@@ -19,7 +19,7 @@
       {% endif %}
   {% endif %}
   
-  <form action="{% url 'django.contrib.auth.views.login' %}" method="post" id="loginForm">
+  <form action="{% url 'login' %}" method="post" id="loginForm">
     {% csrf_token %}
     <div class="form-group input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
