@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap3',
     'authentication',
-    'home'
+    'home',
+    'django_tables2'
 ]
 
 MIDDLEWARE = [
@@ -79,19 +80,18 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'trex.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': 'xe',
+        'HOST': 'localhost',
+        'USER': 'STUDENT',
+        'PASSWORD': 'STUDENT',
+        'PORT': '1521'
     }
 }
 
+WSGI_APPLICATION = 'trex.wsgi.application'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
