@@ -1,0 +1,18 @@
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+body{
+    background: rgb(230, 229, 234);
+}
+#content{
+    /*padding-left: 0;*/
+    /*padding-right: 0;*/
+}
+li {
+    cursor: hand !important;
+}
+span:hover {
+ cursor: hand !important;
+}

@@ -1,0 +1,28 @@
+{% extends 'bootstrap3/bootstrap3.html' %}
+
+{% block bootstrap3_title %}{{ subtitle }}{% endblock %}
+
+<!-- HEAD -->
+{% block bootstrap3_extra_head %}
+  {% load staticfiles %}
+  <link rel="stylesheet" type="text/css" href="{% static "home/base.css" %}">
+  {% block extra_head %}
+      <!-- EXTRA HEAD  -->
+  {% endblock extra_head %}
+{% endblock %}
+
+{% block bootstrap3_content %}
+
+<div class="container-fluid nopadding" >
+  <div class="row-fluid nopadding">
+    
+  </div>
+</div>
+{% endblock bootstrap3_content %}
+
+{% block bootstrap3_extra_script %}
+  {% block extra_scripts %}
+      <!-- LOAD SCRIPTS HERE -->    
+  {% endblock extra_scripts %}
+  
+{% endblock %}
