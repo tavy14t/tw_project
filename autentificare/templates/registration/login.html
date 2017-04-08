@@ -1,0 +1,42 @@
+{% extends 'registration/base.html' %}
+
+{% load bootstrap3 %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block content %}
+  {% if form.errors %}
+      <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
+
+  {% if next %}
+      {% if user.is_authenticated %}
+          <p>Your account doesn't have access to this page.</p>
+      {% else %}
+          <p>Please login to see this page.</p>
+      {% endif %}
+  {% endif %}
+  
+  <form action="{% url 'django.contrib.auth.views.login' %}" method="post" id="loginForm">
+    {% csrf_token %}
+    <div class="form-group input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+      <input class="form-control" type="text" name='username' placeholder="username"/>          
+    </div>
+    <div class="form-group input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+      <input class="form-control" type="password" name='password' placeholder="password"/>     
+    </div>
+    
+    <div class="form-group">
+      <button id="login_btn" type="submit" class="btn btn-def btn-block">Login</button>
+      <input type="hidden" name="next" value="{{ request.GET.next }}" />
+    </div>
+    <div class="form-group text-center">
+      <a href="{% url 'password_reset' %}">Forgot Password</a>&nbsp;|&nbsp;<a href="#">Support</a>
+    </div>
+  </form>   
+
+{% endblock %}
