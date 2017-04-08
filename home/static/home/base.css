@@ -1,0 +1,22 @@
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+body{
+    /*background: rgb(241, 240, 245);*/
+    background: rgb(230, 229, 234);
+    /*background: white;*/
+    /*background: #5D6B7A;*/
+}
+#content{
+    /*padding-left: 0;*/
+    /*padding-right: 0;*/
+}
+li {
+    /*cursor: pointer !important;*/
+    cursor: hand !important;
+}
+span:hover {
+ cursor: hand !important;
+}
