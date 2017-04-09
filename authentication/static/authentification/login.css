@@ -1,11 +1,5 @@
 body{
-  background: #23282e;
-  /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00589F', endColorstr='#0073CF', GradientType=0);
-  background: -webkit-linear-gradient(to bottom, #00589F 50%, #0073CF) !important;
-  background: -moz-linear-gradient(to bottom, #00589F 50%, #0073CF) !important;
-  background: -ms-linear-gradient(to bottom, #00589F 50%, #0073CF) !important;
-  background: -o-linear-gradient(to bottom, #00589F 50%, #0073CF) !important;
-  background: linear-gradient(to bottom, #00589F 50%, #0073CF) !important;*/
+  background: #111155;
   color: white;
 }
 

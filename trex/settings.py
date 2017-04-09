@@ -35,7 +35,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,7 +47,8 @@ INSTALLED_APPS = [
     'bootstrap3',
     'authentication',
     'home',
-    'django_tables2'
+    'django_tables2',
+    'common'
 ]
 
 MIDDLEWARE = [
