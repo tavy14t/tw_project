@@ -1,6 +1,6 @@
 {% load staticfiles %}
 
-<link rel="stylesheet" type="text/css" href="{% static "common/mystylesheet.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "common/sidebar.css" %}">
 
 <!-- SIDEBAR -->
 <div class="nav-side-menu col-md-2 nopadding">
@@ -9,7 +9,7 @@
         <ul id="menu-content" class="menu-content collapsed out">
             {% for item_name, item_ico, subitems in side_menu_list %}
                 <!-- ITEMS -->
-                <li data-toggle="collapse" data-target="#{{ item_name }}" >
+                <li data-toggle="collapse" data-target="#{{ item_name }}" >   
                     <i class="{{ item_ico }}"></i> 
                         {{ item_name }} 
                 </li>
@@ -17,7 +17,7 @@
                 <ul class="sub-menu collapse in" id={{ item_name }} >
                     {% for sub_item_name, sub_item_ref in subitems %}
                         <li>
-                            <i class="glyphicon glyphicon-arrow-right"></i>
+                            <i class="glyphicon glyphicon-menu-right"></i>
                             <a href={{ sub_item_ref }}>{{ sub_item_name }}</a>
                         </li>
                     {% endfor %}

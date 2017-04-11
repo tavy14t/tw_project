@@ -1,18 +1,24 @@
 
 def side_menu(title=None):
     menu_items = {
+        'title': title,
         'side_menu_list': [
-            ['Menu1', 'glyphicon glyphicon-globe',
-             [('Paranoia', 'http://google.com'),
-              ('Minune', 'http://google.com'),
-              ('Valoros', 'http://google.com')]],
+            ['Search', 'glyphicon glyphicon-search',
+             [('Tags', 'search'),
+              ('Posts', 'browse'),
+              ('Titles', 'news'),
+              ('Body', 'body')]],
 
-            ['Menu2', 'glyphicon glyphicon-cloud-download',
+            ['Browse', 'glyphicon glyphicon-folder-open',
              [('Barosaneala', 'http://google.com'),
               ('Sasesc', 'http://google.com'),
               ('Salam', 'http://google.com')]],
 
-            ['Account', 'glyphicon glyphicon-list-alt',
+            ['News', 'glyphicon glyphicon-education',
+             [('Status', 'http://google.com'),
+              ('Logout', 'logout')]],
+
+            ['User', 'glyphicon glyphicon-user',
              [('Status', 'http://google.com'),
               ('Logout', 'logout')]],
         ],

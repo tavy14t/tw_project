@@ -6,9 +6,6 @@
 {% block bootstrap3_extra_head %}
   {% load staticfiles %}
   <link rel="stylesheet" type="text/css" href="{% static "home/base.css" %}">
-  {% block extra_head %}
-      <!-- EXTRA HEAD  -->
-  {% endblock extra_head %}
 {% endblock %}
 
 {% block bootstrap3_content %}
@@ -22,13 +19,13 @@
 
       {% endblock sidebar %}
     </div>
+    <div id="content" class="col-md-10">
+       {% block content_container %}
+         {% block content %}
+           <!-- Content code here -->
+         {% endblock content %}
+       {% endblock content_container %}
+    </div>
   </div>
 </div>
 {% endblock bootstrap3_content %}
-
-{% block bootstrap3_extra_script %}
-  {% block extra_scripts %}
-      <!-- LOAD SCRIPTS HERE -->    
-  {% endblock extra_scripts %}
-  
-{% endblock %}

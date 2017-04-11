@@ -17,7 +17,7 @@ def home_view(request):
     print result
 
     for item in result:
-        context['list'].append(item.name)
+        context['list'].append(item.firstname)
 
     context.update(commonviews.side_menu('Home'))
     return render(request, 'home/home.html', context)

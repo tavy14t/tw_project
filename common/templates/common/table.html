@@ -1,0 +1,23 @@
+ <table class="table">
+  {% for head_field in table_head %}
+    <th>{{ head_field }}</th>
+  {% endfor %}
+
+  {% for item_data, item_ico, item_link in items_list %}
+    <tr>
+      {% for item in item_data %}
+            <td>{{ item }}</td>
+      {% endfor %}
+  
+      <td>
+        {% for action_ico, action_link in ico_actions%}
+          <button class="icobutton" type="radio" onclick="window.location.href='{{ action_link }}'">
+              <span class="{{ action_ico }}" aria-hidden="true"></span>
+          </button>
+        {% endfor %}
+
+      </td>
+  
+    </tr>
+  {% endfor %}
+</table>

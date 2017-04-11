@@ -1,0 +1,38 @@
+{% extends "home/base.html" %}
+
+
+
+{% block content %}
+<!-- CONTENT -->
+    <form role="form" method="POST" style="padding-top: 1em;">
+        {% csrf_token %}
+        {{ form.string }}
+    </form>
+    
+
+    {% if tabs %}
+        {% include "search/tabs.html" with tabs=tabs %}
+    {% endif %}
+
+    {% if data %} 
+        {% for d in data %}
+            <p> {{ d }} </p>
+        {% endfor %}
+    {% endif %}
+
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger fade in col-md-11">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong></strong> {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+
+<!-- FOOTER -->
+{% block extra_scripts %}
+
+{% endblock %}

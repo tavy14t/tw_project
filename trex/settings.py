@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'authentication',
     'home',
     'django_tables2',
-    'common'
+    'common',
+    'search'
 ]
 
 MIDDLEWARE = [
@@ -85,8 +86,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.oracle',
         'NAME': 'xe',
         'HOST': 'localhost',
-        'USER': 'STUDENT',
-        'PASSWORD': 'STUDENT',
+        'USER': 'MIRCEA',
+        'PASSWORD': 'MIRCEA',
         'PORT': '1521'
     }
 }

@@ -25,7 +25,7 @@
 .nav-side-menu ul,
 .nav-side-menu li {
   list-style: none;
-  padding: 0px;
+  padding: 3px;
   margin: 0px;
   line-height: 35px;
   cursor: pointer;
@@ -70,7 +70,7 @@
   vertical-align: middle;
 }
 .nav-side-menu li {
-  padding-left: 0px;
+  padding-left: 15px;
   border-left: 3px solid #2e353d;
   border-bottom: 1px solid #23282e;
 }
