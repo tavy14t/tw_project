@@ -46,7 +46,7 @@ def search(request):
             tabs = [('Identification', {'data': news,
                                         'sidebar': False}),
                     ('Salutare', {'data': news,
-                                        'sidebar': False}), ]
+                                  'sidebar': False}), ]
 
             tabs = collections.OrderedDict(tabs)
 

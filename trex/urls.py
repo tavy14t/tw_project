@@ -17,16 +17,18 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import urls as auth_urls
-
 from home import views as home_views
 from search import views as search_views
+import authentication.views
+
 
 urlpatterns = [
     url(r'^$', home_views.home_view, name='home'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^search/', search_views.search),
-    url(r'^login', auth_views.login, name='login'),
-    url(r'^logout', auth_views.logout,
+    url(r'^register/', authentication.views.register),
+    url(r'^login/', authentication.views.login),
+    url(r'^logout/', auth_views.logout,
         {'template_name': 'registration/login.html'}, name='logout'),
 ]
 
