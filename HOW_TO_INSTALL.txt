@@ -1,0 +1,8 @@
+Depedente:
+	cx_oracle (maxim 5.2.1 pentru python 2.7)
+	instant_client de la oracle (ultima versiune e ok)
+
+In trex/settings.py trebuie modificata variabila DATABASES cu setarile locale ale fiecarui user (contul, parola, portul, etc).
+
+Optional:
+	daca inca nu merge conexiunea cu baza de date, adaugati folderul instant_client (ex: C:/instantclient_12_2) la environment variables ca ORACLE_PATH
