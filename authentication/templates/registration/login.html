@@ -15,19 +15,19 @@
       {% if user.is_authenticated %}
           <p>Your account doesn't have access to this page.</p>
       {% else %}
-          <p>Please login to see this page.</p>
+          <p id="login_items">Please login to continue</p>
       {% endif %}
   {% endif %}
   
   <form action="{% url 'login' %}" method="post" id="loginForm">
     {% csrf_token %}
     <div class="form-group input-group">
-      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-      <input class="form-control" type="text" name='username' placeholder="username"/>          
+      <span id="textbox_case" class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+      <input id="textbox_login" class="form-control" type="text" name='username' placeholder="username"/>          
     </div>
     <div class="form-group input-group">
-      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-      <input class="form-control" type="password" name='password' placeholder="password"/>     
+      <span id="textbox_case" class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+      <input id="textbox_login" class="form-control" type="password" name='password' placeholder="password"/>     
     </div>
     
     <div class="form-group">
@@ -35,7 +35,9 @@
       <input type="hidden" name="next" value="{{ request.GET.next }}" />
     </div>
     <div class="form-group text-center">
-      <a href="{% url 'password_reset' %}">Forgot Password</a>&nbsp;|&nbsp;<a href="#">Support</a>
+      <a id="login_items" href="{% url 'password_reset' %}">Forgot Password</a>
+      &nbsp;|&nbsp;
+      <a id="login_items" href="#">Register</a>
     </div>
   </form>   
 

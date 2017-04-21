@@ -1,5 +1,7 @@
 body{
-  background: #111155;
+  background: url(science.jpg) #111155;
+  background-repeat: no-repeat;
+  background-size: 100% 640px;
   color: white;
 }
 
@@ -22,6 +24,24 @@ div.well{
 }
 
 #login_btn{
-  background: #181c20  !important;
+  background: #5262AD  !important;
   color: white;
+}
+#login_btn:hover{
+  background: #1B48A9  !important;
+}
+
+#login_items{
+  color: white;
+  text-shadow: -1px 0 blue, 0 1px blue, 1px 0 blue, 0 -1px blue;
+}
+
+#textbox_login{
+  background-color:white;
+  border: 1px solid #1B48A9; 
+}
+
+#textbox_case{
+  background-color: #5262AD;
+  border-color: #1B48A9;
 }
