@@ -19,8 +19,6 @@ def authenticate_user(request, form):
     md5_hasher.update(password)
     password_hash = md5_hasher.hexdigest()
 
-    print password_hash
-
     trex_db = settings.DATABASES['default']
     ip = trex_db['HOST']
     port = trex_db['PORT']
@@ -54,7 +52,6 @@ def login(request):
     print "in login"
     if request.method == 'POST':
         form = AuthForm(request.POST)
-        print form
 
         if form.is_valid():
             print "form is valid"
@@ -92,12 +89,13 @@ def create_account(form):
     cursor = con.cursor()
     cursor.prepare('select * from users where email = :mail')
     cursor.execute(None, {'mail': mail})
+
     for line in cursor:
         con.close()
         return False
+        # daca s'a intrat in acest for, inseamna ca deja exista utilizatorul
 
     uid = int(cursor.callfunc('GET_UNUSED_ID', cx_Oracle.NUMBER, ['USERS']))
-    print 'uid', uid
 
     cursor.prepare(
         """
@@ -111,12 +109,14 @@ def create_account(form):
                           'md5pass': password_hash})
     con.commit()
 
+    # verificare daca userul a fost creat
     cursor.prepare('select * from users where email = :mail')
     cursor.execute(None, {'mail': mail})
     for line in cursor:
         con.close()
         print 'NEW USER', mail, firstname, lastname
         return True
+        # daca s-a intrat in acest for, utilizatorul a fost creat
 
     return False
 
