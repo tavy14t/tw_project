@@ -7,38 +7,32 @@
 {% endblock %}
 
 {% block content %}
-  {% if form.errors %}
-      <p>Your username and password didn't match. Please try again.</p>
-  {% endif %}
+ <form method="post" action="/login/">
+      {% csrf_token %}
+      {{ form }}
+      </br>
+      <input type="submit" id="login_btn" class="btn btn-def btn-block" value="Login"></input>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-info" role="alert" style="display:{{ display }};">{{ message }}</div>
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                    <script> 
+                    // sleep time expects milliseconds
+                    function sleep (time) {
+                      return new Promise((resolve) => setTimeout(resolve, time));
+                    }
 
-  {% if next %}
-      {% if user.is_authenticated %}
-          <p>Your account doesn't have access to this page.</p>
-      {% else %}
-          <p id="login_items">Please login to continue</p>
-      {% endif %}
-  {% endif %}
-  
-  <form action="{% url 'login' %}" method="post" id="login_form">
-    {% csrf_token %}
-    <div class="form-group input-group">
-      <span id="textbox_case" class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-      <input id="textbox_login" class="form-control" type="text" name='username' placeholder="username"/>          
-    </div>
-    <div class="form-group input-group">
-      <span id="textbox_case" class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-      <input id="textbox_login" class="form-control" type="password" name='password' placeholder="password"/>     
-    </div>
-    
-    <div class="form-group">
-      <button id="login_btn" type="submit" class="btn btn-def btn-block">Login</button>
-      <input type="hidden" name="next" value="{{ request.GET.next }}" />
-    </div>
-    <div class="form-group text-center">
-      <a id="login_items" href="{% url 'password_reset' %}">Forgot Password</a>
-      &nbsp;|&nbsp;
-      <a id="login_items" href="../register">Register</a>
-    </div>
-  </form>   
+                    // Usage!
+                    sleep(2000).then(() => {
+                         window.location = "/";
+                    });
+                    </script>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+      <div class="form-group text-center">
+        <a id="login_items" href="/register/">Register</a>
+      </div>
+  </form>
 
 {% endblock %}

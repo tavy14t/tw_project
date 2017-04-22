@@ -8,7 +8,7 @@ from models import Users
 from common import commonviews
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def home_view(request):
     result = Users.objects.all()
     context = dict()
