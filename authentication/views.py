@@ -10,7 +10,12 @@ import md5
 import cx_Oracle
 from trex import settings
 
-from login_decorator import custom_login_required
+
+def is_logged_in(request):
+    if 'userid' in request.session.keys():
+        return True
+
+    return False
 
 
 def authenticate_user(request, form):
@@ -52,7 +57,7 @@ def authenticate_user(request, form):
 
 
 def login(request):
-    if 'userid' in request.session.keys():
+    if is_logged_in(request):
         print 'user is already logged in'
         return HttpResponseRedirect('/')
 
@@ -75,7 +80,7 @@ def login(request):
 
 
 def logout(request):
-    if 'userid' in request.session.keys():
+    if is_logged_in(request):
         request.session.pop('userid', None)
 
     return HttpResponseRedirect('/login/')
