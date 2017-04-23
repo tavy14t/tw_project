@@ -10,6 +10,8 @@ import md5
 import cx_Oracle
 from trex import settings
 
+from login_decorator import custom_login_required
+
 
 def authenticate_user(request, form):
     email = form.cleaned_data['email'].encode('utf8')
@@ -43,6 +45,7 @@ def authenticate_user(request, form):
 
         con.close()
         if c[4] == password_hash:
+            request.session['userid'] = str(c[0])
             return True
 
         return False
