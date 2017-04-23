@@ -14,13 +14,6 @@
         {% include "search/tabs.html" with tabs=tabs %}
     {% endif %}
 
-    {% if data %} 
-        {% for d in data %}
-            <p> {{ d }} </p>
-        {% endfor %}
-    {% endif %}
-
-
     {% if messages %}
         {% for message in messages %}
             <div class="alert alert-danger fade in col-md-11">

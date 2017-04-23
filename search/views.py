@@ -34,11 +34,12 @@ def search(request):
                 cursor.execute("select * from users where firstname like '%{0}%'"
                                .format(name))
 
-                context['data'] = [data[1] for data in cursor]
-                for data in context['data']:
+                aux = [(data[1], data[2]) for data in cursor]
+
+                for firstname, lastname in aux:
                     tabs.append({
-                        'info': 'nume1',
-                        'value': data
+                        'info': firstname,
+                        'value': lastname
                     })
 
             news = InfoTable(tabs, show_header=False)
