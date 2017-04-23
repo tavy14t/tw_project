@@ -1,16 +1,16 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
 from django.db import connection
 
 from forms import SearchForm
 from common import commonviews
 from tables import InfoTable
-from home.models import Users
 
 import collections
 
+from authentication.login_decorator import custom_login_required
 
-@login_required(login_url='/')
+
+@custom_login_required
 def search(request):
     context = dict()
 
