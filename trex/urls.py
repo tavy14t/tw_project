@@ -26,6 +26,5 @@ urlpatterns = [
     url(r'^search/', search_views.search),
     url(r'^register/', authentication.views.register),
     url(r'^login/', authentication.views.login),
-    url(r'^logout/', auth_views.logout,
-        {'template_name': 'registration/login.html'}, name='logout'),
+    url(r'^logout/', authentication.views.logout, name='logout'),
 ]

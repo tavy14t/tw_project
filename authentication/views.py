@@ -37,8 +37,6 @@ def authenticate_user(request, form):
 
     cursor.execute(None, {'mail': email})
 
-    user = Users.objects.get(email=email)
-
     for c in cursor:
         print c
         print password_hash
@@ -54,13 +52,11 @@ def authenticate_user(request, form):
 
 
 def login(request):
-    print "in login"
     if request.method == 'POST':
         form = AuthForm(request.POST)
         print form
 
         if form.is_valid():
-            print "form is valid"
             if not authenticate_user(request, form):
                 messages.error(request, 'Login Failed!')
             else:
@@ -71,6 +67,14 @@ def login(request):
     else:
         form = AuthForm()
 
+    return render(request, 'registration/login.html', {'form': form})
+
+
+def logout(request):
+    if request.method == 'POST':
+        request.session.pop('userid', None)
+
+    form = AuthForm()
     return render(request, 'registration/login.html', {'form': form})
 
 
