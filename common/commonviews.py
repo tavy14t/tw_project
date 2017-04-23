@@ -16,11 +16,11 @@ def side_menu(title=None):
 
             ['News', 'glyphicon glyphicon-education',
              [('Status', 'http://google.com'),
-              ('Logout', 'logout')]],
+              ('Logout', '/logout/')]],
 
             ['User', 'glyphicon glyphicon-user',
              [('Status', 'http://google.com'),
-              ('Logout', 'logout')]],
+              ('Logout', '/logout/')]],
         ],
     }
 
