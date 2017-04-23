@@ -4,10 +4,10 @@ def side_menu(title=None):
         'title': title,
         'side_menu_list': [
             ['Search', 'glyphicon glyphicon-search',
-             [('Tags', 'search'),
-              ('Posts', 'browse'),
-              ('Titles', 'news'),
-              ('Body', 'body')]],
+             [('Search', '/search/'),
+              ('Posts', '/browse/'),
+              ('Titles', '/news/'),
+              ('Body', '/body/')]],
 
             ['Browse', 'glyphicon glyphicon-folder-open',
              [('Barosaneala', 'http://google.com'),

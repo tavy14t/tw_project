@@ -25,6 +25,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^search/', search_views.search),
     url(r'^register/', authentication.views.register),
-    url(r'^login/', authentication.views.login),
+    url(r'^login/$', authentication.views.login),
     url(r'^logout/', authentication.views.logout, name='logout'),
 ]

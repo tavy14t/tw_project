@@ -52,6 +52,10 @@ def authenticate_user(request, form):
 
 
 def login(request):
+    if 'userid' in request.session.keys():
+        print 'user is already logged in'
+        return HttpResponseRedirect('/')
+
     if request.method == 'POST':
         form = AuthForm(request.POST)
         print form
@@ -71,11 +75,10 @@ def login(request):
 
 
 def logout(request):
-    if request.method == 'POST':
+    if 'userid' in request.session.keys():
         request.session.pop('userid', None)
 
-    form = AuthForm()
-    return render(request, 'registration/login.html', {'form': form})
+    return HttpResponseRedirect('/login/')
 
 
 def create_account(form):
