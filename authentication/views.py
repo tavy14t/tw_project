@@ -11,6 +11,13 @@ import cx_Oracle
 from trex import settings
 
 
+def is_logged_in(request):
+    if 'userid' in request.session.keys():
+        return True
+
+    return False
+
+
 def authenticate_user(request, form):
     email = form.cleaned_data['email'].encode('utf8')
     password = form.cleaned_data['password'].encode('utf8')
@@ -18,6 +25,8 @@ def authenticate_user(request, form):
     md5_hasher = md5.new()
     md5_hasher.update(password)
     password_hash = md5_hasher.hexdigest()
+
+    print password_hash
 
     trex_db = settings.DATABASES['default']
     ip = trex_db['HOST']
@@ -33,14 +42,13 @@ def authenticate_user(request, form):
 
     cursor.execute(None, {'mail': email})
 
-    user = Users.objects.get(email=email)
-
     for c in cursor:
         print c
         print password_hash
 
         con.close()
         if c[4] == password_hash:
+            request.session['userid'] = str(c[0])
             return True
 
         return False
@@ -49,12 +57,15 @@ def authenticate_user(request, form):
 
 
 def login(request):
-    print "in login"
+    if is_logged_in(request):
+        print 'user is already logged in'
+        return HttpResponseRedirect('/')
+
     if request.method == 'POST':
         form = AuthForm(request.POST)
+        print form
 
         if form.is_valid():
-            print "form is valid"
             if not authenticate_user(request, form):
                 messages.error(request, 'Login Failed!')
             else:
@@ -66,6 +77,13 @@ def login(request):
         form = AuthForm()
 
     return render(request, 'registration/login.html', {'form': form})
+
+
+def logout(request):
+    if is_logged_in(request):
+        request.session.pop('userid', None)
+
+    return HttpResponseRedirect('/login/')
 
 
 def create_account(form):
@@ -89,13 +107,12 @@ def create_account(form):
     cursor = con.cursor()
     cursor.prepare('select * from users where email = :mail')
     cursor.execute(None, {'mail': mail})
-
     for line in cursor:
         con.close()
         return False
-        # daca s'a intrat in acest for, inseamna ca deja exista utilizatorul
 
     uid = int(cursor.callfunc('GET_UNUSED_ID', cx_Oracle.NUMBER, ['USERS']))
+    print 'uid', uid
 
     cursor.prepare(
         """
@@ -109,14 +126,12 @@ def create_account(form):
                           'md5pass': password_hash})
     con.commit()
 
-    # verificare daca userul a fost creat
     cursor.prepare('select * from users where email = :mail')
     cursor.execute(None, {'mail': mail})
     for line in cursor:
         con.close()
         print 'NEW USER', mail, firstname, lastname
         return True
-        # daca s-a intrat in acest for, utilizatorul a fost creat
 
     return False
 

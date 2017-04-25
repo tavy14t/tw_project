@@ -7,15 +7,7 @@
     label{
         text-shadow: -1px 0 #5262AD, 0 1px #5262AD, 1px 0 #5262AD, 0 -1px #5262AD;
     }
-    #register_btn{
-      background: #5262AD  !important;
-      color: white;
-    }
-    #register_btn:hover{
-      background: #1B48A9  !important;
-    }
-
-  </style>s
+  </style>
   <form method="post" action="/register/">
       {% csrf_token %}
       {{ form }}
@@ -24,7 +16,7 @@
         {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-info" role="alert" style="display:{{ display }};">{{ message }}</div>
-                    {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
                     <script> 
                     // sleep time expects milliseconds
                     function sleep (time) {
