@@ -1,16 +1,16 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
 from django.db import connection
 
 from forms import SearchForm
 from common import commonviews
 from tables import InfoTable
-from home.models import Users
 
 import collections
 
+from authentication.login_decorator import custom_login_required
 
-@login_required(login_url='/')
+
+@custom_login_required
 def search(request):
     context = dict()
 
@@ -34,11 +34,12 @@ def search(request):
                 cursor.execute("select * from users where firstname like '%{0}%'"
                                .format(name))
 
-                context['data'] = [data[1] for data in cursor]
-                for data in context['data']:
+                aux = [(data[1], data[2]) for data in cursor]
+
+                for firstname, lastname in aux:
                     tabs.append({
-                        'info': 'nume1',
-                        'value': data
+                        'info': firstname,
+                        'value': lastname
                     })
 
             news = InfoTable(tabs, show_header=False)
@@ -46,7 +47,7 @@ def search(request):
             tabs = [('Identification', {'data': news,
                                         'sidebar': False}),
                     ('Salutare', {'data': news,
-                                        'sidebar': False}), ]
+                                  'sidebar': False}), ]
 
             tabs = collections.OrderedDict(tabs)
 

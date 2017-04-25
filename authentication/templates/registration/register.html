@@ -2,16 +2,17 @@
 
 {% load bootstrap3 %}
 
-{% block title %}
-    Login
-{% endblock %}
-
 {% block content %}
- <form method="post" action="/login/">
+  <style>
+    label{
+        text-shadow: -1px 0 #5262AD, 0 1px #5262AD, 1px 0 #5262AD, 0 -1px #5262AD;
+    }
+  </style>
+  <form method="post" action="/register/">
       {% csrf_token %}
       {{ form }}
       </br>
-      <input type="submit" id="login_btn" class="btn btn-def btn-block" value="Login"></input>
+      <input type="submit" id="register_btn" class="btn btn-def btn-block" value="Register"></input>
         {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-info" role="alert" style="display:{{ display }};">{{ message }}</div>
@@ -24,15 +25,15 @@
 
                     // Usage!
                     sleep(2000).then(() => {
-                         window.location = "/";
+                         window.location = "../login";
                     });
                     </script>
                 {% endif %}
             {% endfor %}
         {% endif %}
-      <div class="form-group text-center">
-        <a id="login_items" href="/register/">Register</a>
-      </div>
   </form>
+
+  </body>
+  </html>
 
 {% endblock %}

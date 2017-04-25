@@ -1,0 +1,28 @@
+Depedente:
+	cx_oracle (maxim 5.2.1 pentru python 2.7)
+		Pentru cx_oracle, trebuie mai intai sa instalati Oracle Database 12c: 
+		Intrati aici:
+			http://www.oracle.com/technetwork/database/enterprise-edition/downloads/database12c-win64-download-2297732.html#close 
+		Descarcati:
+			winx64_12102_database_1of2.zip (1,580,194,397 bytes)
+ 			winx64_12102_database_2of2.zip (1,183,299,689 bytes)
+		Faceti unzip si merge la foldere
+		Instalare:
+			Installation Option: bifati Install database software only
+			Grid Installation Options: lasati Single instance...
+			Database Edition: Enterprise Edition (6.0GB)
+			Oracle Home User Selection: Use Windowsm Built-In Account
+			Next.. Next .. install
+		Dupa instalare, executati pip install cx_oracle
+		*In caz de eroare la instalare, scrieti pip download cx_oracle
+		*gasiti zip-ul cu modulul cx_oracle in: C:\Users\<username-ul tau>\AppData\Local\Temp\cx_Oracle-5.3.tar.gz
+		*dezarhivati, mergeti in setup.py si modificati linia:
+		*	userOracleHome = os.environ.get("ORACLE_HOME")
+		* in:	userOracleHome = r'D:\app\<username-ul tau>\product\12.1.0\dbhome_1'
+	
+	instant_client de la oracle (ultima versiune e ok)
+
+In trex/settings.py trebuie modificata variabila DATABASES cu setarile locale ale fiecarui user (contul, parola, portul, etc).
+
+Optional:
+	daca inca nu merge conexiunea cu baza de date, adaugati folderul instant_client (ex: C:/instantclient_12_2) la environment variables ca ORACLE_PATH

@@ -2,13 +2,13 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
 
 from models import Users
 from common import commonviews
+from authentication.login_decorator import custom_login_required
 
 
-@login_required(login_url='/login')
+@custom_login_required
 def home_view(request):
     result = Users.objects.all()
     context = dict()
