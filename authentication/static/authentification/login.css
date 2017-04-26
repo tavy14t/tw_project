@@ -43,11 +43,11 @@ div.well{
 }
 
 #register_btn{
-  background: #D9CB9E !important;
-  color: #374140;
+  background: #D13F32 !important;
+  color: #D9CB9E;
 }
 #register_btn:hover{
-  background: #D13F32  !important;
+  background: #C03020  !important;
 }
 
 #login_items{
