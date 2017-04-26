@@ -34,16 +34,24 @@ div.well{
   padding: 40px;
 }
 
-#login_btn, #register_btn{
+#login_btn{
   background: #D13F32  !important;
   color: #D9CB9E;
 }
-#login_btn:hover, #register_btn:hover{
+#login_btn:hover{
   background: #C03020  !important;
 }
 
+#register_btn{
+  background: #D9CB9E !important;
+  color: #374140;
+}
+#register_btn:hover{
+  background: #D13F32  !important;
+}
+
 #login_items{
-  font-size: 15px;
+  font-size: 20px;
   color: #D9CB9E;
   text-shadow: -1px 0 #D13F32, 0 0 #D13F32, 0 0 #D13F32, 0 0 #D13F32;
 }
