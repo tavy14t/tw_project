@@ -15,7 +15,7 @@
       <input type="submit" id="register_btn" class="btn btn-def btn-block" value="Register"></input>
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-info" role="alert" style="display:{{ display }};">{{ message }}</div>
+                <div class="alert alert-info text-center" role="alert" id="alert_register" style="display:{{ display }};">{{ message }}</div>
                 {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
                     <script> 
                     // sleep time expects milliseconds
@@ -28,6 +28,7 @@
                          window.location = "../login";
                     });
                     </script>
+                <p> </p>
                 {% endif %}
             {% endfor %}
         {% endif %}
