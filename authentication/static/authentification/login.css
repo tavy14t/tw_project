@@ -1,13 +1,24 @@
 body{
-  background: url(science.jpg) #111155;
-  background-repeat: no-repeat;
-  background-size: 100% 720px;
-  color: white;
+  background: #2A2C2B;
+  color: #D9CB9E;
+}
+body *{
+  font-family: 'Josefin Slab', sans-serif !important;
 }
 
 div.well{
   height: 250px;
 } 
+
+#login_title{
+  font-family: 'Lobster', sans-serif !important;
+  margin-top: 20px;
+  font-size: 40px;
+}
+
+#login_box_title{
+  font-size: 30px;
+}
 
 .Absolute-Center {
   margin: auto;
@@ -24,24 +35,32 @@ div.well{
 }
 
 #login_btn{
-  background: #5262AD  !important;
-  color: white;
+  background: #D13F32  !important;
+  color: #D9CB9E;
 }
 #login_btn:hover{
-  background: #1B48A9  !important;
+  background: #C03020  !important;
 }
 
 #login_items{
-  color: white;
-  text-shadow: -1px 0 blue, 0 1px blue, 1px 0 blue, 0 -1px blue;
+  font-size: 15px;
+  color: #D9CB9E;
+  text-shadow: -1px 0 #D13F32, 0 0 #D13F32, 0 0 #D13F32, 0 0 #D13F32;
 }
 
 #textbox_login{
-  background-color:white;
+  background-color: #D9CB9E;
   border: 1px solid #1B48A9; 
 }
 
 #textbox_case{
   background-color: #5262AD;
   border-color: #1B48A9;
+}
+
+#login_form_div{
+  background-color: #374140;
+  padding: 10px 20px 20px 20px;
+  border: solid 1px #D13F32;
+  border-radius: 10px;
 }

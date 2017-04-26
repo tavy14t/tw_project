@@ -7,12 +7,16 @@
 {% load staticfiles %}
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="{% static "authentification/login.css" %}">
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Josefin+Slab">
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lobster">
 
 <div class="container">
+  <p class="text-center" id="login_title">Topic-based Resource eXplorer</p>
   <div class="row">
     <div class="Absolute-Center is-Responsive">
       <div id="logo-container"></div>
-      <div class="col-sm-12 col-md-10 col-md-offset-1">
+      <div class="col-sm-12 col-md-10 col-md-offset-1" id="login_form_div">
+        <h3 class="text-center" id="login_box_title">LOGIN</h3>
            {% block content %}
             {% endblock %}
       </div>  
