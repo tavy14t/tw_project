@@ -34,11 +34,11 @@ div.well{
   padding: 40px;
 }
 
-#login_btn{
+#login_btn, #register_btn{
   background: #D13F32  !important;
   color: #D9CB9E;
 }
-#login_btn:hover{
+#login_btn:hover, #register_btn:hover{
   background: #C03020  !important;
 }
 
@@ -63,4 +63,18 @@ div.well{
   padding: 10px 20px 20px 20px;
   border: solid 1px #D13F32;
   border-radius: 10px;
+}
+
+#login_form_div *{
+  margin-bottom: 3px;
+}
+
+#alert_login{
+  background-color: #374140;
+  margin-bottom: 20px;
+  border: solid 1px #374140;
+  -webkit-tap-highlight-color: #374140;
+  font-size: 18px;
+  color: #D9CB9E;
+  height: 40px;
 }
