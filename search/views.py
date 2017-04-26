@@ -22,7 +22,7 @@ def search(request):
         search_form = SearchForm(request.POST)
 
         if search_form.is_valid() is False:
-            print 'Invalid Input'
+            print '[debug][search] Invalid search form text input!'
 
         else:
             name = search_form.cleaned_data['string']

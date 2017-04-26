@@ -1,54 +1,40 @@
 from django.shortcuts import render
-from django.shortcuts import render_to_response
-from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from django.contrib.auth import login as auth_login
 from forms import UserForm, AuthForm
-from models import Users
-import md5
+from django.db import connection
 import cx_Oracle
-from trex import settings
+from models import Users
+from common import commonviews
+from authentication.login_decorator import custom_login_required
+import hashlib
 
 
 def is_logged_in(request):
     if 'userid' in request.session.keys():
         return True
-
     return False
+
+
+def get_hash(password):
+    md5_hasher = hashlib.md5()
+    md5_hasher.update(password)
+    password_hash = md5_hasher.hexdigest()
+    return password_hash
 
 
 def authenticate_user(request, form):
     email = form.cleaned_data['email'].encode('utf8')
     password = form.cleaned_data['password'].encode('utf8')
+    password_hash = get_hash(password)
+    print("[debug][autheticate_user] email='{}'; password='{}'; hash='{}'".format(email, password, password_hash))
 
-    md5_hasher = md5.new()
-    md5_hasher.update(password)
-    password_hash = md5_hasher.hexdigest()
+    cursor = connection.cursor()
+    cursor.execute('select * from users where email = :mail', {'mail': email})
 
-    print password_hash
-
-    trex_db = settings.DATABASES['default']
-    ip = trex_db['HOST']
-    port = trex_db['PORT']
-    SID = trex_db['NAME']
-    user = trex_db['USER']
-    password = trex_db['PASSWORD']
-    dsn_tns = cx_Oracle.makedsn(ip, port, SID)
-
-    con = cx_Oracle.connect(user, password, dsn_tns)
-    cursor = con.cursor()
-    cursor.prepare('select * from users where email = :mail')
-
-    cursor.execute(None, {'mail': email})
-
-    for c in cursor:
-        print c
-        print password_hash
-
-        con.close()
-        if c[4] == password_hash:
-            request.session['userid'] = str(c[0])
+    for line in cursor:
+        if line[4] == password_hash:
+            request.session['userid'] = str(line[0])
             return True
 
         return False
@@ -58,12 +44,11 @@ def authenticate_user(request, form):
 
 def login(request):
     if is_logged_in(request):
-        print 'user is already logged in'
+        print '[debug][login] User is already logged in!'
         return HttpResponseRedirect('/')
 
     if request.method == 'POST':
         form = AuthForm(request.POST)
-        print form
 
         if form.is_valid():
             if not authenticate_user(request, form):
@@ -71,8 +56,7 @@ def login(request):
             else:
                 messages.info(request, 'Login Succesfull!')
 
-            return render(request, 'registration/login.html',
-                          {'form': form})
+            return render(request, 'registration/login.html', {'form': form})
     else:
         form = AuthForm()
 
@@ -89,50 +73,33 @@ def logout(request):
 def create_account(form):
     firstname = form.cleaned_data['firstname'].encode('utf8')
     lastname = form.cleaned_data['lastname'].encode('utf8')
-    mail = form.cleaned_data['mail'].encode('utf8')
+    email = form.cleaned_data['mail'].encode('utf8')
     password = form.cleaned_data['password'].encode('utf8')
-    md5_hasher = md5.new()
-    md5_hasher.update(password)
-    password_hash = md5_hasher.hexdigest()
+    password_hash = get_hash(password)
+    print("[debug][create_account] firstname='{}'; lastname='{}'; email='{}'; password='{}'; hash='{}'"
+          .format(firstname, lastname, email, password, password_hash))
 
-    trex_db = settings.DATABASES['default']
-    ip = trex_db['HOST']
-    port = trex_db['PORT']
-    SID = trex_db['NAME']
-    user = trex_db['USER']
-    password = trex_db['PASSWORD']
-    dsn_tns = cx_Oracle.makedsn(ip, port, SID)
+    cursor = connection.cursor()
+    cursor.execute('select * from users where email = :mail', {'mail': email})
 
-    con = cx_Oracle.connect(user, password, dsn_tns)
-    cursor = con.cursor()
-    cursor.prepare('select * from users where email = :mail')
-    cursor.execute(None, {'mail': mail})
     for line in cursor:
-        con.close()
+        print "[debug][create_account] User with mail='{}' and id='{}' was not created!".format(email, line[0])
         return False
 
     uid = int(cursor.callfunc('GET_UNUSED_ID', cx_Oracle.NUMBER, ['USERS']))
-    print 'uid', uid
 
-    cursor.prepare(
-        """
-        insert into users (USERID, FIRSTNAME, LASTNAME,
-        EMAIL, PASSWORDHASH, ISACTIVATED, ROLE)
-        values (:userid, :fname, :lname, :email, :md5pass, 0, 'U')
-        """)
+    cursor = connection.cursor()
+    cursor.execute("insert into users (USERID, FIRSTNAME, LASTNAME, EMAIL, PASSWORDHASH, ISACTIVATED, ROLE)"
+                   "values (:userid, :fname, :lname, :email, :md5pass, 0, 'U')",
+                   {'userid': uid, 'fname': firstname, 'lname': lastname, 'email': email, 'md5pass': password_hash})
 
-    cursor.execute(None, {'userid': uid, 'fname': firstname,
-                          'lname': lastname, 'email': mail,
-                          'md5pass': password_hash})
-    con.commit()
+    cursor.execute('select * from users where email = :mail', {'mail': email})
 
-    cursor.prepare('select * from users where email = :mail')
-    cursor.execute(None, {'mail': mail})
     for line in cursor:
-        con.close()
-        print 'NEW USER', mail, firstname, lastname
+        print "[debug][create_account] User with mail='{}' and id='{}' was created!".format(email, uid)
         return True
 
+    print "[debug][create_account] User with mail='{}' and id='{}' was not created!".format(email, uid)
     return False
 
 
@@ -151,3 +118,16 @@ def register(request):
         form = UserForm()
 
     return render(request, 'registration/register.html', {'form': form})
+
+
+@custom_login_required
+def account(request):
+    result = Users.objects.all()
+    context = dict()
+    context['list'] = []
+
+    for item in result:
+        context['list'].append(item.firstname)
+
+    context.update(commonviews.side_menu('Home'))
+    return render(request, 'account/account.html', context)

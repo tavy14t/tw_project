@@ -19,7 +19,7 @@ def side_menu(title=None):
               ('Logout', '/logout/')]],
 
             ['User', 'glyphicon glyphicon-user',
-             [('Status', 'http://google.com'),
+             [('Account settings', '/account/'),
               ('Logout', '/logout/')]],
         ],
     }
