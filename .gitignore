@@ -2,6 +2,14 @@ authentication/__init__.pyc
 authentication/admin.pyc
 authentication/migrations/__init__.pyc
 authentication/models.pyc
+authentication/forms.pyc
+authentication/login_decorator.pyc
+authentication/models.pyc
+authentication/views.pyc
+authentication/forms.pyc
+authentication/login_decorator.pyc
+authentication/models.pyc
+authentication/views.pyc
 bootstrap3/__init__.pyc
 bootstrap3/bootstrap.pyc
 bootstrap3/components.pyc
