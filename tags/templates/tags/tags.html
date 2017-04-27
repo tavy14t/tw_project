@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-3">
             <form method = "post" id= "select1">
-                <p class="text-center" id="p_tags"> Selectati preferintele </p>
+                <p class="text-center" id="p_tags"> Selected desired tags </p>
 
                 {% csrf_token %}
                 <select multiple class="selectpicker show-tick form-control" name = "values" >
@@ -24,6 +24,7 @@
         </div>
 
         <div class="col-md-8" id="tags_info_right">
+            <p class="text-center" id="p_tags_2"> Posts </p>
             {% if prefered_tags %}
                     {% render_table prefered_tags.table "search/table.html" %}
             {% endif %}
