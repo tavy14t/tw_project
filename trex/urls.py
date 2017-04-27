@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 import search.views
+import tags.views
 import authentication.views
 import home.views
 
@@ -23,6 +24,7 @@ urlpatterns = [
     url(r'^$', home.views.home_view, name='home'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^search/', search.views.search),
+    url(r'^tags/', tags.views.tags),
     url(r'^register/', authentication.views.register),
     url(r'^login/$', authentication.views.login),
     url(r'^logout/', authentication.views.logout, name='logout'),

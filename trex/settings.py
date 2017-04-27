@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'home',
     'django_tables2',
     'common',
-    'search'
+    'search',
+    'tags'
 ]
 
 MIDDLEWARE = [

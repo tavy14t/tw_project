@@ -1,0 +1,25 @@
+{% extends "home/base.html" %}
+
+
+
+{% block content %}
+<!-- CONTENT -->
+    {% if tags %}
+        {% include "search/grouped_table.html" with data=tags %}
+    {% endif %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger fade in col-md-11">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong></strong> {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+
+<!-- FOOTER -->
+{% block extra_scripts %}
+
+{% endblock %}

@@ -10,7 +10,7 @@ def side_menu(title=None):
               ('Body', '/body/')]],
 
             ['Browse', 'glyphicon glyphicon-folder-open',
-             [('Barosaneala', 'http://google.com'),
+             [('Tags', '/tags/'),
               ('Sasesc', 'http://google.com'),
               ('Salam', 'http://google.com')]],
 
