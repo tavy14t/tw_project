@@ -1,7 +1,4 @@
-# tw_project
-Web Technologies Project
-
-TReX (Topic-based Resource eXplorer)
+# TReX (Topic-based Resource eXplorer)
 
 Acest proiect se doreste a fi un instrument Web de colectare,
 de regasire si de vizualizare a informatiilor referitoare la 
