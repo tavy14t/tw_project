@@ -1,30 +1,33 @@
 {% extends "home/base.html" %}
 {% load render_table from django_tables2 %}
 
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static "tags/tags.css" %}">
 
 {% block content %}
 <!-- CONTENT -->
-    <div class="row" style="padding-left: 0">
-        {% if tags %}
-            <div class="col-md-3">
-                <form method = "post">
-                    <h3> Selectati preferintele </h3>
+    <div class="row">
+        <div class="col-md-2">
+            <form method = "post" id= "select1">
+                <h3> Selectati preferintele </h3>
 
-                    {% csrf_token %}
-                    <select multiple class="selectpicker show-tick form-control" name = "values">
-                    {% for tag_name in tags %}
-                        <option>{{ tag_name }}</option>>
-                    {% endfor %}
-                    </select>
+                {% csrf_token %}
+                <select multiple class="selectpicker show-tick form-control" name = "values" >
+                {% for tag_name in tags %}
+                    <option>{{ tag_name }}</option>>
+                {% endfor %}
+                </select>
 
-                    <input  type = "submit" value="Submit">
-                </form>
-            </div>
-        {% endif %}
+                <input  type = "submit" value="Submit">
+            </form>
+        </div>
 
-        {% if prefered_tags %}
-            {% render_table prefered_tags.table "search/table.html" %}
-        {% endif %}
+        <div class="col-md-10">
+            {% if prefered_tags %}
+                    {% render_table prefered_tags.table "search/table.html" %}
+            {% endif %}
+        </div>
     </div>
 
     {% if messages %}
