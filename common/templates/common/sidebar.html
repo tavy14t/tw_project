@@ -5,6 +5,10 @@
 <!-- SIDEBAR -->
 <div class="nav-side-menu col-md-2 nopadding">
     <div class="menu-list">
+        <a href="/" id="logo_a">
+            <p class="text-center" id="logo_title">TREX</p>
+            <img src="{% static "common/TREX.png" %}" class="img-responsive" id="trex_img">
+        </a>
         <ul id="menu-content" class="menu-content collapsed out">
             {% for item_name, item_ico, subitems in side_menu_list %}
                 <!-- ITEMS -->
@@ -22,6 +26,6 @@
                 </ul>
             {% endfor %}
 
-        </ul>    
+        </ul>
      </div>
 </div>

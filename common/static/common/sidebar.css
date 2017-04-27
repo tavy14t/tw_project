@@ -1,7 +1,23 @@
 body *{
   color: #D9CB9E;
   font-family: 'Josefin Slab', sans-serif;
-  font-size: 17px;
+  font-size: 15px;
+}
+#logo_title{
+  font-family: 'Lobster', sans-serif;
+  font-size: 35px;
+  color: #D13F32;
+}
+#logo_a:hover{
+  text-decoration: none;
+}
+#trex_img{
+  display:block;
+  margin:auto;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  width: 115px;
+  height: 70px;
 }
 
 .nav-side-menu {
@@ -9,9 +25,9 @@ body *{
     font-size: 12px;
     font-weight: 200;
     background-color: #2A2C2B;
+    box-shadow: inset 0 0 5px 0px black;
     top: 0px;
     color: #e1ffff;
-    box-shadow: 0 0 5px black;
     position: fixed;
     width: 16.66666667%;
     height: 100%;
