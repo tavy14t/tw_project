@@ -6,6 +6,10 @@ body *{
   font-family: 'Josefin Slab', sans-serif !important;
 }
 
+#big_logo{
+  height: 37vw;
+  margin: auto;
+}
 div.well{
   height: 250px;
 } 
