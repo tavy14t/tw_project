@@ -1,9 +1,25 @@
+@font-face {
+    font-family: 'Josefin Slab';
+    src: url("http://fonts.googleapis.com/css?family=Josefin+Slab");
+}
+
+@font-face {
+    font-family: 'Lobster';
+    src: url("http://fonts.googleapis.com/css?family=Lobster");
+}
+
 body{
   background: #2A2C2B;
   color: #D9CB9E;
 }
 body *{
   font-family: 'Josefin Slab', sans-serif !important;
+}
+
+#logo_title{
+  font-family: 'Lobster', sans-serif;
+  font-size: 35px;
+  color: #D13F32;
 }
 
 #big_logo{
