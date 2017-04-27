@@ -11,7 +11,7 @@ def side_menu(title=None):
 
             ['Browse', 'glyphicon glyphicon-folder-open',
              [('Filtered', '/tags/'),
-              ('Recommanded', '#'),
+              ('Recommanded', '/post/'),
               ('Popular', '#'),
               ('Traending', '#')]],
 

@@ -19,16 +19,7 @@ import search.views
 import tags.views
 import authentication.views
 import home.views
-import home.urls
 
 urlpatterns = [
-    url(r'^$', home.views.home_view, name="home"),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^search/', search.views.search),
-    url(r'^tags/', tags.views.tags),
-    url(r'^register/', authentication.views.register),
-    url(r'^login/$', authentication.views.login),
-    url(r'^logout/', authentication.views.logout, name='logout'),
-    url(r'^account/', authentication.views.account),
-    url(r'^post/', include(home.urls)),
+    url(r'^[0-9]*$', home.views.post)
 ]

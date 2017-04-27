@@ -16,7 +16,7 @@ def tags(request):
     context.update(commonviews.side_menu('Tags'))
 
     keys = {
-        'tag1': ['aaa', 'abc', 'asb'],
+        'tag1': ['', 'abc', 'asb'],
         'tag2': ['zas', 'zdf', 'zvd', 'zza']
     }
 
