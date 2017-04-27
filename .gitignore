@@ -30,6 +30,9 @@ search/__init__.pyc
 search/forms.pyc
 search/tables.pyc
 search/views.pyc
+tags/__init__.pyc
+tags/tables.pyc
+tags/views.pyc
 trex/__init__.pyc
 trex/settings.py
 trex/settings.pyc
