@@ -9,9 +9,11 @@
 }
 
 body *{
-  color: #D9CB9E;
   font-family: 'Josefin Slab', sans-serif;
   font-size: 15px;
+}
+.nav-side-menu li{
+  color: #D9CB9E;
 }
 #logo_title{
   font-family: 'Lobster', sans-serif;

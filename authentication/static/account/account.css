@@ -18,3 +18,31 @@
 .well .list-group {
     margin-bottom: 0px;
 }
+
+
+/* OVD */
+body .content *{
+    color: #1E1E20;
+}
+
+.list-group-item.active, .list-group-item.active:hover{
+    background-color: #C2B58D;
+}
+.list-group-item{
+    background-color: #D9CB9E;
+}
+.form-control{
+    background-color: #D9CB9E;
+}
+#preferences_checkboxes_div::-webkit-scrollbar {
+    width: 1em;
+}
+ 
+#preferences_checkboxes_div::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+ 
+#preferences_checkboxes_div::-webkit-scrollbar-thumb {
+  background-color: #C2B58D;
+  outline: 1px solid slategrey;
+}

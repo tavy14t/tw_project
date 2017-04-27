@@ -58,7 +58,7 @@
             <form method="POST" class="form-horizontal">
                 {% csrf_token %}
                     <label for="listbox_preferences">Check your preferences:</label>
-                    <div style="max-height: 358px; overflow: auto;">
+                    <div style="max-height: 358px; overflow: auto;" id="preferences_checkboxes_div">
                         <ul class="list-group checked-list-box">
                             <li class="list-group-item">Security</li>
                             <li class="list-group-item">Genetics</li>

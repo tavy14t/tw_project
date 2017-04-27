@@ -5,9 +5,6 @@
     margin-top: 15px;
     font-size: 20px;
 }
-.selectpicker.show-tick.form-control{
-    
-}
 .selectpicker.show-tick.form-control::-webkit-scrollbar {
     width: 1em;
 }
@@ -17,7 +14,7 @@
 }
  
 .selectpicker.show-tick.form-control::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
+  background-color: #C2B58D;
   outline: 1px solid slategrey;
 }
 option:active,
