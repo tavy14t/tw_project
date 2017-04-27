@@ -4,7 +4,6 @@
 
 <!-- SIDEBAR -->
 <div class="nav-side-menu col-md-2 nopadding">
-    
     <div class="menu-list">
         <ul id="menu-content" class="menu-content collapsed out">
             {% for item_name, item_ico, subitems in side_menu_list %}
@@ -17,7 +16,6 @@
                 <ul class="sub-menu collapse in" id={{ item_name }} >
                     {% for sub_item_name, sub_item_ref in subitems %}
                         <li>
-                            <i class="glyphicon glyphicon-menu-right"></i>
                             <a href={{ sub_item_ref }}>{{ sub_item_name }}</a>
                         </li>
                     {% endfor %}

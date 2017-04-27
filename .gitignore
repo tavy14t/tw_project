@@ -35,3 +35,9 @@ trex/settings.py
 trex/settings.pyc
 trex/urls.pyc
 trex/wsgi.pyc
+.idea\misc.xml
+.idea\modules.xml
+.idea\tw_project.iml
+.idea\vcs.xml
+.idea\workspace.xml
+.idea\inspectionProfiles\profiles_settings.xml
