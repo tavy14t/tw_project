@@ -46,3 +46,9 @@ body .content *{
   background-color: #C2B58D;
   outline: 1px solid slategrey;
 }
+
+@media (min-width: 992px){
+    .col-md-4 hr{
+        display: none;
+    }
+}
