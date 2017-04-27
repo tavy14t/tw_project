@@ -16,31 +16,32 @@ def tags(request):
     context.update(commonviews.side_menu('Tags'))
 
     keys = {
-        'tag1': ['1', '2', '3'],
-        'tag2': ['1', '3', '2', '4']
+        'tag1': ['aaa', 'abc', 'asb'],
+        'tag2': ['zas', 'zdf', 'zvd', 'zza']
     }
 
-    tag_data = collections.OrderedDict()
+    context['tags'] = [key for key in keys]
 
-    for key in keys:
-        tag_data[key] = []
-        for item in keys[key]:
-            data = {
-                'info': item
-            }
+    if request.method == 'POST':
+        tags = request.POST.getlist('values')
+        tag_data = collections.OrderedDict()
 
-            tag_data[key].append(data)
+        tag_data = []
+        for key in tags:
+            for item in keys[key]:
+                tag_data.append({
+                    'info': item
+                })
 
-    tag_table = collections.OrderedDict()
+        tag_table = collections.OrderedDict()
 
-    for key in tag_data:
         uid = hex(random.randint(-10000, 10000))[2:]
 
-        tag_table[key] = {
+        tag_table = {
             'id': uid,
-            'table': TagsTable(tag_data[key])
+            'table': TagsTable(tag_data)
         }
 
-    context['tags'] = tag_table
+        context['prefered_tags'] = tag_table
 
     return render(request, 'tags/tags.html', context)
