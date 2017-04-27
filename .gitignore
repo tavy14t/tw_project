@@ -38,6 +38,7 @@ trex/settings.py
 trex/settings.pyc
 trex/urls.pyc
 trex/wsgi.pyc
+.idea
 .idea\misc.xml
 .idea\modules.xml
 .idea\tw_project.iml
