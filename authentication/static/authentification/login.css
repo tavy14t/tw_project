@@ -25,7 +25,7 @@ body *{
 #big_logo{
   height: 37vw;
   margin: auto;
-  filter: blur(8px);
+  filter: blur(8px) brightness(2);
 }
 div.well{
   height: 250px;
