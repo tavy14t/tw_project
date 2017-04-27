@@ -284,3 +284,7 @@ pre {
 #finfonav>li {
     font-size:12px !important;
 }
+
+.form-control{
+    background-color: #D9CB9E;
+}
