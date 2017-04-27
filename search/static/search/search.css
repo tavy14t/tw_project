@@ -28,8 +28,6 @@
 .with-nav-tabs.panel-default .nav-tabs > li.active > a:hover,
 .with-nav-tabs.panel-default .nav-tabs > li.active > a:focus {
     color: #555;
-    background-color: #fff;
-    border-color: #ddd;
     border-bottom-color: transparent;
 }
 .with-nav-tabs.panel-default .nav-tabs > li.dropdown .dropdown-menu {
@@ -285,6 +283,58 @@ pre {
     font-size:12px !important;
 }
 
-.form-control{
+#content *{
+    color: #2A2C2B;
+    font-size: 16px;
+}
+
+/* OVD */
+.form-control{   /*input search*/
     background-color: #D9CB9E;
+    border: solid #D13F32 1px;
+    border-bottom-color: transparent;
+}
+
+.panel.with-nav-tabs.panel-default{ /*full results box*/
+    margin-top: 4px;
+    border: solid #D13F32 1px;
+}
+.with-nav-tabs.panel-default .nav-tabs > li.active > a{  /*selected Identification or Salutare */
+    background-color: #D9CB9E;
+    border: solid #D13F32 1px;
+    border-bottom-color: transparent;
+}
+.with-nav-tabs.panel-default .nav-tabs > li.active > a:hover{ /*HOVER selected Identification or Salutare */
+    background-color: #D9CB9E;
+    border: solid #D13F32 1px;
+    border-bottom-color: transparent;
+}
+
+.with-nav-tabs.panel-default .nav-tabs > li > a:hover{  /*HOVER NOT selected Identification or Salutare */
+    background-color: #D1C396;
+    border-bottom-color: #D13F32;
+}
+
+.with-nav-tabs.panel-default .nav-tabs > li > a:focus{  /*FOCUS NOT selected Identification or Salutare */
+    background-color: #D9CB9E;
+    border: solid #D13F32 1px;
+    border-bottom-color: transparent;
+}
+
+.panel-default>.panel-heading{  /*buttons top-bar*/
+    background-color: #CCBF95;  
+    border-bottom-color: #D13F32;
+}
+.panel-body{  /*search results body*/
+    background-color: #D9CB9E;
+}
+
+
+.table>tbody>tr>td.info{  /*table: left row*/
+    background-color: #D9CB9E;
+    border: solid #D13F32 1px;
+}
+.table>tbody>tr>td{  /*table: right row*/;
+    background-color: #D9CB9E; 
+    border: solid #D13F32 1px;
 }
