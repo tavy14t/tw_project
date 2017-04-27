@@ -8,6 +8,7 @@ from models import Users
 from common import commonviews
 from authentication.login_decorator import custom_login_required
 import hashlib
+import json
 
 
 def is_logged_in(request):
@@ -122,12 +123,12 @@ def register(request):
 
 @custom_login_required
 def account(request):
-    result = Users.objects.all()
-    context = dict()
-    context['list'] = []
+    if request.method == 'GET':
+        context = dict()
+        context.update(commonviews.side_menu('Home'))
 
-    for item in result:
-        context['list'].append(item.firstname)
-
-    context.update(commonviews.side_menu('Home'))
-    return render(request, 'account/account.html', context)
+        print('[debug][account] context = ')
+        print(json.dumps(context, indent=4))
+        return render(request, 'account/account.html', context)
+    else:
+        print request

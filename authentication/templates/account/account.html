@@ -4,28 +4,135 @@
 
 <!-- HEAD -->
 {% block bootstrap3_extra_head %}
-  {% load staticfiles %}
-  <link rel="stylesheet" type="text/css" href="{% static "home/base.css" %}">
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static "home/base.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "authentification/login.css" %}">
 {% endblock %}
-
 {% block bootstrap3_content %}
 
 <div class="container-fluid nopadding" >
-  <div class="row-fluid nopadding">
-    <div id="sidebar" class="col-md-2 nopadding">
-      {% block sidebar %}
-
-        {% include "common/sidebar.html" with item_list=side_menu_list %}
-
-      {% endblock sidebar %}
-    </div>
+    <div class="row-fluid nopadding">
+        <div id="sidebar" class="col-md-2 nopadding">
+        {% block sidebar %}
+            {% include "common/sidebar.html" with item_list=side_menu_list %}
+        {% endblock sidebar %}
+        </div>
     <div id="content" class="col-md-10">
-       {% block content_container %}
-         {% block content %}
-           <!-- Content code here -->
-         {% endblock content %}
-       {% endblock content_container %}
+            <form method="POST" class="form-horizontal">
+                <legend>::: Account Settings</legend>
+
+                                            <!-- Text input-->
+                                            <div class="control-group">
+                                              <label class="control-label" for="full_name">Full Name</label>
+                                              <div class="controls">
+                                                <input id="full_name" name="full_name" placeholder="Enter your full name" class="input-xlarge" type="text">
+                                                <p class="help-block">Error</p>
+                                              </div>
+                                            </div>
+
+                                            <!-- Text input-->
+                                            <div class="control-group">
+                                              <label class="control-label" for="father_name">Father's Name</label>
+                                              <div class="controls">
+                                                <input id="father_name" name="father_name" placeholder="Enter Your Father" class="input-xlarge" type="text">
+                                                <p class="help-block">Error</p>
+                                              </div>
+                                            </div>
+
+                                            <!-- Text input-->
+                                            <div class="control-group">
+                                              <label class="control-label" for="mother_name">Mother's Name</label>
+                                              <div class="controls">
+                                                <input id="mother_name" name="mother_name" placeholder="placeholder" class="input-xlarge" type="text">
+                                                <p class="help-block">Error</p>
+                                              </div>
+                                            </div>
+
+                                            <!-- Text input-->
+                                            <div class="control-group">
+                                              <label class="control-label" for="email">Email</label>
+                                              <div class="controls">
+                                                <input id="email" name="email" placeholder="Enter Your Email." class="input-xlarge" type="text">
+                                                <p class="help-block">Error</p>
+                                              </div>
+                                            </div>
+
+                                            <!-- Text input-->
+                                            <div class="control-group">
+                                              <label class="control-label" for="mobile">Mobile No.</label>
+                                              <div class="controls">
+                                                <input id="mobile" name="mobile" placeholder="Enter Your Mobile Number" class="input-xlarge" type="text">
+                                                <p class="help-block">Error</p>
+                                              </div>
+                                            </div>
+
+                                            <!-- Appended Input-->
+                                            <div class="control-group">
+                                              <label class="control-label" for="dob">Date of Birth</label>
+                                              <div class="controls">
+                                                <div class="input-append">
+                                                  <input id="dob" name="dob" class="input-large" placeholder="YYYY-MM-DD" type="text">
+                                                  <span class="add-on">DOB</span>
+                                                </div>
+                                                <p class="help-block">Error</p>
+                                              </div>
+                                            </div>
+
+                                            <!-- Multiple Radios (inline) -->
+                                            <div class="control-group">
+                                              <label class="control-label" for="gender">Gender</label>
+                                              <div class="controls">
+                                                <label class="radio inline" for="gender-0">
+                                                  <input name="gender" id="gender-0" value="Male" checked="checked" type="radio">
+                                                  Male
+                                                </label>
+                                                <label class="radio inline" for="gender-1">
+                                                  <input name="gender" id="gender-1" value="Female" type="radio">
+                                                  Female
+                                                </label>
+                                              </div>
+                                            </div>
+
+                                            <!-- Select Basic -->
+                                            <div class="control-group">
+                                              <label class="control-label" for="course">Apply For</label>
+                                              <div class="controls">
+                                                <select id="course" name="course" class="input-xlarge">
+                                                  <option>Select Course</option>
+                                                  <option>Computer Course</option>
+                                                  <option>University Course</option>
+                                                  <option>Other Course</option>
+                                                </select>
+                                              </div>
+                                            </div>
+
+                                            <!-- Textarea -->
+                                            <div class="control-group">
+                                              <label class="control-label" for="Address">Address</label>
+                                              <div class="controls">
+                                                <textarea id="Address" name="Address">Address</textarea>
+                                              </div>
+                                            </div>
+
+                                            <!-- File Button -->
+                                            <div class="control-group">
+                                              <label class="control-label" for="photo">Photo</label>
+                                              <div class="controls">
+                                                <input id="photo" name="photo" class="input-file" type="file">
+                                              </div>
+                                            </div>
+
+                                            <!-- Button -->
+                                            <div class="control-group">
+                                              <label class="control-label" for="submit"></label>
+                                              <div class="controls">
+                                                <button id="submit" name="submit" class="btn btn-primary">Submit</button>
+                                              </div>
+                                            </div>
+                <input type="submit" id="login_btn" class="btn btn-def btn-block" value="Login"></input>
+            </form>
     </div>
   </div>
 </div>
+
 {% endblock bootstrap3_content %}
