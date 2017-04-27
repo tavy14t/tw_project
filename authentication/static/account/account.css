@@ -48,7 +48,7 @@ body .content *{
 }
 
 @media (min-width: 992px){
-    .col-md-4 hr{
+    .col-md-4 hr, .col-md-8 hr{
         display: none;
     }
 }
