@@ -1,12 +1,24 @@
 #select1 {
 }
 
-#p_tags{
+#p_tags, #p_tags_2{
     margin-top: 15px;
     font-size: 20px;
 }
 .selectpicker.show-tick.form-control{
     
+}
+.selectpicker.show-tick.form-control::-webkit-scrollbar {
+    width: 1em;
+}
+ 
+.selectpicker.show-tick.form-control::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+ 
+.selectpicker.show-tick.form-control::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
 }
 option:active,
 option:checked {
@@ -20,9 +32,12 @@ option:checked {
     border-radius: 2px;
 }
 #tags_info_right{
-    margin-top: 15px;
+        
+}
+.table.table-compact.table-bordered{
+    border-radius: 2px;
 }
 .table>thead>tr>th.info{
     background-color: #CCBF95;
-    border: solid 1px #D13F32;
+    border: solid 1px #D13F32; 
 }
