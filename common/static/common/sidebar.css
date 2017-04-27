@@ -1,8 +1,14 @@
+body *{
+  color: #D9CB9E;
+  font-family: 'Josefin Slab', sans-serif;
+  font-size: 14px;
+}
+
 .nav-side-menu {
     overflow: auto;
     font-size: 12px;
     font-weight: 200;
-    background-color: #000000;
+    background-color: #2A2C2B;
     top: 0px;
     color: #e1ffff;
     box-shadow: 0 0 5px black;
@@ -24,7 +30,6 @@
   display: block;
   text-align: center;
   font-size: 14px;
-  color: white;
 }
 .nav-side-menu .toggle-btn {
   display: none;
@@ -60,15 +65,16 @@
 }
 .nav-side-menu ul .sub-menu li,
 .nav-side-menu li .sub-menu li {
-  background-color: #181c20;
+  background-color: #2A2C2B;
   border: none;
   line-height: 28px;
   border-bottom: 1px solid #23282e;
+  border-radius: 3px;
   margin-left: 0px;
 }
 .nav-side-menu ul .sub-menu li:hover,
 .nav-side-menu li .sub-menu li:hover {
-  background-color: #020203;
+  background-color: #252726;
 }
 .nav-side-menu ul .sub-menu li:before,
 .nav-side-menu li .sub-menu li:before {
@@ -79,8 +85,10 @@
 }
 .nav-side-menu li {
   padding-left: 15px;
+  background-color: #262627;
   border-left: 3px solid #2e353d;
   border-bottom: 1px solid #23282e;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .nav-side-menu li a {
   text-decoration: none;
@@ -93,7 +101,7 @@
 }
 .nav-side-menu li:hover {
   border-left: 3px solid #FFFFFF;
-  background-color: #4f5b69;
+  background-color: #1E1E20;
   -webkit-transition: all 1s ease;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;
