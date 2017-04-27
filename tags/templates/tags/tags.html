@@ -3,14 +3,14 @@
 
 {% load staticfiles %}
 
-<link rel="stylesheet" type="text/css" href="{% static "tags/tags.css" %}">
+
 
 {% block content %}
 <!-- CONTENT -->
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <form method = "post" id= "select1">
-                <h3> Selectati preferintele </h3>
+                <p class="text-center" id="p_tags"> Selectati preferintele </p>
 
                 {% csrf_token %}
                 <select multiple class="selectpicker show-tick form-control" name = "values" >
@@ -19,11 +19,11 @@
                 {% endfor %}
                 </select>
 
-                <input  type = "submit" value="Submit">
+                <input type="submit" value="Submit" id="tags_submit_btn">
             </form>
         </div>
 
-        <div class="col-md-10">
+        <div class="col-md-8" id="tags_info_right">
             {% if prefered_tags %}
                     {% render_table prefered_tags.table "search/table.html" %}
             {% endif %}

@@ -1,4 +1,28 @@
 #select1 {
-    background-color: #0000FF;
-    height: 90hv;
+}
+
+#p_tags{
+    margin-top: 15px;
+    font-size: 20px;
+}
+.selectpicker.show-tick.form-control{
+    
+}
+option:active,
+option:checked {
+  background: linear-gradient(#C2B58D, #C2B58D);
+}
+#tags_submit_btn{
+    width: 100%;
+    margin-top: 2px;
+    background-color: #D13F32;
+    border: solid 1px #D13F32;
+    border-radius: 2px;
+}
+#tags_info_right{
+    margin-top: 15px;
+}
+.table>thead>tr>th.info{
+    background-color: #CCBF95;
+    border: solid 1px #D13F32;
 }
