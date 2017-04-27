@@ -38,19 +38,11 @@ div.well{
   padding: 40px;
 }
 
-#login_btn{
+#login_btn, #register_btn, #update_btn{
   background: #D13F32  !important;
   color: #D9CB9E;
 }
-#login_btn:hover{
-  background: #C03020  !important;
-}
-
-#register_btn{
-  background: #D13F32 !important;
-  color: #D9CB9E;
-}
-#register_btn:hover{
+#login_btn:hover, #register_btn:hover, #update_btn:hover{
   background: #C03020  !important;
 }
 
