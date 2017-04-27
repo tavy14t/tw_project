@@ -3,6 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="69a14b37-3d5c-4441-8699-f6d5e208e529" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+<<<<<<< Updated upstream
+=======
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/authentication/templates/account/account.html" afterPath="$PROJECT_DIR$/authentication/templates/account/account.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/commonviews.py" afterPath="$PROJECT_DIR$/common/commonviews.py" />
+>>>>>>> Stashed changes
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,9 +25,15 @@
       <file leaf-file-name="account.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/authentication/templates/account/account.html">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
             <state relative-caret-position="408">
               <caret line="29" column="61" lean-forward="false" selection-start-line="29" selection-start-column="61" selection-end-line="29" selection-end-column="61" />
+=======
+            <state relative-caret-position="2040">
+              <caret line="120" column="11" lean-forward="false" selection-start-line="120" selection-start-column="11" selection-end-line="120" selection-end-column="11" />
+>>>>>>> Stashed changes
               <folding>
+                <element signature="n#style#0;n#legend#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
               </folding>
             </state>
@@ -34,6 +45,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
               <caret line="8" column="21" lean-forward="false" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+<<<<<<< Updated upstream
               <folding>
                 <marker date="1493331697527" expanded="true" signature="27:742" ph="..." />
                 <marker date="1493331697527" expanded="true" signature="46:718" ph="..." />
@@ -44,6 +56,9 @@
                 <marker date="1493331697527" expanded="true" signature="578:700" ph="..." />
                 <marker date="1493331697527" expanded="true" signature="628:699" ph="..." />
               </folding>
+=======
+              <folding />
+>>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
@@ -84,7 +99,11 @@
         <entry file="file://$PROJECT_DIR$/authentication/static/authentification/login.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="765">
+<<<<<<< Updated upstream
               <caret line="45" column="34" lean-forward="false" selection-start-line="45" selection-start-column="34" selection-end-line="45" selection-end-column="34" />
+=======
+              <caret line="45" column="34" lean-forward="true" selection-start-line="45" selection-start-column="34" selection-end-line="45" selection-end-column="34" />
+>>>>>>> Stashed changes
               <folding />
             </state>
           </provider>
@@ -151,9 +170,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>pri</find>
-      <find>print</find>
-      <find>Pula</find>
       <find>768</find>
       <find>account</find>
       <find>re</find>
@@ -181,6 +197,9 @@
       <find>home_view</find>
       <find>s</find>
       <find>sidebar</find>
+      <find>sa</find>
+      <find>sasesc</find>
+      <find>:::</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -190,7 +209,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/manage.py" />
-        <option value="$PROJECT_DIR$/common/commonviews.py" />
         <option value="$PROJECT_DIR$/authentication/templates/account.html" />
         <option value="$PROJECT_DIR$/trex/urls.py" />
         <option value="$PROJECT_DIR$/authentication/login_decorator.py" />
@@ -205,8 +223,9 @@
         <option value="$PROJECT_DIR$/authentication/templates/registration/login.html" />
         <option value="$PROJECT_DIR$/common/static/common/sidebar.css" />
         <option value="$PROJECT_DIR$/authentication/static/authentification/login.css" />
-        <option value="$PROJECT_DIR$/authentication/static/account/account.css" />
         <option value="$PROJECT_DIR$/authentication/static/account/listbox.js" />
+        <option value="$PROJECT_DIR$/common/commonviews.py" />
+        <option value="$PROJECT_DIR$/authentication/static/account/account.css" />
         <option value="$PROJECT_DIR$/authentication/templates/account/account.html" />
       </list>
     </option>
@@ -843,6 +862,7 @@
     <entry file="file://$PROJECT_DIR$/authentication/admin.py" />
     <entry file="file://$PROJECT_DIR$/authentication/models.py" />
     <entry file="file://$PROJECT_DIR$/authentication/__init__.py" />
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/common/commonviews.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -860,6 +880,8 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> Stashed changes
     <entry file="file://$PROJECT_DIR$/authentication/templates/account.html" />
     <entry file="file://$PROJECT_DIR$/authentication/urls.py" />
     <entry file="file://$PROJECT_DIR$/manage.py" />
@@ -958,10 +980,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/authentication/static/authentification/login.css">
+    <entry file="file://$PROJECT_DIR$/authentication/static/account/listbox.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="765">
           <caret line="45" column="34" lean-forward="false" selection-start-line="45" selection-start-column="34" selection-end-line="45" selection-end-column="34" />
+=======
+        <state relative-caret-position="289">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#41#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/commonviews.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="21" lean-forward="false" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+>>>>>>> Stashed changes
           <folding />
         </state>
       </provider>
@@ -970,17 +1007,34 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+<<<<<<< Updated upstream
+=======
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/authentication/static/account/listbox.js">
+    <entry file="file://$PROJECT_DIR$/authentication/static/authentification/login.css">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="45" column="34" lean-forward="true" selection-start-line="45" selection-start-column="34" selection-end-line="45" selection-end-column="34" />
+>>>>>>> Stashed changes
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/authentication/static/account/account.css">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="289">
           <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding>
             <element signature="e#0#41#0" expanded="false" />
           </folding>
+=======
+        <state relative-caret-position="323">
+          <caret line="19" column="1" lean-forward="false" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
+          <folding />
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
@@ -994,9 +1048,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/authentication/templates/account/account.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="408">
           <caret line="29" column="61" lean-forward="false" selection-start-line="29" selection-start-column="61" selection-end-line="29" selection-end-column="61" />
+=======
+        <state relative-caret-position="2040">
+          <caret line="120" column="11" lean-forward="false" selection-start-line="120" selection-start-column="11" selection-end-line="120" selection-end-column="11" />
+>>>>>>> Stashed changes
           <folding>
+            <element signature="n#style#0;n#legend#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>

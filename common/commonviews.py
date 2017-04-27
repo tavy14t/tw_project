@@ -4,19 +4,19 @@ def side_menu(title=None):
         'title': title,
         'side_menu_list': [
             ['Search', 'glyphicon glyphicon-search',
-             [('Search', '/search/'),
+             [('Users', '/search/'),
               ('Posts', '#'),
               ('Titles', '#'),
-              ('Body', '#')]],
+              ]],
 
             ['Browse', 'glyphicon glyphicon-folder-open',
-             [('Tags', '/tags/'),
-              ('Sasesc', '#'),
-              ('Salam', '#')]],
+             [('Filtered', '/tags/'),
+              ('Recommanded', '#'),
+              ('Popular', '#'),
+              ('Traending', '#')]],
 
             ['News', 'glyphicon glyphicon-education',
-             [('Status', '#'),
-              ('Logout', '/logout/')]],
+             [('Last updates', '#')]],
 
             ['User', 'glyphicon glyphicon-user',
              [('Account settings', '/account/'),
