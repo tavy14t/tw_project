@@ -39,5 +39,5 @@ option:checked {
 }
 .table>thead>tr>th.info{
     background-color: #CCBF95;
-    border: solid 1px #D13F32;
+    border: solid 1px #D13F32; 
 }
