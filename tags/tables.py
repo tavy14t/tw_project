@@ -3,7 +3,7 @@ from django.utils.safestring import mark_safe
 
 
 class TagsTable(tables.Table):
-    info = tables.Column(verbose_name='Info')
+    info = tables.Column(verbose_name='Posts for the selected tags:')
 
     def __init__(self, *args, **kwargs):
         super(TagsTable, self).__init__(*args, **kwargs)
