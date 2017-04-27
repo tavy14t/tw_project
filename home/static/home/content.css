@@ -4,8 +4,23 @@
 
 #prezentation {
 	padding: 10px;
-	background-color: #aa6122;
 	height: 500px;
 	border-radius: 10px;
+    
 }
 
+#prezentation p{
+    font-size: 20px;
+    color: #D9CB9E;
+}
+
+#team_members>li{
+    color: #D9CB9E;
+}
+#team_members * a:hover{
+    cursor: pointer;
+}
+#team_members * a{
+    color: #D13F32;
+    font-size: 20px;
+}
