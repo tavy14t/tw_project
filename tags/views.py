@@ -16,8 +16,24 @@ def tags(request):
     context.update(commonviews.side_menu('Tags'))
 
     keys = {
-        'tag1': ['', 'abc', 'asb'],
-        'tag2': ['zas', 'zdf', 'zvd', 'zza']
+        'Security': [
+            'Everything is a Target. Your Health Data is Next.',
+            'Shadow Brokers Attack Tools Light Up Chinese and Russian Darknet',
+            'APT28: A Window into Russia\'s Cyber Espionage Operations?',
+            'Russian hacker squad Apt 29 is using Twitter to steal valuable data',
+        ],
+        'Antivirus': [
+            'Hackerii de la CIA: "Bitdefender rezista nebuneste"',
+            'Bitdefender - Cybersecurity Solutions for Business and Personal Use',
+            'Collected Lastbench by Antivirus Production (Paperback)',
+            'The AV-TEST Security Report 2015/2016',
+            'Internet of Things: Security Evaluation of 7 Fitness Trackers on Android and the Apple Watch',
+            'Google vs. Bing: Search Engines Deliver Infected Websites as Their Top Results.',
+            'Testing Exploit-Prevention Mechanisms in Anti-Malware Products.',
+            'The WildList is Dead, Long Live the WildList!',
+            'Antivirus outbreak response testing and impact.',
+            'Rescue Me: Updating Anti-Virus Rescue Systems.'
+        ]
     }
 
     context['tags'] = [key for key in keys]

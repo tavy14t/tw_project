@@ -44,9 +44,9 @@ def search(request):
 
             news = InfoTable(tabs, show_header=False)
 
-            tabs = [('Identification', {'data': news,
+            tabs = [('Users', {'data': news,
                                         'sidebar': False}),
-                    ('Salutare', {'data': news,
+                    ('Titles', {'data': news,
                                   'sidebar': False}), ]
 
             tabs = collections.OrderedDict(tabs)

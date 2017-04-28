@@ -13,10 +13,11 @@ def side_menu(title=None):
              [('Filtered', '/tags/'),
               ('Recommanded', '/post/'),
               ('Popular', '#'),
-              ('Traending', '#')]],
+              ('Trending', '#')]],
 
             ['News', 'glyphicon glyphicon-education',
-             [('Last updates', '#')]],
+             [('Home', '/'),
+              ('Last updates', '#')]],
 
             ['User', 'glyphicon glyphicon-user',
              [('Account settings', '/account/'),
