@@ -33,6 +33,14 @@ def tags(request):
             'The WildList is Dead, Long Live the WildList!',
             'Antivirus outbreak response testing and impact.',
             'Rescue Me: Updating Anti-Virus Rescue Systems.'
+        ],
+        'Special': [
+            'Hecarii bitdefendar au dat in spaima la bolnavii de cardieshe de la CIA',
+            'Un IT-ist roman a creat smart-ghiulul, cu care dai bani la lautari contactless',
+            'In sfarsit! Savantii moldoveni au reusit sa teleporteze un cartus de tigari de la Chisinau la Iasi',
+            'Romania a creat un robot inteligent, care merge cu trenul fara bilet si da 5 lei la nas',
+            'Un corporatist din Iasi are planuri ambitioase pentru minivacanta de 1 Mai: "Cobor la o tigara!"',
+            'Studiu: In plin secol XXI, multi romani inca isi deviruseaza PC-urile folosind leacuri babesti',
         ]
     }
 
