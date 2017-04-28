@@ -172,3 +172,12 @@ body *{
 .a{
   color: white !important;
 }
+
+hr{
+  color: #D13F32;
+  background-color: #D13F32;
+  border-color: #D13F32;
+}
+legend{
+  border-bottom-color: #D13F32;
+}
