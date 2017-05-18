@@ -4,13 +4,17 @@
     TREX Login
 {% endblock %}
 
+{% block action_name %}
+    LOGIN
+{% endblock %}
+
 {% block base_auth_content %}
 
 <form method="post" action="/login/">
     {% csrf_token %}
     <br>
     <label for="email">Mail</label>
-    <input class="form-control" id="email" maxlength="255" name="email" placeholder="Your Email Adress" type="text" required="true">
+    <input class="form-control" id="email" maxlength="255" name="email" placeholder="Your Email Adress" type="email" required="true">
     <br>
 
     <label for="password">Password</label>
