@@ -1,38 +1,47 @@
-{% extends 'registration/base.html' %}
+{% extends 'base_auth.html' %}
 
-{% load bootstrap3 %}
-
-{% block title %}
-    Login
+{% block title_base_auth %}
+    TREX Login
 {% endblock %}
 
-{% block content %}
- <form method="post" action="/login/">
-      {% csrf_token %}
-      {{ form }}
-      </br>
-      <input type="submit" id="login_btn" class="btn btn-def btn-block" value="Login"></input>
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-info text-center" id="alert_login" role="alert" style="display:{{ display }};">{{ message }}</div>
-                {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
-                    <script> 
-                    // sleep time expects milliseconds
+{% block base_auth_content %}
+
+<form method="post" action="/login/">
+    {% csrf_token %}
+    <br>
+    <label for="email">Mail</label>
+    <input class="form-control" id="email" maxlength="255" name="email" placeholder="Your Email Adress" type="text" required="true">
+    <br>
+
+    <label for="password">Password</label>
+    <input class="form-control" id="password" maxlength="255" name="password" placeholder="Password" type="password" required="true">
+    <br>
+
+    <input type="submit" id="base_auth_button" class="btn btn-def btn-block" value="Login">
+    <br>
+
+    <div class="form-group text-center">
+        <a id="login_items" href="/register/">Need an account?</a>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info text-center" id="alert_login" role="alert" style="display:{{ display }};">
+                {{ message }}
+            </div>
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                <script> 
                     function sleep (time) {
-                      return new Promise((resolve) => setTimeout(resolve, time));
+                        return new Promise((resolve) => setTimeout(resolve, time));
                     }
 
-                    // Usage!
                     sleep(500).then(() => {
-                         window.location = "/";
-                    s});
-                    </script>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-      <div class="form-group text-center">
-        <a id="login_items" href="/register/">Need an account?</a>
-      </div>
-  </form>
+                    window.location = "/";
+                    });
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</form>
 
 {% endblock %}

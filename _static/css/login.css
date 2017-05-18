@@ -1,17 +1,11 @@
-@font-face {
-    font-family: 'Josefin Slab';
-    src: url("http://fonts.googleapis.com/css?family=Josefin+Slab");
-}
-
-@font-face {
-    font-family: 'Lobster';
-    src: url("http://fonts.googleapis.com/css?family=Lobster");
-}
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Slab');
 
 body{
   background: #2A2C2B;
   color: #D9CB9E;
 }
+
 body *{
   font-family: 'Josefin Slab', sans-serif !important;
 }
@@ -55,11 +49,11 @@ div.well{
   padding: 40px;
 }
 
-#login_btn, #register_btn, #update_btn{
+#base_auth_button{
   background: #D13F32  !important;
   color: #D9CB9E;
 }
-#login_btn:hover, #register_btn:hover, #update_btn:hover{
+#base_auth_button:hover{
   background: #C03020  !important;
 }
 

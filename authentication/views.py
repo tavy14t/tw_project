@@ -1,14 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from forms import UserForm, AuthForm
-from django.db import connection
 import cx_Oracle
 from models import Users
 from common import commonviews
 from authentication.login_decorator import custom_login_required
-import hashlib
+
 import json
+from auth_controller import *
 
 
 def is_logged_in(request):
@@ -17,51 +16,20 @@ def is_logged_in(request):
     return False
 
 
-def get_hash(password):
-    md5_hasher = hashlib.md5()
-    md5_hasher.update(password)
-    password_hash = md5_hasher.hexdigest()
-    return password_hash
-
-
-def authenticate_user(request, form):
-    email = form.cleaned_data['email'].encode('utf8')
-    password = form.cleaned_data['password'].encode('utf8')
-    password_hash = get_hash(password)
-    print("[debug][autheticate_user] email='{}'; password='{}'; hash='{}'".format(email, password, password_hash))
-
-    cursor = connection.cursor()
-    cursor.execute('select * from users where email = :mail', {'mail': email})
-
-    for line in cursor:
-        if line[4] == password_hash:
-            request.session['userid'] = str(line[0])
-            return True
-
-        return False
-
-    return False
-
-
 def login(request):
-    if is_logged_in(request):
-        print '[debug][login] User is already logged in!'
-        return HttpResponseRedirect('/')
-
     if request.method == 'POST':
-        form = AuthForm(request.POST)
+        auth_result = authenticate_user(request)
+        if auth_result == AuthRC.INVALID_EMAIL_FORMAT:
+            messages.error(request, 'Invalid email format!')
+        elif auth_result == AuthRC.EMAIL_TOO_LONG:
+            messages.error(request, 'Email is too long!')
+        elif auth_result == AuthRC.SUCCESS:
+            messages.info(request, 'Login Succesfull!')
+        else:
+            messages.error(request, 'Unknown error has occured!')
+        return render(request, 'login.html')
 
-        if form.is_valid():
-            if not authenticate_user(request, form):
-                messages.error(request, 'Login Failed!')
-            else:
-                messages.info(request, 'Login Succesfull!')
-
-            return render(request, 'registration/login.html', {'form': form})
-    else:
-        form = AuthForm()
-
-    return render(request, 'registration/login.html', {'form': form})
+    return render(request, 'login.html')
 
 
 def logout(request):
@@ -72,53 +40,55 @@ def logout(request):
 
 
 def create_account(form):
-    firstname = form.cleaned_data['firstname'].encode('utf8')
-    lastname = form.cleaned_data['lastname'].encode('utf8')
-    email = form.cleaned_data['mail'].encode('utf8')
-    password = form.cleaned_data['password'].encode('utf8')
-    password_hash = get_hash(password)
-    print("[debug][create_account] firstname='{}'; lastname='{}'; email='{}'; password='{}'; hash='{}'"
-          .format(firstname, lastname, email, password, password_hash))
+    pass
+    # firstname = form.cleaned_data['firstname'].encode('utf8')
+    # lastname = form.cleaned_data['lastname'].encode('utf8')
+    # email = form.cleaned_data['mail'].encode('utf8')
+    # password = form.cleaned_data['password'].encode('utf8')
+    # password_hash = get_hash(password)
+    # print("[debug][create_account] firstname='{}'; lastname='{}'; email='{}'; password='{}'; hash='{}'"
+    #       .format(firstname, lastname, email, password, password_hash))
 
-    cursor = connection.cursor()
-    cursor.execute('select * from users where email = :mail', {'mail': email})
+    # cursor = connection.cursor()
+    # cursor.execute('select * from users where email = :mail', {'mail': email})
 
-    for line in cursor:
-        print "[debug][create_account] User with mail='{}' and id='{}' was not created!".format(email, line[0])
-        return False
+    # for line in cursor:
+    #     print "[debug][create_account] User with mail='{}' and id='{}' was not created!".format(email, line[0])
+    #     return False
 
-    uid = int(cursor.callfunc('GET_UNUSED_ID', cx_Oracle.NUMBER, ['USERS']))
+    # uid = int(cursor.callfunc('GET_UNUSED_ID', cx_Oracle.NUMBER, ['USERS']))
 
-    cursor = connection.cursor()
-    cursor.execute("insert into users (USERID, FIRSTNAME, LASTNAME, EMAIL, PASSWORDHASH, ISACTIVATED, ROLE)"
-                   "values (:userid, :fname, :lname, :email, :md5pass, 0, 'U')",
-                   {'userid': uid, 'fname': firstname, 'lname': lastname, 'email': email, 'md5pass': password_hash})
+    # cursor = connection.cursor()
+    # cursor.execute("insert into users (USERID, FIRSTNAME, LASTNAME, EMAIL, PASSWORDHASH, ISACTIVATED, ROLE)"
+    #                "values (:userid, :fname, :lname, :email, :md5pass, 0, 'U')",
+    #                {'userid': uid, 'fname': firstname, 'lname': lastname, 'email': email, 'md5pass': password_hash})
 
-    cursor.execute('select * from users where email = :mail', {'mail': email})
+    # cursor.execute('select * from users where email = :mail', {'mail': email})
 
-    for line in cursor:
-        print "[debug][create_account] User with mail='{}' and id='{}' was created!".format(email, uid)
-        return True
+    # for line in cursor:
+    #     print "[debug][create_account] User with mail='{}' and id='{}' was created!".format(email, uid)
+    #     return True
 
-    print "[debug][create_account] User with mail='{}' and id='{}' was not created!".format(email, uid)
-    return False
+    # print "[debug][create_account] User with mail='{}' and id='{}' was not created!".format(email, uid)
+    # return False
 
 
 def register(request):
-    if request.method == 'POST':
-        form = UserForm(request.POST)
-        if form.is_valid():
-            if not create_account(form):
-                messages.error(request, 'Account already exists!')
-            else:
-                messages.info(request, 'Account has been created!')
+    pass
+    # if request.method == 'POST':
+    #     form = UserForm(request.POST)
+    #     if form.is_valid():
+    #         if not create_account(form):
+    #             messages.error(request, 'Account already exists!')
+    #         else:
+    #             messages.info(request, 'Account has been created!')
 
-            return render(request, 'registration/register.html',
-                          {'form': form})
-    else:
-        form = UserForm()
+    #         return render(request, 'registration/register.html',
+    #                       {'form': form})
+    # else:
+    #     form = UserForm()
 
-    return render(request, 'registration/register.html', {'form': form})
+    # return render(request, 'registration/register.html', {'form': form})
 
 
 @custom_login_required

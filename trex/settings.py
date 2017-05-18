@@ -11,29 +11,21 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Include BOOTSTRAP3_FOLDER in path
-BOOTSTRAP3_FOLDER = os.path.abspath(os.path.join(BASE_DIR, 'bootstrap3'))
-
-if BOOTSTRAP3_FOLDER not in sys.path:
-    sys.path.insert(0, BOOTSTRAP3_FOLDER)
-
-SESSION_COOKIE_NAME = 'trex_cookie'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'tr2^qksvep7+=%(4sdg6n)5q#j%0w#)d-q0c%h+*+06z)7sse6'
+SECRET_KEY = 'nyv$!=g_6)ovivw8bxaxf@!wde9dh7ip%eymi8vkmhi7gjf3x('
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
 
 # Application definition
 
@@ -69,8 +61,10 @@ ROOT_URLCONF = 'trex.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [
+            BASE_DIR + '/_templates/'
+        ],
+        'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -81,6 +75,12 @@ TEMPLATES = [
         },
     },
 ]
+
+WSGI_APPLICATION = 'trex.wsgi.application'
+
+
+# Database
+# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -93,23 +93,22 @@ DATABASES = {
     }
 }
 
-WSGI_APPLICATION = 'trex.wsgi.application'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # noqa
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',  # noqa
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',  # noqa
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  # noqa
     },
 ]
 
@@ -132,3 +131,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, '_static', 'css'),
+    os.path.join(BASE_DIR, '_static', 'js'),
+    os.path.join(BASE_DIR, '_static', 'images'),
+    os.path.join(BASE_DIR, '_templates')
+]
+STATIC_ROOT = os.path.join(BASE_DIR, '_static')
