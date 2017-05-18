@@ -1,4 +1,4 @@
-{% extends 'bootstrap3/bootstrap3.html' %}
+{% extends 'bootstrap3.html' %}
 
 {% block bootstrap3_title %}{{ "Home Page" }}{% endblock %}
 
@@ -7,10 +7,10 @@
   {% load staticfiles %}
   <link rel="stylesheet" type="text/css" href="{% static "home/base.css" %}">
   <link rel="stylesheet" type="text/css" href="{% static "home/content.css" %}">
-  <link rel="stylesheet" type="text/css" href="{% static "/search/search.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "search.css" %}">
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Josefin+Slab">
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lobster">
-  <link rel="stylesheet" type="text/css" href="{% static "tags/tags.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "tags.css" %}">
 {% endblock %}
 
 {% block bootstrap3_content %}
@@ -20,7 +20,7 @@
     <div id="sidebar" class="col-md-2 nopadding">
       {% block sidebar %}
 
-        {% include "common/sidebar.html" with item_list=side_menu_list %}
+        {% include "sidebar.html" with item_list=side_menu_list %}
 
       {% endblock sidebar %}
     </div>

@@ -12,7 +12,7 @@ from authentication.login_decorator import custom_login_required
 def home_view(request):
     context = dict()
     context.update(commonviews.side_menu('Home'))
-    return render(request, 'home/home.html', context)
+    return render(request, 'home.html', context)
 
 
 def post(request):
@@ -22,6 +22,6 @@ def post(request):
 
         print('[debug][account] context = ')
         print(json.dumps(context, indent=4))
-        return render(request, 'post/post.html', context)
+        return render(request, 'post.html', context)
     else:
         print request

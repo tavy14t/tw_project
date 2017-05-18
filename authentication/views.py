@@ -11,6 +11,8 @@ from auth_controller import *
 
 
 def login(request):
+    if 'userid' in request.session.keys():
+        return render(request, 'home.html')
     if request.method == 'POST':
         auth_result = authenticate_user(request)
 
@@ -26,6 +28,9 @@ def login(request):
             messages.error(request, 'Unknown error has occured!')
         return render(request, 'login.html')
     elif request.method == 'GET':
+        print request.session
+        print request.session.keys()
+
         return render(request, 'login.html')
 
 
