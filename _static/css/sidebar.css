@@ -1,68 +1,45 @@
-@import url('https://fonts.googleapis.com/css?family=Lobster');
-@import url('https://fonts.googleapis.com/css?family=Josefin+Slab');
+@import "https://fonts.googleapis.com/css?family=Lobster";
+
+@import "https://fonts.googleapis.com/css?family=Josefin+Slab";
 
 .nopadding {
-    padding: 0 !important;
-    margin: 0 !important;
+    padding:0!important;
+    margin:0!important
 }
 
 body * {
-    font-family: 'Josefin Slab', sans-serif;
-    font-size: 15px;
+    font-family:'Josefin Slab',sans-serif;
+    font-size:15px
 }
 
-#content, body, html {
-    background-color: #5E6160;
+#content,body,html {
+    background-color: #EEC;
 }
 
-html {
-    display: block;
+#logo_title {
+    font-family:'Lobster',sans-serif;
+    font-size:35px;
+    color:red;
 }
 
-#logo_title{
-  font-family: 'Lobster', sans-serif;
-  font-size: 35px;
-  color: #D13F32;
+#logo_a:hover {
+    text-decoration:none
 }
 
-#big_logo{
-  height: 37vw;
-  margin: auto;
-  filter: blur(8px) brightness(2);
-}
-
-#login_title{
-  font-family: 'Lobster', sans-serif !important;
-  margin-top: 20px;
-  font-size: 40px;
-}
-
-#login_box_title{
-  font-size: 30px;
-}
-
-#logo_title{
-  font-family: 'Lobster', sans-serif;
-  font-size: 35px;
-  color: #D13F32;
-}
-#logo_a:hover{
-  text-decoration: none;
-}
-#trex_img{
-  display:block;
-  margin:auto;
-  margin-top: -10px;
-  margin-bottom: 10px;
-  width: 115px;
-  height: 70px;
+#trex_img {
+    display:block;
+    margin:auto;
+    margin-top:-10px;
+    margin-bottom:10px;
+    width:115px;
+    height:70px
 }
 
 .nav-side-menu {
     overflow: auto;
     font-size: 12px;
     font-weight: 200;
-    background-color: #2A2C2B;
+    background-color: #DDE;
     box-shadow: inset 0 0 5px 0px black;
     top: 0px;
     color: #e1ffff;
@@ -79,7 +56,7 @@ html {
 }
 
 .nav-side-menu .brand {
-  background-color: #23282e;
+  background-color: #FCC;
   line-height: 40px;
   display: block;
   text-align: center;
@@ -106,29 +83,29 @@ html {
 }
 .nav-side-menu ul .active,
 .nav-side-menu li .active {
-  border-left: 3px solid #d19b3d;
-  background-color: #4f5b69;
+  border-left: 3px solid #888;
+  background-color: #700;
 }
 .nav-side-menu ul .sub-menu li.active,
 .nav-side-menu li .sub-menu li.active {
-  color: #d19b3d;
+  color: #888;
 }
 .nav-side-menu ul .sub-menu li.active a,
 .nav-side-menu li .sub-menu li.active a {
-  color: #d19b3d;
+  color: #888;
 }
 .nav-side-menu ul .sub-menu li,
 .nav-side-menu li .sub-menu li {
-  background-color: #2A2C2B;
+  background-color: #DDE;
   border: none;
   line-height: 28px;
-  border-bottom: 1px solid #23282e;
+  border-bottom: 1px solid #FFF;
   border-radius: 3px;
   margin-left: 0px;
 }
 .nav-side-menu ul .sub-menu li:hover,
 .nav-side-menu li .sub-menu li:hover {
-  background-color: #252726;
+  background-color: #FAB;
 }
 .nav-side-menu ul .sub-menu li:before,
 .nav-side-menu li .sub-menu li:before {
@@ -139,14 +116,17 @@ html {
 }
 .nav-side-menu li {
   padding-left: 15px;
-  background-color: #262627;
-  border-left: 3px solid #2e353d;
-  border-bottom: 1px solid #23282e;
+  background-color: #BBB;
+  border-left: 3px solid #CCC;
+  border-bottom: 3px solid #CCC;
+  border-top: 3px solid #CCC;
+  border-right: 3px solid #CCC;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .nav-side-menu li a {
   text-decoration: none;
-  color: #e1ffff;
+  font-size: 20px;
+  color: red;
 }
 .nav-side-menu li a i {
   padding-left: 10px;
@@ -154,8 +134,8 @@ html {
   padding-right: 20px;
 }
 .nav-side-menu li:hover {
-  border-left: 3px solid #FFFFFF;
-  background-color: #1E1E20;
+  border-left: 3px solid #622;
+  background-color: #FAB;
   -webkit-transition: all 1s ease;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;
@@ -186,7 +166,7 @@ html {
     font-size: 22px;
     padding-left: 20px;
     line-height: 50px !important;
-    color: white;
+    color: #000;
   }
 }
 @media (min-width: 767px) {
@@ -195,14 +175,3 @@ html {
     display: block;
   }
 }
-.a{
-  color: white !important;
-}
-
-hr{
-  color: #D13F32;
-  background-color: #D13F32;
-  border-color: #D13F32;
-}
-legend{
-  border-bottom-color: #D13F32;
