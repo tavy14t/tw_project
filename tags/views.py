@@ -6,10 +6,10 @@ from tables import TagsTable
 import random
 import collections
 
-from authentication.login_decorator import custom_login_required
+from authentication.login_decorator import login_required
 
 
-@custom_login_required
+@login_required
 def tags(request):
     context = dict()
 

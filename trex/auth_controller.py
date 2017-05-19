@@ -15,6 +15,11 @@ class AuthRC(Enum):  # Authentication Return Codes
     ALREADY_LOGGED_IN = 5,
 
 
+class DeAuthRC(Enum):  # Authentication Return Codes
+    NOT_LOGGED_IN = 1,
+    SUCCESS = 2
+
+
 class RegisterRC(Enum):
     ALREADY_EXISTS = 1,
     SUCCESS = 2,
@@ -59,6 +64,14 @@ def authenticate_user(request):
     cursor.close()
 
     return AuthRC.UNKNOWN_ERROR
+
+
+def deauthenticate_user(request):
+    if 'userid' not in request.session.keys():
+        return DeAuthRC.NOT_LOGGED_IN
+    else:
+        request.session.pop('userid')
+        return DeAuthRC.SUCCESS
 
 
 def create_account(request):
@@ -112,3 +125,5 @@ def create_account(request):
     print("[debug][create_account] User with mail='{}' "
           "and id='{}' was not created!".format(email, uid))
     return RegisterRC.INSERT_FAILED
+
+

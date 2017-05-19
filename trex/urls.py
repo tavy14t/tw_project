@@ -15,20 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-import search.views
-import tags.views
-import authentication.views
-import home.views
-import home.urls
+from django.views.generic import RedirectView
+
+import views
 
 urlpatterns = [
-    url(r'^$', home.views.home_view, name="home"),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^search/', search.views.search),
-    url(r'^tags/', tags.views.tags),
-    url(r'^register/', authentication.views.register),
-    url(r'^login/$', authentication.views.login),
-    url(r'^logout/', authentication.views.logout, name='logout'),
-    url(r'^account/', authentication.views.account),
-    url(r'^post/', include(home.urls)),
+    url(r'^$', RedirectView.as_view(url='/home/about')),
+
+    url(r'^login/$', views.login),
+    url(r'^register/', views.register),
+    url(r'^logout/', views.logout),
+
+    url(r'^home/$', RedirectView.as_view(url='/home/about')),
+    url(r'^home/about', views.about)
 ]

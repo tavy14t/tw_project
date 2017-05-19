@@ -7,10 +7,10 @@ from tables import InfoTable
 
 import collections
 
-from authentication.login_decorator import custom_login_required
+from authentication.login_decorator import login_required
 
 
-@custom_login_required
+@login_required
 def search(request):
     context = dict()
 

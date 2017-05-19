@@ -1,20 +1,46 @@
-@font-face {
-    font-family: 'Josefin Slab';
-    src: url("http://fonts.googleapis.com/css?family=Josefin+Slab");
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Slab');
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
-@font-face {
-    font-family: 'Lobster';
-    src: url("http://fonts.googleapis.com/css?family=Lobster");
+body * {
+    font-family: 'Josefin Slab', sans-serif;
+    font-size: 15px;
 }
 
-body *{
-  font-family: 'Josefin Slab', sans-serif;
-  font-size: 15px;
+#content, body, html {
+    background-color: #5E6160;
 }
-.nav-side-menu li{
-  color: #D9CB9E;
+
+html {
+    display: block;
 }
+
+#logo_title{
+  font-family: 'Lobster', sans-serif;
+  font-size: 35px;
+  color: #D13F32;
+}
+
+#big_logo{
+  height: 37vw;
+  margin: auto;
+  filter: blur(8px) brightness(2);
+}
+
+#login_title{
+  font-family: 'Lobster', sans-serif !important;
+  margin-top: 20px;
+  font-size: 40px;
+}
+
+#login_box_title{
+  font-size: 30px;
+}
+
 #logo_title{
   font-family: 'Lobster', sans-serif;
   font-size: 35px;
@@ -180,4 +206,3 @@ hr{
 }
 legend{
   border-bottom-color: #D13F32;
-}

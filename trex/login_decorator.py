@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 
 
-def custom_login_required(f):
+def login_required(f):
     def wrap(request, *args, **kwargs):
         if 'userid' not in request.session.keys():
             return HttpResponseRedirect('/login/')

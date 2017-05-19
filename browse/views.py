@@ -2,12 +2,12 @@ from django.shortcuts import render
 
 from common import commonviews
 
-from authentication.login_decorator import custom_login_required
+from authentication.login_decorator import login_required
 
 
-@custom_login_required
+@login_required
 def browse(request):
     context = dict()
 
     context.update(commonviews.side_menu('Browse'))
-    return render(request, 'browse/browse.html', context)
+    return render(request, 'browse.html', context)

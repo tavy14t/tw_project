@@ -1,8 +1,14 @@
 {% extends "base_home.html" %}
 
-{% block content %}
+{% block bootstrap3_title %}
+    About TREX
+{% endblock %}
+
+{% block base_home_content %}
 	<div id="prezentation">
-		<legend style="font-family: 'Lobster'; font-size:32px;">Topic-Based Resource eXplorer</legend>
+		<legend style="font-family: 'Lobster'; font-size:32px;">
+		Topic-Based Resource eXplorer
+		</legend>
 
 		<p>
 			This project is intended to be a Web tool for collecting, retrieving and viewing information about scientific and / or technological resources (articles, books, technical reports, presentations, source code and others) of people interested in an area of Computer science - for example, algorithms, human-computer interaction, programming paradigms, security, Web, etc.
@@ -21,4 +27,4 @@
 				<li><a href="https://www.linkedin.com/in/ciofu-vlad-725333142/">Ciofu Vlad</a></li>
 		</p>
 	</div>
-{% endblock content %}
+{% endblock base_home_content %}
