@@ -42,6 +42,10 @@ class AccountSettingsRC(Enum):
     EMAIL_TOO_LONG = 9
 
 
+class AccountPreferencesRC(Enum):
+    SUCCESS = 1
+
+
 def get_hash(password):
     md5_hasher = hashlib.md5()
     md5_hasher.update(password)
@@ -70,7 +74,6 @@ def authenticate_user(request):
     query = 'select * from users where email = :mail'
     cursor.execute(query, {'mail': email})
     for line in cursor:
-        print line
         if line[4] == password_hash:
             request.session['userid'] = str(line[0])
             return AuthRC.SUCCESS
@@ -214,3 +217,14 @@ def save_account_settings(request):
         return AccountSettingsRC.SUCCESS
     except Exception:
         return AccountSettingsRC.INTERNAL_SERVER_ERROR
+
+
+def get_preferences():
+    cursor = connection.cursor()
+    cursor.execute("select * from tags")
+    preferences = []
+
+    for tag in cursor:
+        preferences.append(tag[1])
+    cursor.close()
+    return preferences

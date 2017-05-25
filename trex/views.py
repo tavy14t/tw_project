@@ -72,8 +72,9 @@ def about(request):
 
 @login_required
 def account_settings(request):
+    context = {'preferences': get_preferences()}
     if request.method == 'GET':
-        return render(request, 'account_settings.html')
+        return render(request, 'account_settings.html', context=context)
     elif request.method == 'POST':
         settings_result = save_account_settings(request)
         if settings_result == AccountSettingsRC.INVALID_JSON:
@@ -101,10 +102,11 @@ def account_settings(request):
 @login_required
 def account_preferences(request):
     if request.method == 'GET':
-        return redirect('/home/account_settings')
-    elif request.method == 'POST':
-        print json.dumps(request.POST, indent=4)
-        return redirect('/home/account_settings')
+        return HttpResponseRedirect('/home/account_settings')
+    if request.method == 'POST':
+        print 'acc_pref', request.POST
+        messages.warning(request, 'Preferences updated!')
+        return render(request, 'account_settings.html')
 
 
 # def post(request):

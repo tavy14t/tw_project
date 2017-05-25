@@ -10,6 +10,7 @@
 {% block bootstrap3_extra_head %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static "account.css" %}">
+    <meta name="csrf-token" content="{{ csrf_token }}">
 {% endblock %}
 
 {% block scripts %}
@@ -17,13 +18,24 @@
     <script type="text/javascript" src="{% static "listbox.js" %}"></script>
     <script>
         $(document).ready(function(){
-            $("#save_preferences_btn").on('click', function(){
-                console.log("Salut!");
+            $("#preferencesForm").submit(function(){
+                var selectedItems = [];
+                $( "li" ).each(function( index ) {
+                    if($( this ).hasClass( "active" )){
+                        selectedItems.push($(this).text());
+                    }
+                });
+
+                console.log(selectedItems);
                 $.ajax({
                     url: '/home/account_preferences',
                     type : "POST",
-                    dataType : 'json',
-                    data : $("#form").serialize()
+                    data : {
+                        'preferences': selectedItems
+                    },
+                    success : function(result) {
+                            console.log("Success!");
+                   }
                 })
             });
         });
@@ -78,62 +90,13 @@
             <hr>
         </div>
         <div class="col-md-8">
-            <form method="POST" class="form-horizontal">
+            <form class="form-horizontal" id="preferencesForm" method="POST" action="/home/account_preferences">
                 {% csrf_token %}
                 <label for="listbox_preferences">Check your preferences:</label>
                 <div style="max-height: 356px; overflow: auto;" id="preferences_checkboxes_div">
-                    <ul class="list-group checked-list-box">
-                        <li class="list-group-item">Security</li>
-                        <li class="list-group-item">Genetics</li>
-                        <li class="list-group-item">Machine Learning</li>
-                        <li class="list-group-item">Antivirus</li>
-                        <li class="list-group-item">Internet</li>
-                        <li class="list-group-item">Web Technologies</li>
-                        <li class="list-group-item">Databases</li>
-                        <li class="list-group-item">Scripting</li>
-                        <li class="list-group-item">BackEnd</li>
-                        <li class="list-group-item">FrontEnd</li>
-                        <li class="list-group-item">Artificial Intelligence</li>
-                        <li class="list-group-item">Computation and Language</li>
-                        <li class="list-group-item">Computational Complexity</li>
-                        <li class="list-group-item">Computational Engineering, Finance, and Science</li>
-                        <li class="list-group-item">Computational Geometry</li>
-                        <li class="list-group-item">Computer Science and Game Theory</li>
-                        <li class="list-group-item">Computer Vision and Pattern Recognition</li>
-                        <li class="list-group-item">Computers and Society</li>
-                        <li class="list-group-item">Cryptography and Security</li>
-                        <li class="list-group-item">Data Structures and Algorithms</li>
-                        <li class="list-group-item">Databases</li>
-                        <li class="list-group-item">Digital Libraries</li>
-                        <li class="list-group-item">Discrete Mathematics</li>
-                        <li class="list-group-item">Distributed, Parallel, and Cluster Computing</li>
-                        <li class="list-group-item">Emerging Technologies</li>
-                        <li class="list-group-item">Formal Languages and Automata Theory</li>
-                        <li class="list-group-item">General Literature</li>
-                        <li class="list-group-item">Graphics</li>
-                        <li class="list-group-item">Hardware Architecture</li>
-                        <li class="list-group-item">Human-Computer Interaction</li>
-                        <li class="list-group-item">Information Retrieval</li>
-                        <li class="list-group-item">Information Theory</li>
-                        <li class="list-group-item">Learning</li>
-                        <li class="list-group-item">Logic in Computer Science</li>
-                        <li class="list-group-item">Mathematical Software</li>
-                        <li class="list-group-item">Multiagent Systems</li>
-                        <li class="list-group-item">Multimedia</li>
-                        <li class="list-group-item">Networking and Internet Architecture</li>
-                        <li class="list-group-item">Neural and Evolutionary Computing</li>
-                        <li class="list-group-item">Numerical Analysis</li>
-                        <li class="list-group-item">Operating Systems</li>
-                        <li class="list-group-item">Other Computer Science</li>
-                        <li class="list-group-item">Performance</li>
-                        <li class="list-group-item">Programming Languages</li>
-                        <li class="list-group-item">Robotics</li>
-                        <li class="list-group-item">Social and Information Networks</li>
-                        <li class="list-group-item">Software Engineering</li>
-                        <li class="list-group-item">Sound</li>
-                        <li class="list-group-item">Symbolic Computation</li>
-                        <li class="list-group-item">Systems and Control</li>
-                    </ul>
+                    {% for value in preferences %}
+                        <input type="checkbox" class="list-group-item"> {{ value }} </input>
+                    {% endfor %}
                 </div>
                 <br>
                 <br>
