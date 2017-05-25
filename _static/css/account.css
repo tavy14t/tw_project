@@ -1,8 +1,8 @@
-#update_btn{
+#save_changes_btn, #save_preferences_btn{
   background: #D13F32  !important;
   color: #D9CB9E;
 }
-#update_btn:hover{
+#save_changes_btn:hover, #save_preferences_btn:hover{
   background: #C03020  !important;
 }
 /* CSS REQUIRED */

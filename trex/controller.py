@@ -5,6 +5,7 @@ from django.db import connection
 from enum import Enum
 
 mail_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
+phone_regex = r"(\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})" # noqa
 
 
 class AuthRC(Enum):  # Authentication Return Codes
@@ -27,6 +28,13 @@ class RegisterRC(Enum):
     INSERT_FAILED = 5,
     INVALID_EMAIL_FORMAT = 6,
     EMAIL_TOO_LONG = 7
+
+
+class AccountSettingsRC(Enum):
+    INVALID_JSON = 1,
+    INVALID_OLD_PASSWORD = 2,
+    INVALID_EMAIL_FORMAT = 3,
+    INVALID_PHONE_FORMAT = 4
 
 
 def get_hash(password):
@@ -127,3 +135,49 @@ def create_account(request):
     return RegisterRC.INSERT_FAILED
 
 
+def save_account_settings(request):
+
+    def is_valid_form(request):
+        if 'cur_password' not in request.POST:
+            return False
+        if 'new_password' not in request.POST:
+            return False
+        if 'phone' not in request.POST:
+            return False
+        if 'email' not in request.POST:
+            return False
+        return True
+
+    def is_valid_old_password_hash(old_password_hash):
+        cursor = connection.cursor()
+        cursor.execute("select * from users where PASSWORDHASH = :md5pass",
+                       {'md5pass': old_password_hash})
+
+        for line in cursor:
+            cursor.close()
+            return True
+
+        cursor.close()
+        return False
+
+    if not is_valid_form(request):
+        return AccountSettingsRC.INVALID_JSON
+
+    print request.session.keys()
+
+    email = request.POST['email'].encode('utf8')
+    cur_password = request.POST['cur_password'].encode('utf8')
+    new_password = request.POST['new_password'].encode('utf8')
+    phone = request.POST['phone'].encode('utf8')
+
+    cur_password_hash = get_hash(cur_password)
+    old_password_hash = get_hash(new_password)
+
+    if not is_valid_old_password_hash(old_password_hash):
+        return AccountSettingsRC.INVALID_OLD_PASSWORD
+
+    if not re.match(mail_regex, email):
+        return AccountSettingsRC.INVALID_EMAIL_FORMAT
+
+    if not re.match(phone_regex, phone):
+        return AccountSettingsRC.INVALID_PHONE_FORMAT

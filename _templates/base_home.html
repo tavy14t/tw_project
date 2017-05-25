@@ -2,9 +2,7 @@
 
 {% load static %}
 {% block bootstrap3_extra_head %}
-
-<link rel="stylesheet" type="text/css" href="{% static "sidebar.css" %}">
-
+    <link rel="stylesheet" type="text/css" href="{% static "sidebar.css" %}">
 {% endblock %}
 
 {% block bootstrap3_content %}
@@ -71,10 +69,10 @@
                     </li>
                     <ul class="sub-menu collapse in" id="User">
                         <li>
-                            <a href="/account/">Account settings</a>
+                            <a href="/home/account_settings">Account settings</a>
                         </li>
                         <li>
-                            <a href="/logout/">Logout</a>
+                            <a href="/logout">Logout</a>
                         </li>
                     </ul>
                 </ul>

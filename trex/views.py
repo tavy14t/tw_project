@@ -1,9 +1,11 @@
 import json
+
+from django.shortcuts import redirect
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from login_decorator import login_required
-from auth_controller import *
+from controller import *
 
 
 def login(request):
@@ -64,7 +66,30 @@ def logout(request):
 
 @login_required
 def about(request):
-    return render(request, 'about.html')
+    if request.method == 'GET':
+        return render(request, 'about.html')
+
+
+@login_required
+def account_settings(request):
+    if request.method == 'GET':
+        return render(request, 'account_settings.html')
+    elif request.method == 'POST':
+        settings_result = save_account_settings(request)
+        if settings_result == AccountSettingsRC.INVALID_JSON:
+            messages.info(request, 'The form is invalid!')
+        else:
+            messages.info(request, 'Changes was saved successfully')
+        return render(request, 'account_settings.html')
+
+
+@login_required
+def account_preferences(request):
+    if request.method == 'GET':
+        return redirect('/home/account_settings')
+    elif request.method == 'POST':
+        print json.dumps(request.POST, indent=4)
+        return redirect('/home/account_settings')
 
 
 # def post(request):
@@ -75,18 +100,5 @@ def about(request):
 #         print('[debug][account] context = ')
 #         print(json.dumps(context, indent=4))
 #         return render(request, 'post.html', context)
-#     else:
-#         print request
-
-
-# @login_required
-# def account(request):
-#     if request.method == 'GET':
-#         context = dict()
-#         context.update(commonviews.side_menu('Home'))
-
-#         print('[debug][account] context = ')
-#         print(json.dumps(context, indent=4))
-#         return render(request, 'account.html', context)
 #     else:
 #         print request

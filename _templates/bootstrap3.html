@@ -2,6 +2,7 @@
 {% load bootstrap3 %}
 <html{% if LANGUAGE_CODE %} lang="{{ LANGUAGE_CODE }}"{% endif %}>
 
+{% load static %}
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,12 +24,19 @@
 
 <body>
     {% block bootstrap3_content %}
-        django-bootstrap3 template content
+        continutul din body
     {% endblock %}
 
     {% if not 'javascript_in_head'|bootstrap_setting %}
+        {% comment adaugare autamata jquery si scripturi de bootstrap %}
+        {% endcomment %}
         {% bootstrap_javascript jquery=True %}
     {% endif %}
+
+    {% block scripts %}
+        {% comment adaugare de scripturi pentru pagina %}
+        {% endcomment %}
+    {% endblock %}
 </body>
 
 </html>
