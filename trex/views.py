@@ -78,8 +78,15 @@ def account_settings(request):
         settings_result = save_account_settings(request)
         if settings_result == AccountSettingsRC.INVALID_JSON:
             messages.info(request, 'The form is invalid!')
-        else:
+        elif settings_result == AccountSettingsRC.INVALID_OLD_PASSWORD:
+            messages.info(request, 'The old password is incorrect!')
+        elif settings_result == AccountSettingsRC.INVALID_EMAIL_FORMAT:
+            messages.info(request, 'The email format is invalid!')
+        elif settings_result == AccountSettingsRC.INVALID_PHONE_FORMAT:
+            messages.info(request, 'The phone format is invalid!')
+        elif settings_result == AccountSettingsRC.SUCCESS:
             messages.info(request, 'Changes was saved successfully')
+
         return render(request, 'account_settings.html')
 
 
