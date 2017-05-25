@@ -35,7 +35,11 @@ class AccountSettingsRC(Enum):
     INVALID_OLD_PASSWORD = 2,
     INVALID_EMAIL_FORMAT = 3,
     INVALID_PHONE_FORMAT = 4,
-    SUCCESS = 5
+    SUCCESS = 5,
+    INTERNAL_SERVER_ERROR = 6,
+    ADDRESS_TOO_LONG = 7,
+    PHONE_TOO_LONG = 8,
+    EMAIL_TOO_LONG = 9
 
 
 def get_hash(password):
@@ -181,19 +185,32 @@ def save_account_settings(request):
     if not is_valid_old_password_hash(old_password_hash):
         return AccountSettingsRC.INVALID_OLD_PASSWORD
 
+    if len(address) > 128:
+        return AccountSettingsRC.ADDRESS_TOO_LONG
+
+    if len(phone) > 16:
+        return AccountSettingsRC.PHONE_TOO_LONG
+
+    if len(email) > 128:
+        return AccountSettingsRC.EMAIL_TOO_LONG
+
     if not re.match(phone_regex, phone):
         return AccountSettingsRC.INVALID_PHONE_FORMAT
 
-    cursor = connection.cursor()
-    cursor.execute("update users set EMAIL = :email,"
-                   "PASSWORDHASH = :md5pass,"
-                   "ADDRESS = :address,"
-                   "PHONE = :phone"
-                   "where userid = :userid",
-                   {'email': email,
-                    'md5pass': cur_password_hash,
-                    'address': address,
-                    'phone': phone,
-                    'userid': request.session['userid']
-                    })
-    cursor.close()
+    try:
+        cursor = connection.cursor()
+        cursor.execute("update users set EMAIL = :email,"
+                       "PASSWORDHASH = :md5pass,"
+                       "ADDRESS = :address,"
+                       "PHONE = :phone"
+                       "where userid = :userid",
+                       {'email': email,
+                        'md5pass': cur_password_hash,
+                        'address': address,
+                        'phone': phone,
+                        'userid': request.session['userid']
+                        })
+        cursor.close()
+        return AccountSettingsRC.SUCCESS
+    except Exception:
+        return AccountSettingsRC.INTERNAL_SERVER_ERROR

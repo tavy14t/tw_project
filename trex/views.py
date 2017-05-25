@@ -85,7 +85,15 @@ def account_settings(request):
         elif settings_result == AccountSettingsRC.INVALID_PHONE_FORMAT:
             messages.info(request, 'The phone format is invalid!')
         elif settings_result == AccountSettingsRC.SUCCESS:
-            messages.info(request, 'Changes was saved successfully')
+            messages.info(request, 'Changes was saved successfully!')
+        elif settings_result == AccoutSettingsRC.INTERNAL_SERVER_ERROR:
+            messages.info(request, 'Internal server error!')
+        elif settings_result == AccoutSettingsRC.ADDRESS_TOO_LONG:
+            messages.info(request, 'Address is too long!')
+        elif settings_result == AccoutSettingsRC.PHONE_TOO_LONG:
+            messages.info(request, 'Phone number is too long!')
+        elif settings_result == AccoutSettingsRC.EMAIL_TOO_LONG:
+            messages.info(request, 'Email is too long!')
 
         return render(request, 'account_settings.html')
 
