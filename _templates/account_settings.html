@@ -16,30 +16,6 @@
 {% block scripts %}
     {{ block.super }}
     <script type="text/javascript" src="{% static "listbox.js" %}"></script>
-    <script>
-        $(document).ready(function(){
-            $("#preferencesForm").submit(function(){
-                var selectedItems = [];
-                $( "li" ).each(function( index ) {
-                    if($( this ).hasClass( "active" )){
-                        selectedItems.push($(this).text());
-                    }
-                });
-
-                console.log(selectedItems);
-                $.ajax({
-                    url: '/home/account_preferences',
-                    type : "POST",
-                    data : {
-                        'preferences': selectedItems
-                    },
-                    success : function(result) {
-                            console.log("Success!");
-                   }
-                })
-            });
-        });
-    </script>
 {% endblock %}
 
 {% block base_home_content %}

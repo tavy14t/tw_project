@@ -104,9 +104,9 @@ def account_preferences(request):
     if request.method == 'GET':
         return HttpResponseRedirect('/home/account_settings')
     if request.method == 'POST':
-        print 'acc_pref', request.POST
+        context = {'preferences': get_preferences()}
         messages.warning(request, 'Preferences updated!')
-        return render(request, 'account_settings.html')
+        return render(request, 'account_settings.html', context)
 
 
 # def post(request):
