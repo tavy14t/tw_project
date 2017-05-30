@@ -16,12 +16,16 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import RedirectView
-
+from rest_framework.urlpatterns import format_suffix_patterns
+import restapi.views
 import views
 
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/home/about')),
     url(r'^admin/', admin.site.urls),
+
+    url(r'^restapi/posts/', restapi.views.PostList.as_view()),
+    url(r'^restapi/users/', restapi.views.UsersList.as_view()),
 
     url(r'^login$', views.login),
     url(r'^register$', views.register),
@@ -32,3 +36,5 @@ urlpatterns = [
     url(r'^home/account_settings$', views.account_settings),
     url(r'^home/account_preferences$', views.account_preferences)
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
