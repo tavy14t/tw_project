@@ -1,0 +1,30 @@
+{% extends 'bootstrap3.html' %}
+
+{% block bootstrap3_title %}
+  {% block title_base_auth %}
+  {% endblock %}
+{% endblock %}
+
+{% block bootstrap3_content %}
+
+{% load static %}
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="{% static "login.css" %}">
+
+<div class="container">
+  <p class="text-center" id="login_title">Topic-based Resource eXplorer</p>
+  <div class="row">
+    <img class="Absolute-Center" src="{% static "TREX.png" %}" id="big_logo">
+    <div class="Absolute-Center is-Responsive">
+      <div id="logo-container"></div>
+      <div class="col-sm-12 col-md-10 col-md-offset-1" id="login_form_div">
+        <h3 class="text-center" id="login_box_title"> {% block action_name %} {% endblock %} </h3>
+           {% block base_auth_content %}
+           {% endblock %}
+      </div>  
+    </div>    
+  </div>
+</div>
+
+{% endblock %}

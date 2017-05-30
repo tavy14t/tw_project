@@ -1,0 +1,101 @@
+{% extends 'base_home.html' %}
+{% load static %}
+
+{% block bootstrap3_title %}
+    Account Settings
+{% endblock %}
+
+{% load static %}
+
+{% block bootstrap3_extra_head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "account.css" %}">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static "listbox.js" %}"></script>
+{% endblock %}
+
+{% block base_home_content %}
+    <div id="content" class="col-md-10">
+        <legend style="font-family: 'Lobster'; font-size:32px;">Account Settings</legend>
+        <div class="col-md-4">
+            <form method="POST" class="form-horizontal">
+                {% csrf_token %}
+                <div class="control-group">
+                    <label for="id_email">Email:</label>
+                    <input type="email" class="form-control" id="id_email" maxlength="128" name="email" placeholder="Your email address">
+                </div>
+                <br>
+                <div class="control-group">
+                    <label for="id_pass">Current Password:</label>
+                    <input type="password" class="form-control" id="id_pass" maxlength="128" name="cur_password">
+                </div>
+                <br>
+                <div class="control-group">
+                    <label for="id_new_pass">New Password:</label>
+                    <input type="password" class="form-control" id="id_new_pass" maxlength="128" name="new_password">
+                </div>
+                <br>
+                <div class="control-group">
+                    <label for="id_addr">Address:</label>
+                    <input type="text" class="form-control" id="id_addr" maxlength="128" name="address" placeholder="Your home address">
+                </div>
+                <br>
+                <div class="control-group">
+                    <label for="id_phone">Phone:</label>
+                    <input type="text" class="form-control" id="id_phone" maxlength="16" name="phone" placeholder="Your phone number">
+                </div>
+                <br>
+                <br>
+                <input type="submit" id="save_changes_btn" class="btn btn-def btn-block" value="Save Changes"></input>
+            </form>
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                        <div>
+                            <p class="navbar-text">
+                                {{ message }}
+                            </p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <hr>
+        </div>
+        <div class="col-md-8">
+            <form class="form-horizontal" id="preferencesForm" method="POST" action="/home/account_preferences">
+                {% csrf_token %}
+                <label for="listbox_preferences">Check your preferences:</label>
+                <div style="max-height: 356px; overflow: auto;" id="preferences_checkboxes_div">
+                    {% for preference_name, details in preferences.items %}
+                        {% if details.checked == 1 %}
+                            <p style="font-size: 20px;"><input type="checkbox"  name="checks[]" value="{{ details.tagid }}" checked> {{ preference_name }}</p>
+                        {% else %}
+                            <p style="font-size: 20px;"><input type="checkbox" name="checks[]" value="{{ details.tagid }}"> {{ preference_name }}</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <br>
+                <br>
+                <input type="submit" id="save_preferences_btn" class="btn btn-def btn-block" value="Save Preferences"></input>
+                <hr>
+            </form>
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                        <div>
+                            <p class="navbar-text">
+                                {{ message }}
+                            </p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <hr>
+        </div>
+    </div>
+
+{% endblock base_home_content %}

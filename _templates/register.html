@@ -1,0 +1,56 @@
+{% extends 'base_auth.html' %}
+
+{% block title_base_auth %}
+    TREX Register
+{% endblock %}
+
+{% load static %}
+
+{% block action_name %}
+    <a href="/login" class="btn btn-info" id="base_auth_button">
+    &#11148
+    </a>
+    REGISTER
+{% endblock %}
+
+{% block base_auth_content %}
+
+<form method="post" action="/register">
+    {% csrf_token %}
+    <br>
+    <label for="firstname">First Name:</label>
+    <input class="form-control" id="firstname" maxlength="255" name="firstname" placeholder="Your First Name" type="text" required>
+
+    <label for="lastname">Last Name:</label>
+    <input class="form-control" id="lastname" maxlength="255" name="lastname" placeholder="Your Last Name" type="text" required>
+
+    <label for="mail">Mail Address:</label>
+    <input class="form-control" id="mail" maxlength="255" name="mail" placeholder="Your Mail Address" type="email" required>
+
+    <label for="password">Password:</label>
+    <input class="form-control" id="password" maxlength="128" name="password" placeholder="Password" type="password" required>
+    <br>
+  
+    <input type="submit" id="base_auth_button" class="btn btn-def btn-block" value="Register">
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info text-center" role="alert" id="alert_register" style="display:{{ display }};">
+                {{ message }}
+            </div>
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                <script> 
+                    function sleep (time) {
+                      return new Promise((resolve) => setTimeout(resolve, time));
+                    }
+
+                    sleep(2000).then(() => {
+                         window.location = "../login";
+                    });
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</form>
+
+{% endblock %}
