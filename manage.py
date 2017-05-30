@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# superusers: admin@admin.com (pass: 12wq!@WQ)
 import os
 import sys
 

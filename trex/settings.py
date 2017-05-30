@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'restapi.apps.RestapiConfig',
     'bootstrap3',
     'django_tables2',
 ]
@@ -78,13 +80,17 @@ WSGI_APPLICATION = 'trex.wsgi.application'
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.oracle',
+    #     'NAME': 'xe',
+    #     'HOST': 'localhost',
+    #     'USER': 'project',
+    #     'PASSWORD': 'project',
+    #     'PORT': '1521'
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'xe',
-        'HOST': 'localhost',
-        'USER': 'project',
-        'PASSWORD': 'project',
-        'PORT': '1521'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'trex.db'
     }
 }
 

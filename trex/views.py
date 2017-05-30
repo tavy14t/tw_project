@@ -1,5 +1,6 @@
 import json
 
+from rest_framework.views import APIView
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -38,8 +39,6 @@ def register(request):
         register_result = create_account(request)
         if register_result == RegisterRC.ALREADY_EXISTS:
             messages.error(request, 'Account already exists!')
-        elif register_result == RegisterRC.INVALID_SQL_METHOD:
-            messages.error(request, 'Internal server error!')
         elif register_result == RegisterRC.INSERT_FAILED:
             messages.error(request, 'Account creation failed!')
         elif register_result == RegisterRC.SUCCESS:
@@ -72,7 +71,8 @@ def about(request):
 
 @login_required
 def account_settings(request):
-    context = {'preferences': get_preferences()}
+    preferences = get_preferences(request)
+    context = {'preferences': preferences}
     if request.method == 'GET':
         return render(request, 'account_settings.html', context=context)
     elif request.method == 'POST':
@@ -104,9 +104,14 @@ def account_preferences(request):
     if request.method == 'GET':
         return HttpResponseRedirect('/home/account_settings')
     if request.method == 'POST':
-        context = {'preferences': get_preferences()}
+        save_preferences(request)
+        context = {'preferences': get_preferences(request)}
         messages.warning(request, 'Preferences updated!')
         return render(request, 'account_settings.html', context)
+
+
+# class PostsList(APIView):
+#    def get(self, request):
 
 
 # def post(request):

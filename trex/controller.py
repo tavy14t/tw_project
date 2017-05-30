@@ -24,10 +24,9 @@ class DeAuthRC(Enum):  # Authentication Return Codes
 class RegisterRC(Enum):
     ALREADY_EXISTS = 1,
     SUCCESS = 2,
-    INVALID_SQL_METHOD = 4,
-    INSERT_FAILED = 5,
-    INVALID_EMAIL_FORMAT = 6,
-    EMAIL_TOO_LONG = 7
+    INSERT_FAILED = 4,
+    INVALID_EMAIL_FORMAT = 5,
+    EMAIL_TOO_LONG = 6
 
 
 class AccountSettingsRC(Enum):
@@ -116,17 +115,11 @@ def create_account(request):
               .format(email, line[0]))
         return RegisterRC.ALREADY_EXISTS
 
-    try:
-        uid = int(cursor.callfunc('GET_UNUSED_ID',
-                                  cx_Oracle.NUMBER, ['USERS']))
-    except Exception:
-        return RegisterRC.INVALID_SQL_METHOD
-
     cursor = connection.cursor()
-    cursor.execute("insert into users (USERID, FIRSTNAME, LASTNAME, "
+    cursor.execute("insert into users (FIRSTNAME, LASTNAME, "
                    "EMAIL, PASSWORDHASH, ISACTIVATED, ROLE) values"
-                   "(:userid, :fname, :lname, :email, :md5pass, 0, 'U')",
-                   {'userid': uid, 'fname': firstname, 'lname':
+                   "(:fname, :lname, :email, :md5pass, 0, 'user')",
+                   {'fname': firstname, 'lname':
                     lastname, 'email': email, 'md5pass': password_hash})
     cursor.close()
 
@@ -134,12 +127,12 @@ def create_account(request):
     cursor.execute('select * from users where email = :mail', {'mail': email})
 
     for line in cursor:
-        print("[debug][create_account] User with mail='{}' "
-              "and id='{}' was created!".format(email, uid))
+        print("[debug][create_account] User with email='{}' was created!"
+              .format(email))
         return RegisterRC.SUCCESS
 
-    print("[debug][create_account] User with mail='{}' "
-          "and id='{}' was not created!".format(email, uid))
+    print("[debug][create_account] User with email='{}' was not created!"
+          .format(email))
     return RegisterRC.INSERT_FAILED
 
 
@@ -219,12 +212,37 @@ def save_account_settings(request):
         return AccountSettingsRC.INTERNAL_SERVER_ERROR
 
 
-def get_preferences():
+def get_preferences(request):
     cursor = connection.cursor()
-    cursor.execute("select * from tags")
-    preferences = []
+    cursor.execute("select tagid, name from tags")
+    preferences = {}
 
-    for tag in cursor:
-        preferences.append(tag[1])
+    for item in cursor:
+        preferences[item[1]] = {'checked': 0, 'tagid': item[0]}
+
+    cursor.execute("select tags.name, tags.tagid from users join users_tags "
+                   "on users.userid = users_tags.userid and users.userid = "
+                   "" + str(request.session['userid']) +
+                   " join tags on tags.tagid = users_tags.tagid;")
+
+    for item in cursor:
+        preferences[item[0]]['checked'] = 1
+
     cursor.close()
     return preferences
+
+
+def save_preferences(request):
+    tags = request.POST.getlist('checks[]')
+
+    cursor = connection.cursor()
+    cursor.execute("delete from users_tags where "
+                   "userid = " + str(request.session['userid']))
+
+    for idx in tags:
+        cursor.execute("insert into users_tags (userid, tagid)"
+                       " values( :userid, :tagid )", {
+                           'userid': request.session['userid'],
+                           'tagid': idx
+                       })
+    cursor.close()

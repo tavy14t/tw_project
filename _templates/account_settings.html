@@ -70,8 +70,12 @@
                 {% csrf_token %}
                 <label for="listbox_preferences">Check your preferences:</label>
                 <div style="max-height: 356px; overflow: auto;" id="preferences_checkboxes_div">
-                    {% for value in preferences %}
-                        <input type="checkbox" class="list-group-item"> {{ value }} </input>
+                    {% for preference_name, details in preferences.items %}
+                        {% if details.checked == 1 %}
+                            <p style="font-size: 20px;"><input type="checkbox"  name="checks[]" value="{{ details.tagid }}" checked> {{ preference_name }}</p>
+                        {% else %}
+                            <p style="font-size: 20px;"><input type="checkbox" name="checks[]" value="{{ details.tagid }}"> {{ preference_name }}</p>
+                        {% endif %}
                     {% endfor %}
                 </div>
                 <br>
