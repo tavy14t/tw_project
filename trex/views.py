@@ -106,15 +106,19 @@ def account_preferences(request):
         return HttpResponseRedirect('/home/account_settings')
     if request.method == 'POST':
         save_preferences(request)
-        context = {'preferences': get_preferences(request)}
+        content = {'preferences': get_preferences(request)}
         messages.warning(request, 'Preferences updated!')
-        return render(request, 'account_settings.html', context)
+        return render(request, 'account_settings.html', content)
 
 
 @login_required
-def post(request):
-    postid = request.GET.get('postid')
-
+def get_posts(request):
+    if request.method == 'GET':
+        if 'postid' in request.GET:
+            postid = request.GET['postid']
+        else:
+            content = {'content': get_all_posts(request)}
+            return render(request, 'all_posts.html', content)
     if request.method == 'POST':
         result = add_comment(request, postid)
         if result == AddCommentRC.INVALID_FORM:
@@ -122,6 +126,6 @@ def post(request):
         elif result == AddCommentRC.EMPTY_TEXT:
             messages.error(request, 'The comment can not be empty!')
 
-    context = get_post_context(request, postid)
+    content = get_post_content(request, postid)
 
-    return render(request, 'post.html', context)
+    return render(request, 'post.html', content)

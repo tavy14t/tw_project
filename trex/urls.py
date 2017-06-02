@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^register$', views.register),
     url(r'^logout$', views.logout),
 
-    url(r'^post/$', views.post),
+    url(r'^posts', views.get_posts),
 
     url(r'^home/$', RedirectView.as_view(url='/home/about')),
     url(r'^home/about$', views.about),

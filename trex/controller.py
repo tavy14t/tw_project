@@ -275,19 +275,35 @@ def add_comment(request, postid):
     return AddCommentRC.SUCCESS
 
 
-def get_post_context(request, postid):
+def get_post_content(request, postid):
     post = Posts.objects.get(postid=postid)
     comments = Comments.objects.filter(postid=postid)
-    context = dict()
+    content = dict()
 
-    context['title'] = post.title
-    context['text'] = post.body
+    content['title'] = post.title
+    content['text'] = post.body
 
-    context['comments'] = []
+    content['comments'] = []
     for obj in comments:
         user = Users.objects.get(userid=obj.userid)
-        context['comments'].append((
+        content['comments'].append((
             obj.text, user.firstname, user.lastname
         ))
 
-    return context
+    return content
+
+
+def get_all_posts(request):
+    posts = Posts.objects.all()
+    content = []
+
+    for post in posts:
+        author = Users.objects.filter(userid=post.userid).first()
+
+        content.append({
+            'title': post.title,
+            'userid': post.userid,
+            'author': author.firstname + ' ' + author.lastname,
+            'postid': post.postid
+        })
+    return content
