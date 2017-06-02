@@ -8,7 +8,7 @@ from django.contrib import messages
 from login_decorator import login_required
 from controller import *
 from forms import CommentForm
-from restapi.models import Comments, Posts
+from restapi.models import Comments, Posts, Users
 
 
 def login(request):
@@ -140,6 +140,11 @@ def post(request):
     context['title'] = post.title
     context['text'] = post.body
 
-    context['comments'] = [obj.text for obj in comments]
+    context['comments'] = []
+    for obj in comments:
+        user = Users.objects.get(userid=obj.userid)
+        context['comments'].append((
+            obj.text, user.firstname, user.lastname
+        ))
 
     return render(request, 'post.html', context)
