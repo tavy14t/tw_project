@@ -13,7 +13,7 @@ from django.db import models
 
 class Comments(models.Model):
     # Field name made lowercase.
-    commentid = models.IntegerField(db_column='commentId', primary_key=True)
+    commentid = models.AutoField(db_column='commentId', primary_key=True)
     # Field name made lowercase.
     userid = models.IntegerField(db_column='userId')
     # Field name made lowercase.

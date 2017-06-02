@@ -7,6 +7,8 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from login_decorator import login_required
 from controller import *
+from forms import CommentForm
+from restapi.models import Comments, Posts
 
 
 def login(request):
@@ -110,17 +112,34 @@ def account_preferences(request):
         return render(request, 'account_settings.html', context)
 
 
-# class PostsList(APIView):
-#    def get(self, request):
+@login_required
+def post(request):
+    context = dict()
+    postid = request.GET.get('postid')
 
+    if request.method == 'POST':
+        text = ''
+        if 'comment' in request.POST:
+            text = request.POST['comment']
 
-# def post(request):
-#     if request.method == 'GET':
-#         context = dict()
-#         context.update(commonviews.side_menu('Home'))
+        if text != '':
+            userid = request.session['userid']
 
-#         print('[debug][account] context = ')
-#         print(json.dumps(context, indent=4))
-#         return render(request, 'post.html', context)
-#     else:
-#         print request
+            comment = Comments.objects.create(
+                userid=userid,
+                postid=postid,
+                text=text
+            )
+            comment.save()
+        else:
+            messages.error(request, 'The comment can not be empty!')
+
+    post = Posts.objects.get(postid=postid)
+    comments = Comments.objects.filter(postid=postid)
+
+    context['title'] = post.title
+    context['text'] = post.body
+
+    context['comments'] = [obj.text for obj in comments]
+
+    return render(request, 'post.html', context)

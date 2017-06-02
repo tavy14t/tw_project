@@ -1,20 +1,53 @@
-{% extends "home/base.html" %}
+{% extends "base_home.html" %}
 
+{% load static %}
 
-{% block content %}
-<legend style="font-family: 'Lobster'; font-size:32px;">AV-TEST Security Report Facts at a Glance</legend>
-<div class="centerAlign" style=" color: #D9CB9E; text-align: justify;" >
-Five new malware programs per second, the return of traditional virus attacks on Windows systems, the Top 10 threats for macOS and Trojan attacks on Android: facts at a glance concerning these and other developments in IT security and the current status of online hazards are found in the latest AV-TEST Security Report.
-Cyber criminals think like businesspeople, and they have to. Because in their line of business, competition is growing stiffer all the time. Even if they manage to flout all other laws, they are forced to conform to the rules of the market if they want to achieve economic success. And the latest Security Report from AV-TEST leaves no doubt that business is the main impetus in the development of constantly new Internet threats for all existing device platforms. In addition to ever more elaborate malware, in the area of ransomware, for example, the sheer mass of malware being churned out continuously underscores the purely profit-oriented efforts of professionally-organized online criminals.
-Five new malware threats per second
-Down to the wire of this report, the AV-TEST database counted 578,702,687 malware programs. The year 2015 alone saw an additional 143,974,553 malware samples. There have been 115,149,242 thus far in the year 2016. This translates to an average rate of four to five new malware threats per second.
-For malware attacks on Windows users, criminal attackers in 2015 deployed Internet worms extremely often. More than one third of all malware detections involved this pesky variant. In second and third place, traditional computer viruses followed, as well as the large army of specialized Trojans, including banking Trojans and the widely distributed ransomware in 2015. In this year, criminals have altered their strategy and have been increasingly relying on viruses and Trojans. Thus, virus proliferation alone is increasing by 19 percent compared to last year.
-Trojan threat to Android users
-With over 16 million malware programs developed especially for Android, Google's operating system is the main target among mobile platforms. The reason for this is the vast distribution of Android devices, as well as the relatively open system for the distribution of apps compared to all others. And consequently, over 99 percent of all malware programs targeting mobile systems single out Android devices.
-Although just a handful of makeshift malware samples for Android were detected in 2013, a mere four years later, the AV-TEST systems registered the full spectrum of malware codes currently available: viruses, worms, malicious scripts, backdoors and Trojans. In this light, the malware situation for Android devices is increasingly moving in the direction of Windows PCs. This is no surprise, as practically every application, from email to online banking, which just a few years ago had to be completed on a PC, now conveniently functions on a mobile device via corresponding apps, from anywhere and anytime. The use of specialized Trojans appears to be especially lucrative for criminals as of late.
-Report based on comprehensive data
-In an ever-accelerating game of cat and mouse, suppliers of protection programs have to be constantly on guard in order to detect new developments of malware programs and thwart them in their beginning stages, ideally prior to mass proliferation. How well they are able to do so is evaluated by over 30 internationally renowned IT security specialists in the labs of the AV-TEST institute involving enormous technical effort and resources. The "VTEST" multi-virus scanner system alone scans more than three million files per day. Thus, VTEST is constantly expanding one of the world's largest databases for malware programs. Its data volume has been growing continuously for more than 15 years on over 250 servers with storage capacity of over 2,200 TB.
-This data is made complete by means of the "Sunshine" analysis system, among others. It enables the controlled launch of potential malware codes for the analysis and classification of malware. The system automatically records and tests 1,000,000 spam messages, 500,000 URLs, 500,000 potentially harmful files, 100,000 innocuous Windows files as well as 10,000 Android apps every day. With these proprietary tools, the AV-TEST Institute is home to one of the world's most comprehensive data pools for measuring and classifying malware code and its proliferation. The Security Report featured here is based on these findings.
-</div>
+{% block bootstrap3_extra_head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "account.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "post.css" %}">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+{% endblock %}
 
-{% endblock content %}
+{% block base_home_content %}
+	<div>
+		<legend style="font-family: 'Lobster'; font-size:32px;"> {{ title }} </legend>
+		<div id="post_background">
+			<p> {{ text }} </p>
+		</div>
+	</div>
+
+	<div>
+		<legend style="font-family: 'Lobster'; font-size:24px;">Comments:</legend>
+
+		{% for comment in comments %}
+			<p><div class="comment">
+				{{ comment }}
+			</div></p>
+		{% empty %}
+			<p> No comments yet :\ </p>
+		{% endfor %}
+	</div>
+
+	<form role="form" id="commentsForm" method="POST" class="post-form">
+		{% csrf_token %}
+		<div class="control-group">
+	        <label for="id_comment">Comment:</label>
+
+	        <input type="text" class="form-control" id="id_comment" maxlength="128" name="comment" placeholder="Insert Comment!">
+        </div>
+
+		<button type="submit" class="save btn btn-default">Send</button>		
+	</form>
+
+	{% if messages %}
+	    {% for message in messages %}
+            <div>
+                <p class="navbar-text" style="color: red">
+                    {{ message }}
+                </p>
+            </div>
+	    {% endfor %}
+    {% endif %}
+
+{% endblock base_home_content %}
