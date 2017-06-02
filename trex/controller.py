@@ -1,9 +1,8 @@
 import re
 import hashlib
-import cx_Oracle
 from django.db import connection
 from enum import Enum
-from restapi.models import Comments, Posts, Users
+from restapi.models import *
 
 mail_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
 phone_regex = r"(\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})"  # noqa
@@ -296,14 +295,26 @@ def get_post_content(request, postid):
 def get_all_posts(request):
     posts = Posts.objects.all()
     content = []
-
     for post in posts:
         author = Users.objects.filter(userid=post.userid).first()
+        tags = []
+
+        cursor = connection.cursor()
+        cursor.execute("select name, tags.tagid from posts_tags join tags "
+                       "on tags.tagid=posts_tags.tagid "
+                       "and posts_tags.postid=" +
+                       str(post.postid))
+
+        for line in cursor:
+            tags.append({'name': line[0], 'tagid': line[1]})
+
+        cursor.close()
 
         content.append({
             'title': post.title,
             'userid': post.userid,
             'author': author.firstname + ' ' + author.lastname,
-            'postid': post.postid
+            'postid': post.postid,
+            'tags': tags
         })
     return content

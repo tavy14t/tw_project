@@ -35,11 +35,20 @@
         <tr>
             <th> Title of publication </th>
             <th> Author </th>
+            <th> Tags </th>
         </tr>
         {% for item in content %}
             <tr>
                 <td> <a href="/posts/?postid={{ item.postid }}"> {{ item.title }} </a> </td>
-                <td> {{ item.author }} </td> 
+                <td> {{ item.author }} </td>
+                <td>
+                {% for tag in item.tags %}
+                    {% if forloop.counter0|divisibleby:3 %}
+                        <p></p>
+                    {% endif %}
+                    <a href="/tags/?tagid={{ tag.tagid }}"> {{ tag.name }} &nbsp;&nbsp;</a>
+                {% endfor %}
+                </td>
             </tr>
         {% endfor %}
     </table>
