@@ -257,17 +257,14 @@ def save_preferences(request):
 
 def add_comment(request, postid):
     text = ''
-
     if 'comment' not in request.POST:
         return AddCommentRC.INVALID_FORM
 
     text = request.POST['comment']
-
     if text == '':
         return AddCommentRC.EMPTY_TEXT
 
     userid = request.session['userid']
-
     comment = Comments.objects.create(
         userid=userid,
         postid=postid,
