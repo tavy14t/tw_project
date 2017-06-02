@@ -8,7 +8,6 @@ from django.contrib import messages
 from login_decorator import login_required
 from controller import *
 from forms import CommentForm
-from restapi.models import Comments, Posts, Users
 
 
 def login(request):
@@ -114,37 +113,15 @@ def account_preferences(request):
 
 @login_required
 def post(request):
-    context = dict()
     postid = request.GET.get('postid')
 
     if request.method == 'POST':
-        text = ''
-        if 'comment' in request.POST:
-            text = request.POST['comment']
-
-        if text != '':
-            userid = request.session['userid']
-
-            comment = Comments.objects.create(
-                userid=userid,
-                postid=postid,
-                text=text
-            )
-            comment.save()
-        else:
+        result = add_comment(request, postid)
+        if result == AddCommentRC.INVALID_FORM:
+            messages.error(request, 'Invalid Form! Comment text not found!')
+        elif result == AddCommentRC.EMPTY_TEXT:
             messages.error(request, 'The comment can not be empty!')
 
-    post = Posts.objects.get(postid=postid)
-    comments = Comments.objects.filter(postid=postid)
-
-    context['title'] = post.title
-    context['text'] = post.body
-
-    context['comments'] = []
-    for obj in comments:
-        user = Users.objects.get(userid=obj.userid)
-        context['comments'].append((
-            obj.text, user.firstname, user.lastname
-        ))
+    context = get_post_context(request, postid)
 
     return render(request, 'post.html', context)

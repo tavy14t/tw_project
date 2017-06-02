@@ -3,6 +3,7 @@ import hashlib
 import cx_Oracle
 from django.db import connection
 from enum import Enum
+from restapi.models import Comments, Posts, Users
 
 mail_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
 phone_regex = r"(\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})"  # noqa
@@ -43,6 +44,12 @@ class AccountSettingsRC(Enum):
 
 class AccountPreferencesRC(Enum):
     SUCCESS = 1
+
+
+class AddCommentRC(Enum):
+    SUCCESS = 1,
+    EMPTY_TEXT = 2,
+    INVALID_FORM = 3
 
 
 def get_hash(password):
@@ -246,3 +253,44 @@ def save_preferences(request):
                            'tagid': idx
                        })
     cursor.close()
+
+
+def add_comment(request, postid):
+    text = ''
+
+    if 'comment' not in request.POST:
+        return AddCommentRC.INVALID_FORM
+
+    text = request.POST['comment']
+
+    if text == '':
+        return AddCommentRC.EMPTY_TEXT
+
+    userid = request.session['userid']
+
+    comment = Comments.objects.create(
+        userid=userid,
+        postid=postid,
+        text=text
+    )
+    comment.save()
+
+    return AddCommentRC.SUCCESS
+
+
+def get_post_context(request, postid):
+    post = Posts.objects.get(postid=postid)
+    comments = Comments.objects.filter(postid=postid)
+    context = dict()
+
+    context['title'] = post.title
+    context['text'] = post.body
+
+    context['comments'] = []
+    for obj in comments:
+        user = Users.objects.get(userid=obj.userid)
+        context['comments'].append((
+            obj.text, user.firstname, user.lastname
+        ))
+
+    return context
