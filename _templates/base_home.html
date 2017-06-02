@@ -1,0 +1,88 @@
+{% extends 'bootstrap3.html' %}
+
+{% load static %}
+{% block bootstrap3_extra_head %}
+    <link rel="stylesheet" type="text/css" href="{% static "sidebar.css" %}">
+{% endblock %}
+
+{% block bootstrap3_content %}
+    <div class="container-fluid nopadding" >
+        <div class="row-fluid nopadding">
+            <div id="sidebar" class="col-md-2 nopadding">
+            <div class="nav-side-menu col-md-2 nopadding">
+            <div class="menu-list">
+                <a href="/" id="logo_a">
+                    <p class="text-center" id="logo_title">TREX</p>
+                    <img src="{% static "TREX.png" %}" class="img-responsive" id="trex_img">
+                </a>
+                <ul id="menu-content" class="menu-content collapsed out">
+                    <li data-toggle="collapse" data-target="#Search" aria-expanded="true" class="">   
+                        <i class="glyphicon glyphicon-search"></i> 
+                        Search 
+                    </li>
+                    <ul class="sub-menu collapse in" id="Search" aria-expanded="true">
+                            <li>
+                                <a href="#">Users</a>
+                            </li>
+                            <li>
+                                <a href="#">Posts</a>
+                            </li>
+                            <li>
+                                <a href="#">Titles</a>
+                            </li>
+                    </ul>
+                    <li data-toggle="collapse" data-target="#Browse">   
+                        <i class="glyphicon glyphicon-folder-open"></i> 
+                        Browse 
+                    </li>
+                    <ul class="sub-menu collapse in" id="Browse">
+                        <li>
+                            <a href="/tags/">Filtered</a>
+                        </li>
+                        <li>
+                            <a href="/post/">Recommanded</a>
+                        </li>
+                        <li>
+                            <a href="#">Popular</a>
+                        </li>
+                        <li>
+                            <a href="#">Trending</a>
+                        </li>     
+                    </ul>
+                    <li data-toggle="collapse" data-target="#News">   
+                        <i class="glyphicon glyphicon-education"></i> 
+                        News 
+                    </li>
+                    <ul class="sub-menu collapse in" id="News">
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+                    
+                        <li>
+                            <a href="#">Last updates</a>
+                        </li>
+                        
+                    </ul>
+                    <li data-toggle="collapse" data-target="#User">   
+                        <i class="glyphicon glyphicon-user"></i> 
+                        User 
+                    </li>
+                    <ul class="sub-menu collapse in" id="User">
+                        <li>
+                            <a href="/home/account_settings">Account settings</a>
+                        </li>
+                        <li>
+                            <a href="/logout">Logout</a>
+                        </li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="content" class="col-md-10">
+        {% block base_home_content %}
+
+        {% endblock base_home_content %}
+    </div>
+{% endblock bootstrap3_content %}

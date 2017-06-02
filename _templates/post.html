@@ -1,0 +1,57 @@
+{% extends "base_home.html" %}
+
+{% load static %}
+
+{% block bootstrap3_extra_head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "account.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "post.css" %}">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+{% endblock %}
+
+{% block base_home_content %}
+	<div>
+		<legend style="font-family: 'Lobster'; font-size:32px;"> {{ title }} </legend>
+		<div id="post_background">
+			<p> {{ text }} </p>
+		</div>
+	</div>
+
+	<div>
+		<legend style="font-family: 'Lobster'; font-size:24px;">Comments:</legend>
+
+		{% for comment, firstname, lastname in comments %}
+			<p><div class="comment">
+				{{ comment }}
+				
+				<br>
+				<a id="username" href="#">{{ firstname }} {{ lastname }}</a>
+			
+			</div></p>
+		{% empty %}
+			<p> No comments yet :\ </p>
+		{% endfor %}
+	</div>
+
+	<form role="form" id="commentsForm" method="POST" class="post-form">
+		{% csrf_token %}
+		<div class="control-group">
+	        <label for="id_comment">Comment:</label>
+
+	        <input type="text" class="form-control" id="id_comment" maxlength="4094" name="comment" placeholder="Insert Comment!">
+        </div>
+
+		<button type="submit" class="save btn btn-default">Send</button>		
+	</form>
+
+	{% if messages %}
+	    {% for message in messages %}
+            <div>
+                <p class="navbar-text" style="color: red">
+                    {{ message }}
+                </p>
+            </div>
+	    {% endfor %}
+    {% endif %}
+
+{% endblock base_home_content %}

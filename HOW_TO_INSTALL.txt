@@ -1,4 +1,5 @@
 Depedente:
+	pip install django-bootstrap3
 	cx_oracle (maxim 5.2.1 pentru python 2.7)
 		Pentru cx_oracle, trebuie mai intai sa instalati Oracle Database 12c: 
 		Intrati aici:
