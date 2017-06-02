@@ -274,7 +274,7 @@ def add_comment(request, postid):
     return AddCommentRC.SUCCESS
 
 
-def get_post_content(request, postid):
+def get_post_content(postid):
     post = Posts.objects.get(postid=postid)
     comments = Comments.objects.filter(postid=postid)
     content = dict()
@@ -292,7 +292,7 @@ def get_post_content(request, postid):
     return content
 
 
-def get_all_posts(request):
+def get_all_posts():
     posts = Posts.objects.all()
     content = []
     for post in posts:
@@ -317,4 +317,37 @@ def get_all_posts(request):
             'postid': post.postid,
             'tags': tags
         })
+    return content
+
+
+def get_user_content(userid):
+    content = dict()
+
+    user_posts = Posts.objects.filter(userid=userid)
+    content['posts'] = []  # postarile lui userid
+    for post in user_posts:
+        content['posts'].append({
+            'title': post.title,
+            'postid': post.postid,
+        })
+
+    content['tags'] = []  # preferintele userului userid
+    cursor = connection.cursor()
+    cursor.execute("select tags.name, tags.tagid from tags "
+                   "join users_tags on tags.tagid = users_tags.tagid "
+                   "where users_tags.userid=" + str(userid))
+    for line in cursor:
+        content['tags'].append({
+            'name': line[0],
+            'tagid': line[1]
+        })
+    cursor.close()
+
+    user_details = Users.objects.filter(userid=userid).first()
+    content['firstname'] = user_details.firstname
+    content['lastname'] = user_details.lastname
+    content['email'] = user_details.email
+    content['address'] = user_details.address
+    content['phone'] = user_details.phone
+
     return content

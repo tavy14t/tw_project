@@ -117,15 +117,26 @@ def get_posts(request):
         if 'postid' in request.GET:
             postid = request.GET['postid']
         else:
-            content = {'content': get_all_posts(request)}
+            content = {'content': get_all_posts()}
             return render(request, 'all_posts.html', content)
-    if request.method == 'POST':
+    elif request.method == 'POST':
         result = add_comment(request, postid)
         if result == AddCommentRC.INVALID_FORM:
             messages.error(request, 'Invalid Form! Comment text not found!')
         elif result == AddCommentRC.EMPTY_TEXT:
             messages.error(request, 'The comment can not be empty!')
 
-    content = get_post_content(request, postid)
-
+    content = get_post_content(postid)
     return render(request, 'post.html', content)
+
+
+@login_required
+def get_authors(request):
+    if request.method == 'GET':
+        if 'userid' in request.GET:
+            userid = request.GET['userid']
+        else:
+            return HttpResponseRedirect('/home/about')
+
+    content = get_user_content(userid)
+    return render(request, 'author.html', content)
