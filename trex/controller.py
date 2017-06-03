@@ -320,6 +320,40 @@ def get_all_posts():
     return content
 
 
+def get_posts_by_tags(tag_list):
+    posts = Posts.objects.all()
+    content = []
+    for post in posts:
+        author = Users.objects.filter(userid=post.userid).first()
+        tags = []
+
+        cursor = connection.cursor()
+        cursor.execute("select name, tags.tagid from posts_tags join tags "
+                       "on tags.tagid=posts_tags.tagid "
+                       "and posts_tags.postid=" +
+                       str(post.postid))
+
+        for line in cursor:
+            tags.append({'name': line[0], 'tagid': line[1]})
+
+        cursor.close()
+
+        ids = [tags[x]['tagid'] for x in range(len(tags))]
+
+        if not set(ids).issuperset(set(tag_list)):
+            continue
+
+        content.append({
+            'title': post.title,
+            'userid': post.userid,
+            'author': author.firstname + ' ' + author.lastname,
+            'postid': post.postid,
+            'tags': tags
+        })
+    return content
+
+
+
 def get_user_content(userid):
     content = dict()
 
