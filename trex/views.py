@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from login_decorator import login_required
 from controller import *
+from forms import CommentForm
 
 
 def login(request):
@@ -105,22 +106,37 @@ def account_preferences(request):
         return HttpResponseRedirect('/home/account_settings')
     if request.method == 'POST':
         save_preferences(request)
-        context = {'preferences': get_preferences(request)}
+        content = {'preferences': get_preferences(request)}
         messages.warning(request, 'Preferences updated!')
-        return render(request, 'account_settings.html', context)
+        return render(request, 'account_settings.html', content)
 
 
-# class PostsList(APIView):
-#    def get(self, request):
+@login_required
+def get_posts(request):
+    if request.method == 'GET':
+        if 'postid' in request.GET:
+            postid = request.GET['postid']
+        else:
+            content = {'content': get_all_posts()}
+            return render(request, 'all_posts.html', content)
+    elif request.method == 'POST':
+        result = add_comment(request, postid)
+        if result == AddCommentRC.INVALID_FORM:
+            messages.error(request, 'Invalid Form! Comment text not found!')
+        elif result == AddCommentRC.EMPTY_TEXT:
+            messages.error(request, 'The comment can not be empty!')
+
+    content = get_post_content(postid)
+    return render(request, 'post.html', content)
 
 
-# def post(request):
-#     if request.method == 'GET':
-#         context = dict()
-#         context.update(commonviews.side_menu('Home'))
+@login_required
+def get_authors(request):
+    if request.method == 'GET':
+        if 'userid' in request.GET:
+            userid = request.GET['userid']
+        else:
+            return HttpResponseRedirect('/home/about')
 
-#         print('[debug][account] context = ')
-#         print(json.dumps(context, indent=4))
-#         return render(request, 'post.html', context)
-#     else:
-#         print request
+    content = get_user_content(userid)
+    return render(request, 'author.html', content)
