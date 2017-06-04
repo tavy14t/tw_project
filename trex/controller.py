@@ -320,6 +320,25 @@ def get_all_posts():
     return content
 
 
+def get_all_authors():
+    authors = Users.objects.all()
+    content = []
+    for user in authors:
+        publications = []
+        posts = Posts.objects.filter(userid=user.userid)
+        for post in posts:
+            publications.append({
+                'postid': post.postid,
+                'title': post.title
+            })
+        content.append({
+            'author': user.firstname + ' ' + user.lastname,
+            'userid': user.userid,
+            'publications': publications
+        })
+    return content
+
+
 def get_posts_by_tags(tag_list):
     posts = Posts.objects.all()
     content = []
@@ -351,7 +370,6 @@ def get_posts_by_tags(tag_list):
             'tags': tags
         })
     return content
-
 
 
 def get_user_content(userid):
