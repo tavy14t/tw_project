@@ -385,3 +385,10 @@ def get_user_content(userid):
     content['phone'] = user_details.phone
 
     return content
+
+
+def get_posts_by_tag(tagid):
+    posts = Posts.objects.filter(tagid=tagid)
+    content = {}
+    content['posts'] = []
+#    for post in posts:

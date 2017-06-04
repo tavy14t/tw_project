@@ -33,6 +33,7 @@ urlpatterns = [
 
     url(r'^posts', views.get_posts),
     url(r'^authors', views.get_authors),
+    url(r'^tags', views.get_tags),
 
     url(r'^recommended', views.get_recommended),
 
