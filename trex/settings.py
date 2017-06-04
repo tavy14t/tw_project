@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'restapi.apps.RestapiConfig',
     'bootstrap3',
     'django_tables2',
+#    'disqus',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +140,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, '_templates')
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, '_static')
+
+# Disqus
+
+#DISQUS_API_KEY = '5VTLWvMe92EjrhcebCPZkfBgRF0VFkobfPUlv8VsVncBARhJ5RTPZf2PFKLowJgt'
+#DISQUS_WEBSITE_SHORTNAME = 'foobar' ########################################    CHANGE HERE     ##################################################
