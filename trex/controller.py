@@ -1,8 +1,8 @@
 import re
 import hashlib
-import cx_Oracle
 from django.db import connection
 from enum import Enum
+from restapi.models import *
 
 mail_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
 phone_regex = r"(\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})"  # noqa
@@ -43,6 +43,12 @@ class AccountSettingsRC(Enum):
 
 class AccountPreferencesRC(Enum):
     SUCCESS = 1
+
+
+class AddCommentRC(Enum):
+    SUCCESS = 1,
+    EMPTY_TEXT = 2,
+    INVALID_FORM = 3
 
 
 def get_hash(password):
@@ -246,3 +252,109 @@ def save_preferences(request):
                            'tagid': idx
                        })
     cursor.close()
+
+
+def add_comment(request, postid):
+    text = ''
+    if 'comment' not in request.POST:
+        return AddCommentRC.INVALID_FORM
+
+    text = request.POST['comment']
+    if text == '':
+        return AddCommentRC.EMPTY_TEXT
+
+    userid = request.session['userid']
+    comment = Comments.objects.create(
+        userid=userid,
+        postid=postid,
+        text=text
+    )
+    comment.save()
+
+    return AddCommentRC.SUCCESS
+
+
+def get_post_content(postid):
+    post = Posts.objects.get(postid=postid)
+    comments = Comments.objects.filter(postid=postid)
+    content = dict()
+
+    content['title'] = post.title
+    content['text'] = post.body
+
+    content['comments'] = []
+    for obj in comments:
+        user = Users.objects.get(userid=obj.userid)
+        content['comments'].append((
+            obj.text, user.firstname, user.lastname
+        ))
+
+    return content
+
+
+def get_all_posts():
+    posts = Posts.objects.all()
+    content = []
+    for post in posts:
+        author = Users.objects.filter(userid=post.userid).first()
+        tags = []
+
+        cursor = connection.cursor()
+        cursor.execute("select name, tags.tagid from posts_tags join tags "
+                       "on tags.tagid=posts_tags.tagid "
+                       "and posts_tags.postid=" +
+                       str(post.postid))
+
+        for line in cursor:
+            tags.append({'name': line[0], 'tagid': line[1]})
+
+        cursor.close()
+
+        content.append({
+            'title': post.title,
+            'userid': post.userid,
+            'author': author.firstname + ' ' + author.lastname,
+            'postid': post.postid,
+            'tags': tags
+        })
+    return content
+
+
+def get_user_content(userid):
+    content = dict()
+
+    user_posts = Posts.objects.filter(userid=userid)
+    content['posts'] = []  # postarile lui userid
+    for post in user_posts:
+        content['posts'].append({
+            'title': post.title,
+            'postid': post.postid,
+        })
+
+    content['tags'] = []  # preferintele userului userid
+    cursor = connection.cursor()
+    cursor.execute("select tags.name, tags.tagid from tags "
+                   "join users_tags on tags.tagid = users_tags.tagid "
+                   "where users_tags.userid=" + str(userid))
+    for line in cursor:
+        content['tags'].append({
+            'name': line[0],
+            'tagid': line[1]
+        })
+    cursor.close()
+
+    user_details = Users.objects.filter(userid=userid).first()
+    content['firstname'] = user_details.firstname
+    content['lastname'] = user_details.lastname
+    content['email'] = user_details.email
+    content['address'] = user_details.address
+    content['phone'] = user_details.phone
+
+    return content
+
+
+def get_posts_by_tag(tagid):
+    posts = Posts.objects.filter(tagid=tagid)
+    content = {}
+    content['posts'] = []
+#    for post in posts:

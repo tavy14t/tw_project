@@ -8,7 +8,6 @@ from django.contrib import messages
 from login_decorator import login_required
 from controller import *
 from forms import CommentForm
-from restapi.models import Comments, Posts, Users
 
 
 def login(request):
@@ -107,44 +106,47 @@ def account_preferences(request):
         return HttpResponseRedirect('/home/account_settings')
     if request.method == 'POST':
         save_preferences(request)
-        context = {'preferences': get_preferences(request)}
+        content = {'preferences': get_preferences(request)}
         messages.warning(request, 'Preferences updated!')
-        return render(request, 'account_settings.html', context)
+        return render(request, 'account_settings.html', content)
 
 
 @login_required
-def post(request):
-    context = dict()
-    postid = request.GET.get('postid')
-
-    if request.method == 'POST':
-        text = ''
-        if 'comment' in request.POST:
-            text = request.POST['comment']
-
-        if text != '':
-            userid = request.session['userid']
-
-            comment = Comments.objects.create(
-                userid=userid,
-                postid=postid,
-                text=text
-            )
-            comment.save()
+def get_posts(request):
+    if request.method == 'GET':
+        if 'postid' in request.GET:
+            postid = request.GET['postid']
         else:
+            content = {'content': get_all_posts()}
+            return render(request, 'all_posts.html', content)
+    elif request.method == 'POST':
+        postid = request.GET['postid']
+        result = add_comment(request, postid)
+        if result == AddCommentRC.INVALID_FORM:
+            messages.error(request, 'Invalid Form! Comment text not found!')
+        elif result == AddCommentRC.EMPTY_TEXT:
             messages.error(request, 'The comment can not be empty!')
 
-    post = Posts.objects.get(postid=postid)
-    comments = Comments.objects.filter(postid=postid)
+    content = get_post_content(postid)
+    return render(request, 'post.html', content)
 
-    context['title'] = post.title
-    context['text'] = post.body
 
-    context['comments'] = []
-    for obj in comments:
-        user = Users.objects.get(userid=obj.userid)
-        context['comments'].append((
-            obj.text, user.firstname, user.lastname
-        ))
+@login_required
+def get_authors(request):
+    if request.method == 'GET':
+        if 'userid' in request.GET:
+            userid = request.GET['userid']
+        else:
+            return HttpResponseRedirect('/posts')
 
-    return render(request, 'post.html', context)
+    content = get_user_content(userid)
+    return render(request, 'author.html', content)
+
+
+@login_required
+def get_tags(request):
+    if request.method == 'GET':
+        if 'tagid' in request.GET:
+            tagid = request.GET['tagid']
+            content = get_posts_by_tag(tagid)
+            return render(request, 'filter.html', content)
