@@ -132,6 +132,27 @@ def get_posts(request):
 
 
 @login_required
+def get_recommended(request):
+    if request.method == 'GET':
+        if 'postid' in request.GET:
+            postid = request.GET['postid']
+        else:
+            prefs = get_preferences(request)
+            tag_list = [x['tagid'] for x in filter(lambda x: x['checked'] == 1, [prefs[key] for key in prefs])]
+            content = {'content': get_posts_by_tags(tag_list)}
+            return render(request, 'all_posts.html', content)
+    elif request.method == 'POST':
+        result = add_comment(request, postid)
+        if result == AddCommentRC.INVALID_FORM:
+            messages.error(request, 'Invalid Form! Comment text not found!')
+        elif result == AddCommentRC.EMPTY_TEXT:
+            messages.error(request, 'The comment can not be empty!')
+
+    content = get_post_content(postid)
+    return render(request, 'post.html', content)
+
+
+@login_required
 def get_authors(request):
     if request.method == 'GET':
         if 'userid' in request.GET:
