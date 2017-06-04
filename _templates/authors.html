@@ -1,0 +1,52 @@
+{% extends 'base_home.html' %}
+{% load static %}
+
+{% block bootstrap3_title %}
+    TReX Posts
+{% endblock %}
+
+{% load static %}
+
+{% block bootstrap3_extra_head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "account.css" %}">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static "listbox.js" %}"></script>
+{% endblock %}
+
+{% block base_home_content %}
+    <style>
+        table, th, td {
+            text-align: center;
+            border: 1px solid black;
+        }
+        table {
+            width: 100%;
+        }
+        th {
+            height: 50px;
+        }
+    </style>
+    <table>
+        <tr>
+            <th> Author </th>
+            <th> Publications </th>
+        </tr>
+        {% for item in content %}
+            <tr>
+                <td> <a href="/authors/?userid={{ item.userid }}"> {{ item.author }} </a> </td>
+                <td>
+                {% for post in item.publications %}
+                    <a href="/posts/?postid={{ post.postid }}">
+                    {{ post.title }} </a> &nbsp;&nbsp;
+                {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

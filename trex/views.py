@@ -116,14 +116,9 @@ def get_posts(request):
     if request.method == 'GET':
         if 'postid' not in request.GET:
             content = {'content': get_all_posts()}
-            return render(request, 'all_posts.html', content)
+            return render(request, 'posts.html', content)
     elif request.method == 'POST':
-<<<<<<< HEAD
-        postid = request.GET['postid']
-        result = add_comment(request, postid)
-=======
         result = add_comment(request, request.GET['postid'])
->>>>>>> ab0be49c168986232a13040bda9f8c47b825f300
         if result == AddCommentRC.INVALID_FORM:
             messages.error(request, 'Invalid Form! Comment text not found!')
         elif result == AddCommentRC.EMPTY_TEXT:
@@ -138,7 +133,9 @@ def get_recommended(request):
     if request.method == 'GET':
         if 'postid' not in request.GET:
             prefs = get_preferences(request)
-            tag_list = [x['tagid'] for x in filter(lambda x: x['checked'] == 1, [prefs[key] for key in prefs])]
+            tag_list = [x['tagid'] for x in filter(
+                lambda x: x['checked'] == 1,
+                [prefs[key] for key in prefs])]
             content = {'content': get_posts_by_tags(tag_list)}
             return render(request, 'all_posts.html', content)
     elif request.method == 'POST':
@@ -158,7 +155,8 @@ def get_authors(request):
         if 'userid' in request.GET:
             userid = request.GET['userid']
         else:
-            return HttpResponseRedirect('/posts')
+            content = {'content': get_all_authors()}
+            return render(request, 'authors.html', content)
 
     content = get_user_content(userid)
     return render(request, 'author.html', content)
