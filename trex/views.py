@@ -120,6 +120,7 @@ def get_posts(request):
             content = {'content': get_all_posts()}
             return render(request, 'all_posts.html', content)
     elif request.method == 'POST':
+        postid = request.GET['postid']
         result = add_comment(request, postid)
         if result == AddCommentRC.INVALID_FORM:
             messages.error(request, 'Invalid Form! Comment text not found!')
@@ -136,7 +137,16 @@ def get_authors(request):
         if 'userid' in request.GET:
             userid = request.GET['userid']
         else:
-            return HttpResponseRedirect('/home/about')
+            return HttpResponseRedirect('/posts')
 
     content = get_user_content(userid)
     return render(request, 'author.html', content)
+
+
+@login_required
+def get_tags(request):
+    if request.method == 'GET':
+        if 'tagid' in request.GET:
+            tagid = request.GET['tagid']
+            content = get_posts_by_tag(tagid)
+            return render(request, 'filter.html', content)
