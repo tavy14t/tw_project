@@ -27,3 +27,13 @@ In trex/settings.py trebuie modificata variabila DATABASES cu setarile locale al
 
 Optional:
 	daca inca nu merge conexiunea cu baza de date, adaugati folderul instant_client (ex: C:/instantclient_12_2) la environment variables ca ORACLE_PATH
+
+Chat Requirements:
+	Django>=1.9
+	channels>=1.1.2
+	asgi_redis>=0.9
+
+	Redis server:
+		https://freefr.dl.sourceforge.net/project/redis/redis-2.6.10/redis-2.6.10-x86.zip
+
+	Pentru a putea folosi chat-ul trebuie sa fie activ redis-server, care se gaseste in <redis_install_folder>/bin/redis-server.exe

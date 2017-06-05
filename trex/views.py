@@ -1,5 +1,6 @@
 import json
 
+from utils import get_room_id_for_2_users
 from rest_framework.views import APIView
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -8,6 +9,9 @@ from django.contrib import messages
 from login_decorator import login_required
 from controller import *
 from forms import CommentForm
+from restapi.models import *
+from django.http import JsonResponse
+from django.db.models import Q
 
 
 def login(request):
@@ -125,3 +129,39 @@ def post(request):
     context = get_post_context(request, postid)
 
     return render(request, 'post.html', context)
+
+
+@login_required
+def chat(request):
+    chat_rooms = ChatRoom.objects.filter(id__lte=1000).order_by('name')
+    context = {
+        'rooms': chat_rooms,
+        'userid': request.session['userid']
+    }
+    return render(request, 'chat.html', context)
+
+
+@login_required
+def chat_friends(request):
+    userid = int(request.session['userid'])
+    friends = Friends.objects.filter(Q(friend1=userid) | Q(friend2=userid))
+
+    friend_chat = []
+    for obj in friends:
+        a = obj.friend1
+        b = obj.friend2
+
+        if b.userid == userid:
+            a, b = b, a
+
+        name = b.email
+        friend_chat.append({
+            'id': get_room_id_for_2_users(a.userid, b.userid),
+            'name': name,
+        })
+
+    context = {
+        'friends': friend_chat,
+        'userid': userid
+    }
+    return render(request, 'chat.html', context)
