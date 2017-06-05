@@ -1,7 +1,5 @@
 import json
 
-from utils import get_room_id_for_2_users
-from django.db.models import Q
 from rest_framework.views import APIView
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -175,35 +173,15 @@ def get_tags(request):
 
 @login_required
 def chat(request):
-    chat_rooms = ChatRoom.objects.filter(id__lte=1000).order_by('name')
-    context = {
-        'rooms': chat_rooms,
-        'userid': request.session['userid']
-    }
+    userid = int(request.session['userid'])
+
+    context = get_chat_rooms_context(userid)
     return render(request, 'chat.html', context)
 
 
 @login_required
 def chat_friends(request):
     userid = int(request.session['userid'])
-    friends = Friends.objects.filter(Q(friend1=userid) | Q(friend2=userid))
 
-    friend_chat = []
-    for obj in friends:
-        a = obj.friend1
-        b = obj.friend2
-
-        if b.userid == userid:
-            a, b = b, a
-
-        name = b.email
-        friend_chat.append({
-            'id': get_room_id_for_2_users(a.userid, b.userid),
-            'name': name,
-        })
-
-    context = {
-        'friends': friend_chat,
-        'userid': userid
-    }
+    context = get_chat_friends_context(userid)
     return render(request, 'chat.html', context)
