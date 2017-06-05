@@ -76,12 +76,13 @@
 
                     var roomdiv = $(
                             "<h2 style=\"font-family: 'Lobster'; font-size:32px; text-align: center;\">" + data.title + "</h2><div id='chat_room'>" +
+                            '<div id="input_down" class="col-md-12 form-group float-label-control">' +
+                            '<form><input class="form-control"></form></div>' +
                             '<div class="room" id="room-'  +
                             data.join + '">' +
                             "<div class='messages' id='messages-id'></div>" +
-                            '</div><div id="input_down" class="col-md-12 form-group float-label-control">' +
-                            '<form><input class="form-control"></form>' +
                             "</div></div>"
+                            
                     );
                 
                     // Hook up send button to send a message
@@ -110,7 +111,7 @@
                                     "<span class='body'>" + data.last_messages[i].message + "</span>" +
                                     "</div>";
 
-                        msgdiv.append(old_message);
+                        msgdiv.prepend(old_message);
                     }
                     
                     msgdiv.scrollTop(msgdiv.prop("scrollHeight"));
@@ -161,7 +162,7 @@
                             console.log("Unsupported message type!");
                             return;
                     }
-                    msgdiv.append(ok_msg);
+                    msgdiv.prepend(ok_msg);
 
                     msgdiv.scrollTop(msgdiv.prop("scrollHeight"));
                     $(window).scrollTop(msgdiv.prop("scrollHeight"))

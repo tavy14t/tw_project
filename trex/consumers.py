@@ -40,9 +40,7 @@ def chat_join(message):
     username = user_query.email
 
     room.websocket_group.add(message.reply_channel)
-    message.channel_session['rooms'] = list(
-        set(message.channel_session['rooms']).union([room.id]))
-
+    message.channel_session['rooms'] = [int(room.id)]
     message.channel_session['userid'] = message['userid']
     message.channel_session['username'] = username
     message.channel_session['room'] = message["room"]
@@ -81,8 +79,8 @@ def chat_leave(message):
                           MSG_TYPE_LEAVE)
 
     room.websocket_group.discard(message.reply_channel)
-    message.channel_session['rooms'] = list(
-        set(message.channel_session['rooms']).difference([room.id]))
+    message.channel_session['rooms'] = []
+
     message.reply_channel.send({
         "text": json.dumps({
             "leave": str(room.id),
@@ -94,6 +92,7 @@ def chat_leave(message):
 @catch_client_error
 def chat_send(message):
     if int(message['room']) not in message.channel_session['rooms']:
+        print message['room'], message.channel_session['rooms']
         raise ClientError("ROOM_ACCESS_DENIED")
 
     username = message.channel_session['username']
