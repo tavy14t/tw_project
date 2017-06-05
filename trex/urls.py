@@ -5,6 +5,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 import restapi.views
 import views
 
+
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/home/about')),
     url(r'^admin/', admin.site.urls),
@@ -16,18 +17,20 @@ urlpatterns = [
     url(r'^register$', views.register),
     url(r'^logout$', views.logout),
 
-    url(r'^post/$', views.post),
-    url(r'^chat/$', views.chat, name='chat'),
-    url(r'^friends/$', views.chat_friends, name='chat'),
-
     url(r'^posts', views.get_posts),
     url(r'^authors', views.get_authors),
     url(r'^tags', views.get_tags),
 
+    url(r'^recommended', views.get_recommended),
+
     url(r'^home/$', RedirectView.as_view(url='/home/about')),
     url(r'^home/about$', views.about),
     url(r'^home/account_settings$', views.account_settings),
-    url(r'^home/account_preferences$', views.account_preferences)
+    url(r'^home/account_preferences$', views.account_preferences),
+
+    url(r'^chat/$', views.chat, name='chat'),
+    url(r'^friends/$', views.chat_friends, name='chat'),
 ]
+
 
 urlpatterns = format_suffix_patterns(urlpatterns)

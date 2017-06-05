@@ -1,6 +1,7 @@
 import json
 
 from utils import get_room_id_for_2_users
+from django.db.models import Q
 from rest_framework.views import APIView
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -9,9 +10,6 @@ from django.contrib import messages
 from login_decorator import login_required
 from controller import *
 from forms import CommentForm
-from restapi.models import *
-from django.http import JsonResponse
-from django.db.models import Q
 
 
 def login(request):
@@ -92,13 +90,13 @@ def account_settings(request):
             messages.info(request, 'The phone format is invalid!')
         elif settings_result == AccountSettingsRC.SUCCESS:
             messages.info(request, 'Changes was saved successfully!')
-        elif settings_result == AccoutSettingsRC.INTERNAL_SERVER_ERROR:
+        elif settings_result == AccountSettingsRC.INTERNAL_SERVER_ERROR:
             messages.info(request, 'Internal server error!')
-        elif settings_result == AccoutSettingsRC.ADDRESS_TOO_LONG:
+        elif settings_result == AccountSettingsRC.ADDRESS_TOO_LONG:
             messages.info(request, 'Address is too long!')
-        elif settings_result == AccoutSettingsRC.PHONE_TOO_LONG:
+        elif settings_result == AccountSettingsRC.PHONE_TOO_LONG:
             messages.info(request, 'Phone number is too long!')
-        elif settings_result == AccoutSettingsRC.EMAIL_TOO_LONG:
+        elif settings_result == AccountSettingsRC.EMAIL_TOO_LONG:
             messages.info(request, 'Email is too long!')
 
         return render(request, 'account_settings.html')
@@ -118,20 +116,38 @@ def account_preferences(request):
 @login_required
 def get_posts(request):
     if request.method == 'GET':
-        if 'postid' in request.GET:
-            postid = request.GET['postid']
-        else:
+        if 'postid' not in request.GET:
             content = {'content': get_all_posts()}
-            return render(request, 'all_posts.html', content)
+            return render(request, 'posts.html', content)
     elif request.method == 'POST':
-        postid = request.GET['postid']
-        result = add_comment(request, postid)
+        result = add_comment(request, request.GET['postid'])
         if result == AddCommentRC.INVALID_FORM:
             messages.error(request, 'Invalid Form! Comment text not found!')
         elif result == AddCommentRC.EMPTY_TEXT:
             messages.error(request, 'The comment can not be empty!')
 
-    content = get_post_content(postid)
+    content = get_post_content(request.GET['postid'])
+    return render(request, 'post.html', content)
+
+
+@login_required
+def get_recommended(request):
+    if request.method == 'GET':
+        if 'postid' not in request.GET:
+            prefs = get_preferences(request)
+            tag_list = [x['tagid'] for x in filter(
+                lambda x: x['checked'] == 1,
+                [prefs[key] for key in prefs])]
+            content = {'content': get_posts_by_tags(tag_list)}
+            return render(request, 'all_posts.html', content)
+    elif request.method == 'POST':
+        result = add_comment(request, request.GET['postid'])
+        if result == AddCommentRC.INVALID_FORM:
+            messages.error(request, 'Invalid Form! Comment text not found!')
+        elif result == AddCommentRC.EMPTY_TEXT:
+            messages.error(request, 'The comment can not be empty!')
+
+    content = get_post_content(request.GET['postid'])
     return render(request, 'post.html', content)
 
 
@@ -141,13 +157,20 @@ def get_authors(request):
         if 'userid' in request.GET:
             userid = request.GET['userid']
         else:
-            return HttpResponseRedirect('/posts')
+            content = {'content': get_all_authors()}
+            return render(request, 'authors.html', content)
 
     content = get_user_content(userid)
     return render(request, 'author.html', content)
 
-<<<<<<< HEAD
-    return render(request, 'post.html', context)
+
+@login_required
+def get_tags(request):
+    if request.method == 'GET':
+        if 'tagid' in request.GET:
+            tagid = request.GET['tagid']
+            content = get_posts_by_tag(tagid)
+            return render(request, 'filter.html', content)
 
 
 @login_required
@@ -184,13 +207,3 @@ def chat_friends(request):
         'userid': userid
     }
     return render(request, 'chat.html', context)
-=======
-
-@login_required
-def get_tags(request):
-    if request.method == 'GET':
-        if 'tagid' in request.GET:
-            tagid = request.GET['tagid']
-            content = get_posts_by_tag(tagid)
-            return render(request, 'filter.html', content)
->>>>>>> 1b15343d26c404c7c7ebbfab368e17591cacf665

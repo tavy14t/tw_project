@@ -62,8 +62,6 @@ def chat_join(message):
             'message': obj.message
         })
 
-    print "JOINED ROOM NAME", message['name']
-
     message.reply_channel.send({
         "text": json.dumps({
             "join": str(room.id),
@@ -76,7 +74,6 @@ def chat_join(message):
 @channel_session_user
 @catch_client_error
 def chat_leave(message):
-    print 'room: ', message["room"]
     room = get_room_or_error(message["room"], message.user)
 
     if NOTIFY_USERS_ON_ENTER_OR_LEAVE_ROOMS:
