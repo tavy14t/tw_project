@@ -2,6 +2,10 @@
 
 {% load static %}
 
+{% block bootstrap3_title %}
+    {{ title }}
+{% endblock %}
+
 {% block bootstrap3_extra_head %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static "account.css" %}">

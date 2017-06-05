@@ -16,15 +16,9 @@ urlpatterns = [
     url(r'^register$', views.register),
     url(r'^logout$', views.logout),
 
-<<<<<<< HEAD
     url(r'^post/$', views.post),
     url(r'^chat/$', views.chat, name='chat'),
     url(r'^friends/$', views.chat_friends, name='chat'),
-=======
-    url(r'^posts', views.get_posts),
-    url(r'^authors', views.get_authors),
-    url(r'^tags', views.get_tags),
->>>>>>> 1b15343d26c404c7c7ebbfab368e17591cacf665
 
     url(r'^home/$', RedirectView.as_view(url='/home/about')),
     url(r'^home/about$', views.about),

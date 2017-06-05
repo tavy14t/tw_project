@@ -1,4 +1,19 @@
-from django.conf.urls import url
+"""trex URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/1.10/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.conf.urls import url, include
+    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
+"""
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import RedirectView
 from rest_framework.urlpatterns import format_suffix_patterns
@@ -16,15 +31,9 @@ urlpatterns = [
     url(r'^register$', views.register),
     url(r'^logout$', views.logout),
 
-<<<<<<< HEAD
-    url(r'^post/$', views.post),
-    url(r'^chat/$', views.chat, name='chat'),
-    url(r'^friends/$', views.chat_friends, name='chat'),
-=======
     url(r'^posts', views.get_posts),
     url(r'^authors', views.get_authors),
     url(r'^tags', views.get_tags),
->>>>>>> 1b15343d26c404c7c7ebbfab368e17591cacf665
 
     url(r'^home/$', RedirectView.as_view(url='/home/about')),
     url(r'^home/about$', views.about),
