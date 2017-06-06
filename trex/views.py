@@ -137,7 +137,7 @@ def get_recommended(request):
                 lambda x: x['checked'] == 1,
                 [prefs[key] for key in prefs])]
             content = {'content': get_posts_by_tags(tag_list)}
-            return render(request, 'all_posts.html', content)
+            return render(request, 'posts.html', content)
     elif request.method == 'POST':
         result = add_comment(request, request.GET['postid'])
         if result == AddCommentRC.INVALID_FORM:
