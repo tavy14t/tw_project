@@ -169,3 +169,6 @@ def get_tags(request):
             tagid = request.GET['tagid']
             content = get_posts_by_tags([tagid])
             return render(request, 'posts.html', content)
+        else:
+            content = {'content': get_all_tags()}
+            return render(request, 'tags.html', content)

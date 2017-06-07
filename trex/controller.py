@@ -331,15 +331,39 @@ def get_all_authors():
                 'postid': post.postid,
                 'title': post.title
             })
-        content.append({
-            'author': user.firstname + ' ' + user.lastname,
-            'userid': user.userid,
-            'publications': publications
-        })
+        if len(publications) > 0:
+            content.append({
+                'author': user.firstname + ' ' + user.lastname,
+                'userid': user.userid,
+                'publications': publications
+            })
     return content
 
 
-def get_posts_by_tags(tag_list, should_contain_all=True, sort_by_matches=False):
+def get_all_tags():
+    tags = Tags.objects.all()
+    content = []
+    for item in tags:
+        posts = []
+        cursor = connection.cursor()
+        cursor.execute("select title, posts.postid from posts "
+                       "join posts_tags on posts.postid=posts_tags.postid "
+                       "and posts_tags.tagid=" + str(item.tagid))
+        for line in cursor:
+            posts.append({'title': line[0], 'postid': line[1]})
+
+        content.append({
+            'tagid': item.tagid,
+            'name': item.name,
+            'posts': posts
+        })
+
+    return content
+
+
+def get_posts_by_tags(tag_list,
+                      should_contain_all=True,
+                      sort_by_matches=False):
     posts = Posts.objects.all()
     content = []
     for post in posts:
