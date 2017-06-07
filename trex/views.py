@@ -136,7 +136,7 @@ def get_recommended(request):
             tag_list = [x['tagid'] for x in filter(
                 lambda x: x['checked'] == 1,
                 [prefs[key] for key in prefs])]
-            content = {'content': get_posts_by_tags(tag_list)}
+            content = {'content': get_posts_by_tags(tag_list, False, True)}
             return render(request, 'posts.html', content)
     elif request.method == 'POST':
         result = add_comment(request, request.GET['postid'])
@@ -167,5 +167,5 @@ def get_tags(request):
     if request.method == 'GET':
         if 'tagid' in request.GET:
             tagid = request.GET['tagid']
-            content = get_posts_by_tag(tagid)
-            return render(request, 'filter.html', content)
+            content = get_posts_by_tags([tagid])
+            return render(request, 'posts.html', content)

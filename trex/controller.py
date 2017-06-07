@@ -339,7 +339,7 @@ def get_all_authors():
     return content
 
 
-def get_posts_by_tags(tag_list):
+def get_posts_by_tags(tag_list, should_contain_all=True, sort_by_matches=False):
     posts = Posts.objects.all()
     content = []
     for post in posts:
@@ -359,7 +359,10 @@ def get_posts_by_tags(tag_list):
 
         ids = [tags[x]['tagid'] for x in range(len(tags))]
 
-        if not set(ids).issuperset(set(tag_list)):
+        if should_contain_all and not set(ids).issuperset(set(tag_list)):
+            continue
+
+        if not should_contain_all and set(ids).isdisjoint(set(tag_list)):
             continue
 
         content.append({
@@ -369,6 +372,15 @@ def get_posts_by_tags(tag_list):
             'postid': post.postid,
             'tags': tags
         })
+
+    if sort_by_matches:
+        content = sorted(content,
+                         key=lambda entry:
+                         len(set(tag_list).intersection(set(
+                             [entry['tags'][x]['tagid']
+                              for x in range(len(entry['tags']))]))),
+                         reverse=True)
+
     return content
 
 
@@ -403,10 +415,3 @@ def get_user_content(userid):
     content['phone'] = user_details.phone
 
     return content
-
-
-def get_posts_by_tag(tagid):
-    posts = Posts.objects.filter(tagid=tagid)
-    content = {}
-    content['posts'] = []
-#    for post in posts:
