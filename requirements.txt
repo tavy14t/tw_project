@@ -6,3 +6,6 @@ django-tables2==1.5.0
 django-windows-tools==0.2
 djangorestframework
 Jinja2==2.9.4
+asgi_redis
+service_identity
+channels
