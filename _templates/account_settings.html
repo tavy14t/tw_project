@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block base_home_content %}
-    <div id="content" class="col-md-10">
+    <div id="content" class="col-md-12">
         <legend style="font-family: 'Lobster'; font-size:32px;">Account Settings</legend>
         <div class="col-md-4">
             <form method="POST" class="form-horizontal">
@@ -69,7 +69,7 @@
             <form class="form-horizontal" id="preferencesForm" method="POST" action="/home/account_preferences">
                 {% csrf_token %}
                 <label for="listbox_preferences">Check your preferences:</label>
-                <div style="max-height: 356px; overflow: auto;" id="preferences_checkboxes_div">
+                <div style="max-height: 358px; overflow: auto;" id="preferences_checkboxes_div">
                     {% for preference_name, details in preferences.items %}
                         {% if details.checked == 1 %}
                             <p style="font-size: 20px;"><input type="checkbox"  name="checks[]" value="{{ details.tagid }}" checked> {{ preference_name }}</p>
