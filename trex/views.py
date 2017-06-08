@@ -165,10 +165,6 @@ def get_authors(request):
 @login_required
 def get_filtered(request):
     if request.method == 'GET':
-        if 'tagid' in request.GET:
-            tagid = int(request.GET['tagid'])
-            content = {'content': get_posts_by_tags([tagid])}
-            return render(request, 'posts.html', content)
         content = {'tags': get_empty_tags(request)}
         return render(request, 'filtered.html', content)
     elif request.method == 'POST':

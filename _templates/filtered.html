@@ -21,7 +21,7 @@
     <div id="content" class="col-md-12">
         <legend style="font-family: 'Lobster'; font-size:32px;">Tags</legend>
         <div class="col-md-12">
-            <form class="form-horizontal" id="tagsForm" method="POST" action="/tags/">
+            <form class="form-horizontal" id="tagsForm" method="POST" action="/filtered">
                 {% csrf_token %}
                 <label for="listbox_tags">Check the tags you want to search by:</label>
                 <div style="max-height: 70vh; overflow: auto;" id="tags_checkboxes_div">
