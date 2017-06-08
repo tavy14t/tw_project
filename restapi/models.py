@@ -8,7 +8,11 @@
 # field names.
 from __future__ import unicode_literals
 
+import json
+
 from django.db import models
+from channels import Group
+from trex.settings import MSG_TYPE_MESSAGE
 
 
 class Comments(models.Model):
@@ -116,3 +120,42 @@ class UsersTags(models.Model):
     class Meta:
         managed = False
         db_table = 'USERS_TAGS'
+
+
+class ChatRoom(models.Model):
+    name = models.CharField(max_length=200)
+
+    @property
+    def websocket_group(self):
+        return Group("room-%s" % self.id)
+
+    def send_message(self, message, user, msg_type=MSG_TYPE_MESSAGE):
+        final_msg = {'room': str(self.id), 'message': message,
+                     'username': user,
+                     'msg_type': msg_type}
+
+        # Send out the message to everyone in the room
+        self.websocket_group.send(
+            {"text": json.dumps(final_msg)}
+        )
+
+
+class Messages(models.Model):
+    from_userid = models.IntegerField()
+    to_roomid = models.IntegerField()
+    message = models.CharField(max_length=4000)
+    time = models.DateTimeField(auto_now_add=True)
+
+
+class Friends(models.Model):
+    friend1 = models.ForeignKey(
+        Users,
+        on_delete=models.CASCADE,
+        related_name='friend1',
+    )
+
+    friend2 = models.ForeignKey(
+        Users,
+        on_delete=models.CASCADE,
+        related_name='friend2',
+    )

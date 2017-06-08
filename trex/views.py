@@ -172,3 +172,18 @@ def get_tags(request):
         else:
             content = {'content': get_all_tags()}
             return render(request, 'tags.html', content)
+
+@login_required
+def chat(request):
+    userid = int(request.session['userid'])
+
+    context = get_chat_rooms_context(userid)
+    return render(request, 'chat.html', context)
+
+
+@login_required
+def chat_friends(request):
+    userid = int(request.session['userid'])
+
+    context = get_chat_friends_context(userid)
+    return render(request, 'chat.html', context)
