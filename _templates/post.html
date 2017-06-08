@@ -6,13 +6,6 @@
     {{ title }}
 {% endblock %}
 
-{% block bootstrap3_extra_head %}
-    {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{% static "account.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static "post.css" %}">
-    <meta name="csrf-token" content="{{ csrf_token }}">
-{% endblock %}
-
 {% block base_home_content %}
 	<div>
 		<legend style="font-family: 'Lobster'; font-size:32px;"> {{ title }} </legend>

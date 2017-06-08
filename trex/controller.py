@@ -3,6 +3,8 @@ import hashlib
 from django.db import connection
 from enum import Enum
 from restapi.models import *
+from django.db.models import Q
+from utils import get_room_id_for_2_users
 
 mail_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
 phone_regex = r"(\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})"  # noqa
@@ -342,15 +344,39 @@ def get_all_authors():
                 'postid': post.postid,
                 'title': post.title
             })
-        content.append({
-            'author': user.firstname + ' ' + user.lastname,
-            'userid': user.userid,
-            'publications': publications
-        })
+        if len(publications) > 0:
+            content.append({
+                'author': user.firstname + ' ' + user.lastname,
+                'userid': user.userid,
+                'publications': publications
+            })
     return content
 
 
-def get_posts_by_tags(tag_list, should_contain_all=True, sort_by_matches=False):
+def get_all_tags():
+    tags = Tags.objects.all()
+    content = []
+    for item in tags:
+        posts = []
+        cursor = connection.cursor()
+        cursor.execute("select title, posts.postid from posts "
+                       "join posts_tags on posts.postid=posts_tags.postid "
+                       "and posts_tags.tagid=" + str(item.tagid))
+        for line in cursor:
+            posts.append({'title': line[0], 'postid': line[1]})
+
+        content.append({
+            'tagid': item.tagid,
+            'name': item.name,
+            'posts': posts
+        })
+
+    return content
+
+
+def get_posts_by_tags(tag_list,
+                      should_contain_all=True,
+                      sort_by_matches=False):
     posts = Posts.objects.all()
     content = []
     for post in posts:
@@ -426,3 +452,38 @@ def get_user_content(userid):
     content['phone'] = user_details.phone
 
     return content
+
+
+def get_chat_friends_context(userid):
+    friends = Friends.objects.filter(Q(friend1=userid) | Q(friend2=userid))
+
+    friend_chat = []
+    for obj in friends:
+        a = obj.friend1
+        b = obj.friend2
+
+        if b.userid == userid:
+            a, b = b, a
+
+        name = b.email
+        friend_chat.append({
+            'id': get_room_id_for_2_users(a.userid, b.userid),
+            'name': name,
+        })
+
+    context = {
+        'friends': friend_chat,
+        'userid': userid
+    }
+
+    return context
+
+
+def get_chat_rooms_context(userid):
+    chat_rooms = ChatRoom.objects.filter(id__lte=1000).order_by('name')
+    context = {
+        'rooms': chat_rooms,
+        'userid': userid
+    }
+
+    return context

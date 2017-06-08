@@ -47,4 +47,3 @@ trex/wsgi.pyc
 .idea\workspace.xml
 .idea\inspectionProfiles\profiles_settings.xml
 *.pyc
-trex.db

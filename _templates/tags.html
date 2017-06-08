@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block bootstrap3_title %}
-    TReX Authors
+    TReX Tags
 {% endblock %}
 
 {% block base_home_content %}
@@ -20,16 +20,18 @@
     </style>
     <table>
         <tr>
-            <th> Author </th>
-            <th> Publications </th>
+            <th> Tag </th>
+            <th> Posts </th>
         </tr>
-        {% for item in content %}
+        {% for tag in content %}
             <tr>
-                <td> <a href="/authors/?userid={{ item.userid }}"> {{ item.author }} </a> </td>
+                <td> <a href="/tags/?tagid={{ tag.tagid }}"> {{ tag.name }} </a> </td>
                 <td>
-                {% for post in item.publications %}
-                    <a href="/posts/?postid={{ post.postid }}">
-                    {{ post.title }} </a> &nbsp;&nbsp;
+                {% for post in tag.posts %}
+                    {% if forloop.counter0|divisibleby:2 %}
+                        <p></p>
+                    {% endif %}
+                    <a href="/posts/?postid={{ post.postid }}"> {{ post.title }}</a>&nbsp;&nbsp;
                 {% endfor %}
                 </td>
             </tr>

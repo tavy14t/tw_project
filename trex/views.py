@@ -176,3 +176,18 @@ def get_tags(request):
         tag_list = [int(x) for x in tags]
         content = {'content': get_posts_by_tags(tag_list)}
         return render(request, 'posts.html', content)
+
+@login_required
+def chat(request):
+    userid = int(request.session['userid'])
+
+    context = get_chat_rooms_context(userid)
+    return render(request, 'chat.html', context)
+
+
+@login_required
+def chat_friends(request):
+    userid = int(request.session['userid'])
+
+    context = get_chat_friends_context(userid)
+    return render(request, 'chat.html', context)

@@ -6,13 +6,6 @@
     {{ title }}
 {% endblock %}
 
-{% block bootstrap3_extra_head %}
-    {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{% static "account.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static "post.css" %}">
-    <meta name="csrf-token" content="{{ csrf_token }}">
-{% endblock %}
-
 {% block base_home_content %}
 	<p style="font-size: 30px;"> Postarile lui {{ firstname }} {{ lastname }} : </p>
 	{% for post in posts %}
