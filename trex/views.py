@@ -169,3 +169,10 @@ def get_tags(request):
             tagid = int(request.GET['tagid'])
             content = {'content': get_posts_by_tags([tagid])}
             return render(request, 'posts.html', content)
+        content = {'tags': get_empty_tags(request)}
+        return render(request, 'filtered.html', content)
+    elif request.method == 'POST':
+        tags = request.POST.getlist('checks[]')
+        tag_list = [int(x) for x in tags]
+        content = {'content': get_posts_by_tags(tag_list)}
+        return render(request, 'posts.html', content)
