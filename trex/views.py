@@ -26,7 +26,7 @@ def login(request):
         elif auth_result == AuthRC.ALREADY_LOGGED_IN:
             messages.info(request, 'Already logged in!')
         elif auth_result == AuthRC.UNKNOWN_ERROR:
-            messages.error(request, 'Unknown error has occured!')
+            messages.error(request, 'Unknown error has occurred!')
         return render(request, 'login.html')
     elif request.method == 'GET':
         print request.session
@@ -59,7 +59,7 @@ def logout(request):
         if deauth_result == DeAuthRC.NOT_LOGGED_IN:
             messages.error(request, 'Operation could not be performed!')
         elif deauth_result == DeAuthRC.SUCCESS:
-            messages.info(request, 'Deauthenticate successfully')
+            messages.info(request, 'Deautenticate successfully')
 
         return HttpResponseRedirect('/login')
 
@@ -166,12 +166,16 @@ def get_authors(request):
 def get_tags(request):
     if request.method == 'GET':
         if 'tagid' in request.GET:
-            tagid = request.GET['tagid']
-            content = get_posts_by_tags([tagid])
+            tagid = int(request.GET['tagid'])
+            content = {'content': get_posts_by_tags([tagid])}
             return render(request, 'posts.html', content)
-        else:
-            content = {'content': get_all_tags()}
-            return render(request, 'tags.html', content)
+        content = {'tags': get_empty_tags(request)}
+        return render(request, 'filtered.html', content)
+    elif request.method == 'POST':
+        tags = request.POST.getlist('checks[]')
+        tag_list = [int(x) for x in tags]
+        content = {'content': get_posts_by_tags(tag_list)}
+        return render(request, 'posts.html', content)
 
 @login_required
 def chat(request):

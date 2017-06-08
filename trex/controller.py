@@ -220,6 +220,17 @@ def save_account_settings(request):
         return AccountSettingsRC.INTERNAL_SERVER_ERROR
 
 
+def get_empty_tags(request):
+    cursor = connection.cursor()
+    cursor.execute("select tagid, name from tags")
+    tags = {}
+
+    for item in cursor:
+        tags[item[1]] = {'checked': 0, 'tagid': item[0]}
+
+    return tags
+
+
 def get_preferences(request):
     cursor = connection.cursor()
     cursor.execute("select tagid, name from tags")
