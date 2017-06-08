@@ -163,7 +163,7 @@ def get_authors(request):
 
 
 @login_required
-def get_tags(request):
+def get_filtered(request):
     if request.method == 'GET':
         if 'tagid' in request.GET:
             tagid = int(request.GET['tagid'])
@@ -176,6 +176,19 @@ def get_tags(request):
         tag_list = [int(x) for x in tags]
         content = {'content': get_posts_by_tags(tag_list)}
         return render(request, 'posts.html', content)
+
+
+@login_required
+def get_tags(request):
+    if request.method == 'GET':
+        if 'tagid' in request.GET:
+            tagid = int(request.GET['tagid'])
+            content = {'content': get_posts_by_tags([tagid], False)}
+            return render(request, 'posts.html', content)
+        else:
+            content = {'content': get_all_tags()}
+            return render(request, 'tags.html', content)
+
 
 @login_required
 def chat(request):

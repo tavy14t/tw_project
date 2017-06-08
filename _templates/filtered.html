@@ -2,30 +2,29 @@
 {% load static %}
 
 {% block bootstrap3_title %}
-    Tags
+    TReX Filtered Search
 {% endblock %}
 
-{% load static %}
 
 {% block bootstrap3_extra_head %}
     {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{% static "account.css" %}">
     <meta name="csrf-token" content="{{ csrf_token }}">
 {% endblock %}
 
+{% load static %}
 {% block scripts %}
     {{ block.super }}
     <script type="text/javascript" src="{% static "listbox.js" %}"></script>
 {% endblock %}
 
 {% block base_home_content %}
-    <div id="content" class="col-md-10">
+    <div id="content" class="col-md-12">
         <legend style="font-family: 'Lobster'; font-size:32px;">Tags</legend>
-        <div class="col-md-8">
+        <div class="col-md-12">
             <form class="form-horizontal" id="tagsForm" method="POST" action="/tags/">
                 {% csrf_token %}
                 <label for="listbox_tags">Check the tags you want to search by:</label>
-                <div style="max-height: 356px; overflow: auto;" id="tags_checkboxes_div">
+                <div style="max-height: 70vh; overflow: auto;" id="tags_checkboxes_div">
                     {% for preference_name, details in tags.items %}
                         {% if details.checked == 1 %}
                             <p style="font-size: 20px;"><input type="checkbox"  name="checks[]" value="{{ details.tagid }}" checked> {{ preference_name }}</p>
