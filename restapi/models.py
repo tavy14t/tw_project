@@ -11,6 +11,7 @@ from __future__ import unicode_literals
 import json
 
 from django.db import models
+from django import forms
 from channels import Group
 from trex.settings import MSG_TYPE_MESSAGE
 
@@ -175,3 +176,13 @@ class Friends(models.Model):
         on_delete=models.CASCADE,
         related_name='friend2',
     )
+
+
+class ImageUploadForm(forms.Form):
+    """Image upload form."""
+    image = forms.ImageField()
+
+
+class ExampleModel(models.Model):
+    model_pic = models.ImageField(
+        upload_to='avatars/', default='avatars/default-user.png')
