@@ -152,14 +152,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, '_static', 'css'),
     os.path.join(BASE_DIR, '_static', 'js'),
     os.path.join(BASE_DIR, '_static', 'images'),
+    os.path.join(BASE_DIR, '_static', 'pdfs'),
     os.path.join(BASE_DIR, '_templates')
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, '_static')
-
-#################################################################################
-
-#DISQUS_API_KEY = '5VTLWvMe92EjrhcebCPZkfBgRF0VFkobfPUlv8VsVncBARhJ5RTPZf2PFKLowJgt'
-#DISQUS_WEBSITE_SHORTNAME = 'foobar' ########################################    CHANGE HERE     ##################################################
 
 NOTIFY_USERS_ON_ENTER_OR_LEAVE_ROOMS = getattr(
     settings, 'NOTIFY_USERS_ON_ENTER_OR_LEAVE_ROOMS', True)

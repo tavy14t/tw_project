@@ -1,0 +1,455 @@
+Mieczys law Alo jzy K lopotek
+
+Institute of Computer Science, Polish Academy of Sciences, Warszawa, Poland,
+klopotek@ipipan.waw.pl
+
+Abstract. This paper suggests a new interpretation of the Dempster-
+Shafer theory in terms of probabilistic interpretation of plausibility. A
+new rule of combination of independent evidence is shown and its preser-
+vation of interpretation is demonstrated. 1
+
+Introduction
+
+Dempster Rule of Independent Evidence Combination has been criticized for
+its failure to conform to probabilistic interpretation ascribed to belief and plau-
+sibility function. Among those verifying DST (Dempster-Shafer-Theory, [2,12])
+critically were Kyburg [7], Fagin [3], Halpern [6], Pearl [9], Provan [10], Cano
+[1], just to mention a few.
+As a way out of those diculties, we proposed in a recent book co-authored
+by S.T.Wierzchon [18] three proposals for an empirical model of DST:
+
+ the marginally correct approximation.
+ the qualitative model
+ the quantitative model
+
+The marginally correct approximation assumes that the belief function shall
+constitute lower bounds for frequencies, though only for the marginals, and not
+for the joint distribution. Then, the reasoning process is expressed in terms
+of the so-called Cano et al. conditionals - a special class of conditional belief
+functions that are positive. This approach implies modication of the reasoning
+mechanism, because the correctness is maintained only by reasoning forward.
+Depending on the reasoning direction we need dierent Markov trees for the
+reasoning engine.
+Note that lower/upper bound interpretations have a long tradition for DST
+[2,7] and have been heavily criticized [6]. The one that we presented in our
+
+1 This is a preliminary version of the paper:
+M.A. Kopotek: Transferable Plausibility Model - A Probabilistic Interpretation
+of Mathematical Theory of Evidence O.Hryniewicz, J. Kacprzyk, J.Koronacki,
+S.Wierzcho:
+Issues
+in Intelligent Systems Paradigms Akademicka Ocyna
+Wydawnicza EXIT, Warszawa 2005 ISBN 83-87674-90-7, pp.107118
+
+book diers from the known ones signicantly as we insist on dierent reason-
+ing schemes (hypertrees) depending on which are our target variables, whose
+values are to be inferred. This assures overcoming of the basic diculties with
+lower/upper bound interpretations.
+Our qualitative approach is based on the earlier rough set interpretations of
+DST, but makes a small and still signicant distinction. All computations are
+carried out in a strictly relational way, that is, indistinguishable ob jects in a
+database are merged (no ob ject identities). The behavior under reasoning ts
+strictly the DST reasoning model. Factors of well established hypergraph repre-
+sentation (due to Shafer and Shenoy [14]) can be expressed by relational tables.
+Conditional independence is well dened. However, there is no interpretation for
+conditional belief functions in this model.
+Rough set interpretations [15] were primarily developed for interpreting the
+belief function in terms of decision tables. However, the Dempster-rule of evi-
+dence combination was valid there only for the extended decision tables, not
+easily derived from the original ones. In our interpretation, both the original
+tables and the resultant tables dealt with when simulating Dempster-rule are
+conventional decision tables and the process of combining of decision tables is a
+natural one (relational join operator).
+Our rough set based interpretation may be directly applied in the domain of
+multiple decision tables: independence of decision variables or Shenoys condi-
+tional independence in the sense of DST may serve as an indication of possibility
+of decomposition of the decision table into smaller but equivalent tables.
+Furthermore, it may be applied in the area of Cooperative Query Answer-
+ing [11]. The problem there is that a query posed to a local relational database
+system may contain an unknown attribute. But, possibly, other co-operating
+database systems know it and may explain it to the queried system in terms
+of known attributes, shared by the various systems. The uncertainties studied
+in the decision tables arise here in a natural way and our interpretation may
+be used to measure these uncertainties in terms of DST (as a diversity of sup-
+port). Furthermore, if several co-operating systems respond, then the queried
+system may calculate the overall uncertainty measure using DST combination
+of measures of individual responses.
+The quantitative model assumed that the ob jects possess multivalued proper-
+ties which are then lost in some physical properties and these physical processes
+are described by DST belief functions (see e.g. [8])..
+The quantitative model assumes that during the reasoning process one at-
+taches labels to ob jects hiding some of their properties. There is a full agreement
+with the reasoning mechanism of DST. Conditional independence and condi-
+tional belief functions are well dened. We have also elaborated processes that
+can give rise to well-controlled graphoidally structured belief functions. Thus,
+sample generation for DST is possible. We elaborated also learning procedures
+for discovery of graphoidal structures from data.
+The quantitative model seems to be the best tting model for belief functions
+created so far.
+
+This frequency model diers from what was previously considered [16,17] in
+that it assumes that reasoning in DST is connected with updating of variables
+for individual cases. This is dierent from e.g. reasoning in probability where rea-
+soning means only selection of cases. In this way, failures of previous approaches
+could be overcome.
+Many authors [13,16] question the need for an empirical model for DST and
+point rather to theoretical properties of DST considered within an axiomatic
+framework seeking parallels with the probability theory. Though it is true that
+the probability theory may be applied within the framework of Kolmogorov ax-
+ioms and quite useful results are derived in this way, one shall still point out that
+the applicability of probability theory is signicantly connected with frequencies.
+Both frequencies considered as naive probabilities, ore ones being probabilities
+in the limit. Statistics is clearly an important part of the probabilistic world.
+All three interpretations share a common drawback they are not sensu stricto
+probabilistic. In the current paper we make an attempt of a purely probabilistic
+vision of plausibility function.
+
+2 Basics of the Dempster-Shafer Theory
+
+We understand DST measures in a standard way (see [12]). Let  be a nite set
+of elements called elementary events. Any subset of  is a composite event, or
+hypothesis.  be called also the frame of discernment.
+
+Denition 1. [12] Let  be a nite set of elements cal led elementary events.
+The set  is cal led frame of discernment. Any subset of  be a composite event.
+A basic probability assignment (bpa) function is any function m:2  [0, 1] such
+that
+
+m(A) = ON E
+
+m() = 0,
+
+A2
+A2
+
+0  X
+AB
+
+m(B )
+
+We say that a bpa is vacuous i m( ) = ON E and m(A) = 0 for every A 6=  .
+
+If ONE is equal 1, then we say that the belief function is normalized, otherwise
+not (but ONE must be positive).
+
+Denition 2. [12] Let a belief function be dened as Bel:2  [0, 1] so that
+B el(A) = PBA m(B ). Let a plausibility function be Pl:2  [0, 1] with A2 P l(A) =
+ON E  B el(  A), a commonality function be Q:2  {}  [0, 1] with
+A2 {} Q(A) = PAB m(B ).
+Denition 3. [12] The Rule of Combination of two Independent Belief Func-
+tions B elE1 , B elE2 Over the Same Frame of Discernment (the so-cal led Dempster-
+Rule), denoted
+
+B elE1 ,E2 = B elE1  B elE2
+
+is dened as fol lows: :
+
+mE1 ,E2 (A) = c  X
+B ,C ;A=BC
+
+mE1 (B )  mE2 (C )
+
+(c - constant normalizing the sum of m to 1).
+
+Under multivariate settings  is a set of vectors in n-dimensional space
+spanned by the set of variables X={ X1 , X2 , . . . Xn}. If A   , then by pro jec-
+tion AY of the set A onto a subspace spanned by the set of variables Y  X we
+understand the set B of vectors from A pro jected onto Y. Then marginalization
+operator
+follows:
+as
+dened
+is
+DST
+of
+mY (B ) = PA;B=AX m(A).
+
+Denition 4. (See [?]) Let B be a subset of  , cal led evidence, mB be a basic
+probability assignment such that mB (B ) = 1 and mB (A) = 0 for any A dierent
+from B. Then the conditional belief function B el(.||B ) representing the belief
+function B el conditioned on evidence B is dened as: B el(.||B ) = B el  B elB .
+
+3 New Rule of Evidence Combination
+
+Let us suggest now a totally new approach to understanding belief functions.
+We assume the following interpretation of the plausibility function: P l (A) is
+the maximum probability that an element from the set of events A occurs, given
+the evidence  , where we assume the apriorical probability of all elementary
+events is equal. Let 1 and 2 be two independent bodies of evidence, which are
+represented numerically by plausibility functions P l1 and P l2 over some frame
+of discourse  . We would like to obtain such an evidence updating rule P l that
+P l3 = P l1 P l P l2 would have the semantics that under that interpretation
+P l3 (A) is the maximum probability that an element from the set of events A
+occurs, given the evidence P l1 , P l2 under the least conicting evidence.
+Let us study in detail this assumption. First of all we have to tell what we
+mean by independent evidence. Let  be an elementary event from the frame of
+discernment  . The body of evidence 1 is independent of the body 2 if, for
+each    , the probability of occurrence of evidence 1 is independent of the
+occurrence of evidence 2. So we say that P r(1  2| ) = P r(1| )  P r(2| ).
+How shall we understand the evidence, however. For any A   ) should hold
+P l (A)  P r(A| ). Consequently, by the way, P l (A) + P l (/A)  1.
+Now observe that P r(1  2 | ) = P r(1 | ) + P r(2 | ). As a consequence,
+we have always that P l ({1}) + P l ({2})  P l ({1 , 2}).
+Let us now turn to combining independent evidence.
+
+P r( |1  2) = P r(1  2| ) 
+
+P r( )
+P r(1  2)
+
+P r(1| )  P r(2| ) 
+
+P r( )
+P r(1  2)
+
+P r( |1)  P r( |2) 
+
+P r(1)  P r(2)
+P r(1  2)  P r( )
+
+So we can conclude that P l12 ( ) = P l1 ( )P l2 ( )c where c is a normalizing
+factor (which needs to be chosen carefully).
+
+But what about P r(1  2 |1  2) ? We know that P r(1  2 |1  2) =
+P r(1 |1  2) + P r(2 |1  2) hence
+
+P r(1  2 |1  2)
+
+P r(1 |1)P r(1 |2)
+
+P r(1)  P r(2)
+P r(1  2)  P r(1 )
+
++P r(2 |1)P r(2 |2)
+
+P r(1)  P r(2)
+P r(1  2)  P r(2 )
+
+As P r( ) is the same for all the  s, we get
+
+P r(1  2 |1  2)
+
+(P r(1 |1)  P r(1 |2) + P r(2 |1)  P r(2 |2)) 
+
+P r(1)  P r(2)
+P r(1  2)  P r( )
+
+We can easily check that this translates to:
+
+P l12 ({1 , 2}) =
+
+max(P l1 (1 )  P l2 (1 ) + (P l1 ({1 , 2}  P l1(1 ))  (P l2 ({1 , 2}  P l2(1 ))
+
+, P l1 (1 )  (P l2 ({1 , 2}  P l2 (2 )) + (P l1 ({1 , 2}  P l1 (1 ))  P l2 (2 )
+
+, P l1 (2 )  (P l2 ({1 , 2}  P l2 (1 )) + (P l1 ({1 , 2}  P l1 (2 ))  P l2 (1 )
+
+, P l1 (2 )  P l2 (2 ) + (P l1 ({1 , 2}  P l1(2 ))  (P l2 ({1 , 2}  P l2(2 )))  c
+
+where c is the normalizing factor mentioned earlier.
+These formulas easily generalize for subsets of  with higher cardinality. The
+normalizing factor should be chosen in such a way that P l12 ( ) = 1.
+The generalization of P l for frames of discourse with cardinality higher than
+3 runs along the following lines. To combine P l1 with P l2 we calculate:
+
+ for each subset X of 
+P lresult (X ) = P LX
+1 V P l2 X ;
+
+The operator  X does only a change of the domain of the P l function
+keeping the values of P l for each subset of X and presuming that the discourse
+frame consists only of X . In this way we get unnormalized P ls here, which are
+not normalized during this operation.
+The operator V , returning a numerical value, attempts identify such com-
+binations of mass assignments ma and mb to singleton sets that will not violate
+the constraints imposed by plausibility functions P l1 and P l2 resp. and such
+that the sum PX ;X asingleton ma (X )  mb (X ) is maximal.
+This is done by the operation of so-called pushing down the plausibilities
+to singleton sets. Independently for P l1 and P l2 candidate ma and mb are ob-
+taining via pushing-down recursively a singleton  of  . A candidate ma is
+obtained if all singletons are pushed down. Dierent candidates are obtained
+by dierent sequences of pushing down. It is easy to imagine that the process
+is time-consuming and its complexity grows exponentially with the number of
+elements of a set. Nonetheless for small domains the operation is feasible.
+
+The idea of the push-down operator  + is as follows: Let P l be a plausibil-
+ity function. If A does not contain  , P l+ (A) = min(P l(A), P l(A  {}) 
+P l({})), and otherwise P l+ (A) = P l(A).
+Under these conditions it is obvious that we do not seek actually the max-
+imum product over the whole domain, but rather in some corner points. We
+will give a formal proof elsewhere that this check is in fact sucient to establish
+the maximum. Here we only want to draw attention to the analogy with linear
+programming, where we seek the maximum sub ject to linear constraints. When-
+ever we x pushdown of one of the plausibility distributions, we in fact have
+a linear optimization case with the other. If found, we can do the same with the
+other.
+The P l operator is characterized by commutativity and associativity. The
+commutativity is easily seen because all the operations are in fact symmetrical
+with respect to left and right hand of the operators. The associativity is more
+dicult to grasp, and a formal proof will be sub ject of another publication.
+Nonetheless we can give here brief common-sense guidelines how it can be es-
+tablished. We can essentially concentrate on the associative properties of the
+maximum operator. Starting with the expression of combination of all the three
+plausibility functions, we can show that we can equivalently denote the same
+optimization task when drawing behind braces the rst or the third operand.
+In the next section we show some properties of the new operator compared
+with Dempster rule of combination for some illustrative examples.
+
+4 Examples
+
+Let us consider the bodies of evidence in the tables 1, 2, 3.
+
+Table 1. mass function for the body of evidence a
+
+m value for the set of elements
+0.0 { }
+0.25 { red }
+0.25 { blue }
+0.25 { red , blue }
+0.25 { green }
+0.0 { red , green }
+0.0 { blue , green }
+0.0 { red , blue , green }
+
+We can check the commutativity and obtain the results as in the table 4.
+The associativity has been veried in table 5.
+It is worth noting, that the new operator is dierent from Dempster rule,
+compare tables 4 and 6
+
+Table 2. mass function for the body of evidence  b
+
+m value for the set of elements
+0.0 { }
+0.2 { red }
+0.4 { blue }
+0.1 { red , blue }
+0.0 { green }
+0.0 { red , green }
+0.3 { blue , green }
+0.0 { red , blue , green }
+
+Table 3. mass function for the body of evidence  c
+
+m value for the set of elements
+0.0 { }
+0.0 { red }
+0.15 { blue }
+0.25 { red , blue }
+0.35 { green }
+0.25 { red , green }
+0.0 { blue , green }
+0.0 { red , blue , green }
+
+Table 4. mass function for the body of evidence (a P L  b) =( b P L a)
+
+m value for the set of elements
+0.0 { }
+0.11111111111111105 { red }
+0.4999999999999999 { blue }
+0.22222222222222232 { red , blue }
+0.0 { green }
+0.0 { red , green }
+0.16666666666666674 { blue , green }
+0.0 { red , blue , green }
+
+Table 5. mass function for the body of evidence ((aP L  b)P L  c) =(aP L ( bP L
+ c))
+
+m value for the set of elements
+0.0 { }
+0.0 { red }
+0.4214285714285715 { blue }
+0.3214285714285714 { red , blue }
+0.014285714285714124 { green }
+0.07142857142857151 { red , green }
+0.1357142857142858 { blue , green }
+0.0357142857142857 { red , blue , green }
+
+Table 6. mass function for the body of evidence (a   b)
+
+m value for the set of elements
+0.0 { }
+0.20833333333333337 { red }
+0.6249999999999999 { blue }
+0.04166666666666663 { red , blue }
+0.12500000000000003 { green }
+0 { red , green }
+0 { blue , green }
+0 { red , blue , green }
+
+With this and other experiments we see clearly the tendency of Dempster
+rule to move mass downwards to singleton sets, whereas the new rule is much
+more cautious here and in fact does not introduce the feeling of certainty where
+it is not justied.
+
+5 Conclusions
+
+We have introduced in this paper a new DST operator for combining independent
+evidence providing a clear probabilistic denition of the plausibility function,
+which is preserved under this rule of combination.
+We have also provided several toy examples to give an impression what results
+are returned by the new operator.
+Though the strict theoretical proof of properties like cummutativeness, asso-
+ciativeness is still to be provided, the computations for test examples show that
+the properties really hold. It is also obvious from the examples that the new rule
+diers from the Dempster rule of evidence combination. An interested reader is
+invited
+to
+visit
+the
+Web
+page
+http://www.ipipan.waw.pl/klopotek/DSTnew/DSTdemo.html to try out him-
+self.
+
+References
+
+1. Cano J., Delgado M., Moral S.: An axiomatic framework for propagating uncer-
+tainty in directed acyclic networks, Int. J. of Approximate Reasoning. 1993:8, 253-
+280.
+2. A.P.Dempster: Upper and lower probabilities induced by a multi-valued mapping.
+Ann. Math. Stat. 38 (1967), 325-339
+3. R.Fagin, J.Y.Halpern: Uncertainty, belief, and probability, Proc. Int. Joint Conf.
+AI, IJCAI89, Detroit, 1989, 1161-1167.
+4. R.Fagin, J.Y.Halpern: A new approach to updating beliefs, in:J.F. Lemmer, L.N.
+Kanal eds: Uncertainty in Articial Intel ligence 6 (North-Holland Amsterdam,
+1991), 347-374.
+5. R. Fagin, J.Y. Halpern: Uncertainty, belief, and probability. Comput. Intell. 71991,
+160-173.
+6. J.Y. Halpern, R. Fagin: Two views of belief: belief as generalized probability and
+belief as evidence.Articial Intel ligence 541992, 275-317
+7. H.E. Kyburg Jr: Bayesian and non-Bayesian evidential updating.
+8. M.A.Kopotek, S.T.Wierzcho: Quest on New Applications for Dempster-Shafer
+Theory: Risk Analysis in Pro ject Protability Calculus. In: P. Grzegorzewski,
+O.Hryiewicz, M.A.Gil Eds.: Soft Methods in Probability, Statistics and Data Anal-
+ysis , Advances in Soft Computing Series, Physica-Verlag/Springer Verlag, 2002,
+ISBN 3-7908-1526-8, pp. 302-309
+9. Pearl, 1990 J. Pearl: Bayesian and Belief-Function formalisms for evidential rea-
+soning:A conceptual analysis. in:G. Shafer, J. Pearl (eds): Readings in Uncertain
+Reasoning, (ISBN 1-55860-125-2, Morgan Kaufmann Publishers Inc., San Mateo,
+California, 1990), 540-569.
+
+10. Provan, 1990 G.M.Provan: A logic-based analysis of Dempster-Shafer Theory, In-
+ternational Journal of Approximate Reasoning 41990, 451-495.
+11. Z.W. Ras: Query processing in distributed information systems, Fundamenta In-
+formaticae Journal, Special Issue on Logics for Articial Intelligence, IOS Press,
+Vol. XV, No. 3/4, 1991, 381-397
+12. G.Shafer: A Mathematical Theory of Evidence , Princeton University Press, Prince-
+ton, 1976
+13. G.Shafer: Perspectives on the theory and practice of belief functions, International
+Journal of Approximate Reasoning, 1990:4, 323-362.
+14. P.P.Shenoy: Valuation networks and conditional independence. International Jour-
+nal of Uncertainty, Fuzziness and Know ledge-Based Systems, Vol.2, No.2, June
+1994.
+15. A.Skowron, J.W.Grzyma la-Busse: From rough set theory to evidence theory.
+in:R.R.Yager, J.Kasprzyk and M.Fedrizzi, eds, Advances in the Dempster-Shafer
+Theory of Evidence J. Wiley, New York (1994), 193-236.
+16. Smets, 1992 Ph.Smets: Resolving misunderstandings about belief functions, Inter-
+national Journal of Approximate Reasoning 1992:6:321-344.
+17. Smets, Kenne, 1994 Ph.Smets, R.Kennes: The tranferable belief model, Articial
+Intel ligence 66 (1994), 191-234
+18. S.T.Wierzcho, M.A.Kopotek: Evidential Reasoning. An Interpretative Investiga-
+tion. Wydawnictwo Akademii Podlaskiej, Siedlce, 2002 PL ISSN 0860-2719, 304
+pages,
+
+

@@ -7,6 +7,11 @@
 {% endblock %}
 
 {% block base_home_content %}
+	<legend style="font-family: 'Lobster'; font-size:32px;">
+	{{ firstname }} {{ lastname }}
+	</legend>
+	<img src="{% static "defaultuser.png" %}" style="width: 256px; height: 256px; border: 1px solid #ddd;
+    border-radius: 4px; padding: 5px;">
 	<p style="font-size: 30px;"> Postarile lui {{ firstname }} {{ lastname }} : </p>
 	{% for post in posts %}
 		<p><a href="/posts/?postid={{ post.postid }}"> {{ post.title }} </a></p>

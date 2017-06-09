@@ -1,6 +1,10 @@
 li {
   list-style-type: none;
 }
+#item_room:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
 
 
 .room {
