@@ -104,3 +104,34 @@ def convert_pdf(path):
 def printfl(data, fn='1.html'):
     with open(fn, 'w') as f:
         f.write(data)
+
+
+def get_tags_and_link(html_data):
+    r = '<li><b>cs\.[A-Z][A-Z] - [a-zA-Z,\- ]+</b> \(<a href=\"[^\"]+\">'
+    r += 'new</a>,'
+    link_r = '<a href=\"([^\"]+)\">'
+    tag_r = '[A-Z][A-Z] - ([a-zA-Z,\- ]+)</b>'
+    dict_list = []
+    all_data = re.findall(r, html_data)
+    for entry in all_data:
+        tag = re.findall(tag_r, entry)[0]
+        link = re.findall(link_r, entry)[0]
+        this_dict = {}
+        this_dict['tag'] = tag
+        this_dict['link'] = base_link + link
+        dict_list.append(this_dict)
+
+    return dict_list
+
+
+def get_pdf_link(html_data):
+    # r = '.+\[1\].+title="Download PDF">pdf</a>, <a href="([^"]+)" title='
+    r = '.+\[1\].+a href="([^"]+)" title="Download PDF">pdf</a>'
+    pdf_link = re.findall(r, html_data)[0]
+    if pdf_link.startswith('/format'):
+        pdf_link = '/pdf' + pdf_link[7:]
+    if not pdf_link.endswith('.pdf'):
+        pdf_link += '.pdf'
+    if pdf_link.startswith('/ps/'):
+        return base_link + pdf_link, pdf_link[4:]
+    return base_link + pdf_link, pdf_link[5:]
