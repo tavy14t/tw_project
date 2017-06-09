@@ -4,6 +4,10 @@ from .models import Posts
 from .models import Users
 from .serializers import PostSerializer
 from .serializers import UsersSerializer
+from django.core.urlresolvers import resolve
+from django.utils.encoding import smart_str
+from django.http import FileResponse, HttpResponse, HttpResponseRedirect
+import os
 
 
 class PostList(APIView):
@@ -24,3 +28,18 @@ class UsersList(APIView):
 
     def post(self, request):
         pass
+
+
+def get_post(request):
+    if request.method == 'GET':
+        file_name = request.path_info.split('/', 3)[-1]
+        file_path = os.path.join('_static', 'pdfs', file_name)
+        print 'Downloading...', file_name
+        if os.path.isfile(file_path):
+            response = HttpResponse(open(file_path, 'rb').read())
+            response['Content-Type'] = 'mimetype/submimetype'
+            response['Content-Disposition'] = \
+                'attachment; filename=%s' % file_name
+            return response
+        else:
+            return HttpResponseRedirect('/restapi/posts')
