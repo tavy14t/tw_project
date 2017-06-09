@@ -8,6 +8,7 @@
 
 {% block bootstrap3_extra_head %}
     {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "account.css" %}">
     <meta name="csrf-token" content="{{ csrf_token }}">
 {% endblock %}
 
@@ -44,7 +45,7 @@
                 </div>
                 <br>
                 <br>
-                <input type="submit" id="search_tags_btn" class="btn btn-def btn-block" value="Search tags"></input>
+                <input type="submit" id="save_changes_btn" class="btn btn-def btn-block" value="Search tags"></input>
                 <hr>
             </form>
             {% if messages %}
