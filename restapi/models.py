@@ -31,7 +31,7 @@ class Comments(models.Model):
 
 class Posts(models.Model):
     # Field name made lowercase.
-    postid = models.IntegerField(db_column='postId', primary_key=True)
+    postid = models.AutoField (db_column='postId', primary_key=True)
     # Field name made lowercase.
     userid = models.IntegerField(db_column='userId')
     title = models.TextField()  # This field type is a guess.
@@ -52,12 +52,13 @@ class PostsResources(models.Model):
         managed = False
         db_table = 'POSTS_RESOURCES'
 
-
 class PostsTags(models.Model):
     # Field name made lowercase.
     postid = models.IntegerField(db_column='postId')
+    #post = models.ForeignKey(Posts)
     # Field name made lowercase.
     tagid = models.IntegerField(db_column='tagId')
+    #tag = models.ForeignKey(Tags)
 
     class Meta:
         managed = False

@@ -10,46 +10,15 @@
 	<div>
 		<legend style="font-family: 'Lobster'; font-size:32px;"> {{ title }} </legend>
 		<div id="post_background">
-			<p> {{ text }} </p>
+			<center>
+				<embed src="{% static text %}" width="1400px" height="2100px" />
+			</center>
 		</div>
 	</div>
 
 	<div>
 		<legend style="font-family: 'Lobster'; font-size:24px;">Comments:</legend>
-
-		{% for comment, firstname, lastname in comments %}
-			<p><div class="comment">
-				{{ comment }}
-				
-				<br>
-				<a id="username" href="#">{{ firstname }} {{ lastname }}</a>
-			
-			</div></p>
-		{% empty %}
-			<p> No comments yet :\ </p>
-		{% endfor %}
 	</div>
-
-	<form role="form" id="commentsForm" method="POST" class="post-form">
-		{% csrf_token %}
-		<div class="control-group">
-	        <label for="id_comment">Comment:</label>
-
-	        <input type="text" class="form-control" id="id_comment" maxlength="4094" name="comment" placeholder="Insert Comment!">
-        </div>
-
-		<button type="submit" class="save btn btn-default">Send</button>		
-	</form>
-
-	{% if messages %}
-	    {% for message in messages %}
-            <div>
-                <p class="navbar-text" style="color: red">
-                    {{ message }}
-                </p>
-            </div>
-	    {% endfor %}
-    {% endif %}
 
 	<div id="disqus_thread"></div>
 	<script>

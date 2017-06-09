@@ -90,7 +90,7 @@ def authenticate_user(request):
 
 
 def deauthenticate_user(request):
-    if 'userid' not in request.session.keys():
+    if 'userid' not in request.session. keys():
         return DeAuthRC.NOT_LOGGED_IN
     else:
         request.session.pop('userid')
