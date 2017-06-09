@@ -99,3 +99,8 @@ def convert_pdf(path):
     ceva = ceva.decode('utf-8', 'ignore')
     return ceva.encode('ascii', 'ignore')
     return ceva
+
+
+def printfl(data, fn='1.html'):
+    with open(fn, 'w') as f:
+        f.write(data)
