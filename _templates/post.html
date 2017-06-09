@@ -7,11 +7,17 @@
 {% endblock %}
 
 {% block base_home_content %}
+	<style>
+		#pdf{
+			height: 80vh;
+			width: 75vw;
+		}
+	</style>
 	<div>
 		<legend style="font-family: 'Lobster'; font-size:32px;"> {{ title }} </legend>
 		<div id="post_background">
 			<center>
-				<embed src="{% static text %}" width="1400px" height="2100px" />
+				<embed src="{% static text %}" id="pdf"/>
 			</center>
 		</div>
 	</div>
