@@ -5,6 +5,10 @@ import tempfile
 import pycurl
 import re
 import urlparse
+from pdfminer.pdfinterp import PDFResourceManager, process_pdf
+from cStringIO import StringIO
+from pdfminer.converter import TextConverter
+from pdfminer.layout import LAParams
 
 base_link = 'https://arxiv.org'
 
@@ -74,3 +78,24 @@ def download_file_redir(url, fn, httpheaders=None):
             url2 = urlparse.urljoin(url, urls[0].strip())
         else:
             return url2
+
+
+def convert_pdf(path):
+
+    rsrcmgr = PDFResourceManager()
+    retstr = StringIO()
+    codec = 'utf-8'
+    laparams = LAParams()
+    device = TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
+
+    fp = file(path, 'rb')
+    process_pdf(rsrcmgr, device, fp)
+    fp.close()
+    device.close()
+
+    ceva = retstr.getvalue()
+    retstr.close()
+
+    ceva = ceva.decode('utf-8', 'ignore')
+    return ceva.encode('ascii', 'ignore')
+    return ceva
