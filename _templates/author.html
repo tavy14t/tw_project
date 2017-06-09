@@ -7,24 +7,71 @@
 {% endblock %}
 
 {% block base_home_content %}
+	<link rel="stylesheet" type="text/css" href="{% static "author.css" %}">
 	<legend style="font-family: 'Lobster'; font-size:32px;">
 	{{ firstname }} {{ lastname }}
 	</legend>
-	<img src="{% static "defaultuser.png" %}" style="width: 256px; height: 256px; border: 1px solid #ddd;
-    border-radius: 4px; padding: 5px;">
-	<p style="font-size: 30px;"> Postarile lui {{ firstname }} {{ lastname }} : </p>
-	{% for post in posts %}
-		<p><a href="/posts/?postid={{ post.postid }}"> {{ post.title }} </a></p>
-	{% endfor %}
 
-	<p style="font-size: 30px;"> Preferintele sale: </p>
-	{% for tag in tags %}
-		<p><a href="/tags/?tagid={{ tag.tagid }}"> {{ tag.name }} </a></p>
-	{% endfor %}
+	<div id="container_author_1">
+		<div class="col-md-6">
+			<img src="{% static "defaultuser.png" %}" style="width: 200px; height: 200px; border: 1px solid #ddd;
+		    border-radius: 4px; padding: 5px;" id="author_img_id">
+		</div>
+		<div class="col-md-6">
+			<p style="font-size: 30px;"> About: </p>
+			<table id="author_table" class="table table-responsive">
+				<tr>
+					<td>
+						<p> <b> First name </b> </p>
+					</td>
+					<td>
+						<p> {{ firstname }} </p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p> <b> Last name </b> </p>
+					</td>
+					<td>
+						<p> {{ lastname }} </p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p> <b> Email </b> </p>
+					</td>
+					<td>
+						<p> {{ email }} </p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p> <b> Phone </b> </p>
+					</td>
+					<td>
+						<p> {{ phone }} </p>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
 
-	<p style="font-size: 30px;"> Detalii despre el: </p>
-	<p> {{ firstname }} </p>
-	<p> {{ lastname }} </p>
-	<p> {{ email }} </p>
-	<p> {{ phone }} </p>
+	<div id="container_author_2">
+		<div class="col-md-6">
+			<p style="font-size: 30px;"> {{ firstname }} {{ lastname }}'s posts: </p>
+			{% for post in posts %}
+				<p><a href="/posts/?postid={{ post.postid }}"> {{ post.title }} </a></p>
+			{% endfor %}
+		</div>
+
+		<div class="col-md-6">
+			<p style="font-size: 30px;"> {{ firstname }} {{ lastname }}'s preferences: </p>
+			<div style="overflow-y: scroll; height:40vh">
+				{% for tag in tags %}
+					<p><a href="/tags/?tagid={{ tag.tagid }}"> {{ tag.name }} </a></p>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
 {% endblock base_home_content %}
