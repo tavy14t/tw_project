@@ -11,6 +11,7 @@ from __future__ import unicode_literals
 import json
 
 from django.db import models
+from django import forms
 from channels import Group
 from trex.settings import MSG_TYPE_MESSAGE
 
@@ -31,7 +32,7 @@ class Comments(models.Model):
 
 class Posts(models.Model):
     # Field name made lowercase.
-    postid = models.IntegerField(db_column='postId', primary_key=True)
+    postid = models.AutoField(db_column='postId', primary_key=True)
     # Field name made lowercase.
     userid = models.IntegerField(db_column='userId')
     title = models.TextField()  # This field type is a guess.
@@ -51,17 +52,6 @@ class PostsResources(models.Model):
     class Meta:
         managed = False
         db_table = 'POSTS_RESOURCES'
-
-
-class PostsTags(models.Model):
-    # Field name made lowercase.
-    postid = models.IntegerField(db_column='postId')
-    # Field name made lowercase.
-    tagid = models.IntegerField(db_column='tagId')
-
-    class Meta:
-        managed = False
-        db_table = 'POSTS_TAGS'
 
 
 class Resources(models.Model):
@@ -84,6 +74,25 @@ class Tags(models.Model):
     class Meta:
         managed = False
         db_table = 'TAGS'
+
+
+class PostsTags(models.Model):
+    # Field name made lowercase.
+    postid = models.IntegerField(db_column='postId')
+    post = models.ForeignKey(
+        Posts,
+        on_delete=models.CASCADE
+    )
+    # Field name made lowercase.
+    tagid = models.IntegerField(db_column='tagId')
+    tag = models.ForeignKey(
+        Tags,
+        on_delete=models.CASCADE
+    )
+
+    class Meta:
+        managed = False
+        db_table = 'POSTS_TAGS'
 
 
 class Users(models.Model):
@@ -114,8 +123,16 @@ class Users(models.Model):
 class UsersTags(models.Model):
     # Field name made lowercase.
     userid = models.IntegerField(db_column='userId')
+    user = models.ForeignKey(
+        Users,
+        on_delete=models.CASCADE
+    )
     # Field name made lowercase.
     tagid = models.IntegerField(db_column='tagId')
+    tag = models.ForeignKey(
+        Tags,
+        on_delete=models.CASCADE
+    )
 
     class Meta:
         managed = False
@@ -159,3 +176,13 @@ class Friends(models.Model):
         on_delete=models.CASCADE,
         related_name='friend2',
     )
+
+
+class ImageUploadForm(forms.Form):
+    """Image upload form."""
+    image = forms.ImageField()
+
+
+class ExampleModel(models.Model):
+    model_pic = models.ImageField(
+        upload_to='avatars/', default='avatars/default-user.png')

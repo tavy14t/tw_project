@@ -90,7 +90,7 @@ def authenticate_user(request):
 
 
 def deauthenticate_user(request):
-    if 'userid' not in request.session.keys():
+    if 'userid' not in request.session. keys():
         return DeAuthRC.NOT_LOGGED_IN
     else:
         request.session.pop('userid')
@@ -206,7 +206,7 @@ def save_account_settings(request):
         cursor.execute("update users set EMAIL = :email,"
                        "PASSWORDHASH = :md5pass,"
                        "ADDRESS = :address,"
-                       "PHONE = :phone"
+                       "PHONE = :phone "
                        "where userid = :userid",
                        {'email': email,
                         'md5pass': cur_password_hash,
@@ -216,7 +216,8 @@ def save_account_settings(request):
                         })
         cursor.close()
         return AccountSettingsRC.SUCCESS
-    except Exception:
+    except Exception as ex:
+        print 'Exception:', ex
         return AccountSettingsRC.INTERNAL_SERVER_ERROR
 
 
