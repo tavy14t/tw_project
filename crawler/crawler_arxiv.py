@@ -2,9 +2,11 @@ import urllib2
 import traceback
 import time
 import tempfile
+import json
 import pycurl
 import re
 import urlparse
+import os
 from pdfminer.pdfinterp import PDFResourceManager, process_pdf
 from cStringIO import StringIO
 from pdfminer.converter import TextConverter
@@ -135,3 +137,26 @@ def get_pdf_link(html_data):
     if pdf_link.startswith('/ps/'):
         return base_link + pdf_link, pdf_link[4:]
     return base_link + pdf_link, pdf_link[5:]
+
+
+if not os.path.exists('pdfs'):
+    os.makedirs('pdfs')
+
+new_dict_list = []
+tags_and_links = get_tags_and_link(load_url('https://arxiv.org/archive/cs'))
+for d in tags_and_links:
+    link = d['link']
+    pdf_link, pdf_name = get_pdf_link(load_url(link))
+    download_file_redir(pdf_link, 'pdfs/' + pdf_name)
+
+    ###########
+    d['text'] = convert_pdf('pdfs/' + pdf_name)
+    print len(d)
+    ###########
+    # try:
+    #     d['text'] = convert_pdf('pdfs/' + pdf_name)
+    new_dict_list.append(d)
+    # except Exception:
+    #     print 'this pdf (%s) is not ok' % pdf_name
+
+printfl(json.dumps(new_dict_list, indent=4), 'text.txt')
