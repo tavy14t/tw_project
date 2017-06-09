@@ -1,0 +1,15 @@
+#table_authors{
+    margin-top: 20px;
+}
+#table_authors tr th{
+    background-color: rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    font-size: 18px;
+}
+.author_class{
+    padding: 2px;
+}
+.author_class *{
+    font-size: 15px;
+    font-weight: bold;
+}
