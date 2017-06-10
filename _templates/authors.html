@@ -18,15 +18,16 @@
             height: 50px;
         }
     </style>
-    <link rel="stylesheet" type="text/css" href="{% static "authors.css" %}">
-    <table id="table_authors">
+    <link rel="stylesheet" type="text/css" href="{% static "tables.css" %}">
+    <legend style="font-family: 'Lobster'; font-size:32px;">Authors</legend>
+    <table class="table_class">
         <tr>
             <th> Author </th>
             <th> Publications </th>
         </tr>
         {% for item in content %}
             <tr>
-                <td class="author_class"> <a href="/authors/?userid={{ item.userid }}"> {{ item.author }} </a> </td>
+                <td class="table_td"> <a href="/authors/?userid={{ item.userid }}"> {{ item.author }} </a> </td>
                 <td>
                 {% for post in item.publications %}
                     <a href="/posts/?postid={{ post.postid }}">

@@ -21,7 +21,9 @@
             background-color: #E0E0BF;
         }
     </style>
-    <table class="table table-hover table-responsiveness">
+    <link rel="stylesheet" type="text/css" href="{% static "tables.css" %}">
+    <legend style="font-family: 'Lobster'; font-size:32px;">Posts</legend>
+    <table class="table table-hover table-responsiveness table_class">
         <tr>
             <th> Title of publication </th>
             <th> Author </th>
@@ -29,7 +31,7 @@
         </tr>
         {% for item in content %}
             <tr>
-                <td> <a href="/posts/?postid={{ item.postid }}"> {{ item.title }} </a> </td>
+                <td class="table_td"> <a href="/posts/?postid={{ item.postid }}"> {{ item.title }} </a> </td>
                 <td> <a href="/authors/?userid={{ item.userid }}"> {{ item.author }} </a> </td>
                 <td>
                 {% for tag in item.tags %}
