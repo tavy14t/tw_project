@@ -26,7 +26,7 @@
             <div id="collapse1" class="panel-collapse collapse">
                 <ul class="list-group rooms" id="rooms-tag">
                     {% for room in rooms %}
-                        <li id="item_room" class="list-group-item room-link" data-room-id="{{ room.id }}" name={{ room.name }}>{{ room.name }}</li>
+                        <li class="list-group-item room-link" data-room-id="{{ room.id }}" name={{ room.name }}>{{ room.name }}</li>
                     {% empty %}
                         {% for friend in friends %}
                             <li class="list-group-item room-link" data-room-id="{{ friend.id }}" name={{ friend.name }}>{{ friend.name }}</li>

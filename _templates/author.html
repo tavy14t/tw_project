@@ -14,7 +14,7 @@
 
 	<div id="container_author_1">
 		<div class="col-md-6">
-			<img src="{% static "defaultuser.png" %}" style="width: 200px; height: 200px; border: 1px solid #ddd;
+			<img src="{% get_static_prefix %}{{ url }}" style="width: 200px; height: 200px; border: 1px solid #ddd;
 		    border-radius: 4px; padding: 5px;" id="author_img_id">
 		</div>
 		<div class="col-md-6">
@@ -73,5 +73,4 @@
 			</div>
 		</div>
 	</div>
-
 {% endblock base_home_content %}
