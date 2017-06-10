@@ -1,4 +1,5 @@
 import re
+import os
 import hashlib
 from django.db import connection
 from enum import Enum
@@ -437,12 +438,24 @@ def get_user_content(userid):
     cursor = connection.cursor()
     cursor.execute("select tags.name, tags.tagid from tags "
                    "join users_tags on tags.tagid = users_tags.tagid "
-                   "where users_tags.userid=" + str(userid))
+                   "where users_tags.userid=" + str(int(userid)))
     for line in cursor:
         content['tags'].append({
             'name': line[0],
             'tagid': line[1]
         })
+    cursor.close()
+
+    cursor = connection.cursor()
+    cursor.execute("select url from restapi_avatars "
+                   "where user_id=" + str(int(userid)))
+
+    for line in cursor:
+        content['url'] = os.path.basename(line[0])
+
+    if 'url' not in content:
+        content['url'] = 'defaultuser.png'
+
     cursor.close()
 
     user_details = Users.objects.filter(userid=userid).first()

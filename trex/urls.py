@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^home/about$', views.about),
     url(r'^home/account_settings$', views.account_settings),
     url(r'^home/account_preferences$', views.account_preferences),
+    url(r'^home/account_avatar$', views.account_avatar),
 
     url(r'^chat/$', views.chat, name='chat'),
     url(r'^friends/$', views.chat_friends, name='chat'),
