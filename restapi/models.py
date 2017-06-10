@@ -11,7 +11,6 @@ from __future__ import unicode_literals
 import json
 
 from django.db import models
-from django import forms
 from channels import Group
 from trex.settings import MSG_TYPE_MESSAGE
 
