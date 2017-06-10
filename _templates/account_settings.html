@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block base_home_content %}
-    <div id="content" class="col-md-10">
+    <div id="content" class="col-md-12">
         <legend style="font-family: 'Lobster'; font-size:32px;">Account Settings</legend>
         <div class="col-md-4">
             <form method="POST" class="form-horizontal">
@@ -49,10 +49,7 @@
                     <input type="text" class="form-control" id="id_phone" maxlength="16" name="phone" placeholder="Your phone number">
                 </div>
                 <br>
-<<<<<<< HEAD
-=======
                 <br>
->>>>>>> db296508495ae44fa4bb5619e1eabc3a9a882979
                 <input type="submit" id="save_changes_btn" class="btn btn-def btn-block" value="Save Changes"></input>
             </form>
             {% if messages %}
@@ -83,7 +80,7 @@
             <form class="form-horizontal" id="preferencesForm" method="POST" action="/home/account_preferences">
                 {% csrf_token %}
                 <label for="listbox_preferences">Check your preferences:</label>
-                <div style="max-height: 492px; overflow: auto;" id="preferences_checkboxes_div">
+                <div style="max-height: 514px; overflow: auto;" id="preferences_checkboxes_div">
                     {% for preference_name, details in preferences.items %}
                         {% if details.checked == 1 %}
                             <p style="font-size: 20px;"><input type="checkbox"  name="checks[]" value="{{ details.tagid }}" checked> {{ preference_name }}</p>

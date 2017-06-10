@@ -7,10 +7,10 @@
 {% endblock %}
 
 {% block base_home_content %}
-	<p style="font-size: 30px;"> Postarile lui {{ firstname }} {{ lastname }} : </p>
-	{% for post in posts %}
-		<p><a href="/posts/?postid={{ post.postid }}"> {{ post.title }} </a></p>
-	{% endfor %}
+	<link rel="stylesheet" type="text/css" href="{% static "author.css" %}">
+	<legend style="font-family: 'Lobster'; font-size:32px;">
+	{{ firstname }} {{ lastname }}
+	</legend>
 
 	<div id="container_author_1">
 		<div class="col-md-6">
@@ -73,10 +73,4 @@
 			</div>
 		</div>
 	</div>
-
-	<p style="font-size: 30px;"> Detalii despre el: </p>
-	<p> {{ firstname }} </p>
-	<p> {{ lastname }} </p>
-	<p> {{ email }} </p>
-	<p> {{ phone }} </p>
 {% endblock base_home_content %}
