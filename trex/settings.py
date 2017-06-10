@@ -153,7 +153,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, '_static', 'js'),
     os.path.join(BASE_DIR, '_static', 'images'),
     os.path.join(BASE_DIR, '_static', 'pdfs'),
-    os.path.join(BASE_DIR, '_templates')
+    os.path.join(BASE_DIR, '_templates'),
+    os.path.join(BASE_DIR, 'avatars')
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, '_static')
 

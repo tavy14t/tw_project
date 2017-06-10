@@ -49,12 +49,6 @@
                     <input type="text" class="form-control" id="id_phone" maxlength="16" name="phone" placeholder="Your phone number">
                 </div>
                 <br>
-                <!-->
-                <div class="control-group">
-                    <label for="id_image">Avatar:</label>
-                    <input id="id_image" type="file" class="" name="image">
-                </div><!-->
-                <br>
                 <br>
                 <input type="submit" id="save_changes_btn" class="btn btn-def btn-block" value="Save Changes"></input>
             </form>
@@ -70,12 +64,23 @@
                 {% endfor %}
             {% endif %}
             <hr>
-        </div>
+            <br>
+            <br>
+            <form action="/home/account_avatar" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p>{{ avatar_form.non_field_errors }}</p>
+                <p>{{ avatar_form.url.label_tag }} {{ avatar_form.url.help_text }}</p>
+                <p>{{ avatar_form.url.errors }} {{avatar_form.url }}</p>
+                <p><input type="submit" id="save_changes_btn" class="btn btn-def btn-block" value="Upload image"/></p>
+            </form>
+            <br><br>
+            <a href="/authors/?userid={{ userid }}"> Take a look at your public TReX profile </a>
+       </div>
         <div class="col-md-8">
             <form class="form-horizontal" id="preferencesForm" method="POST" action="/home/account_preferences">
                 {% csrf_token %}
                 <label for="listbox_preferences">Check your preferences:</label>
-                <div style="max-height: 429px; overflow: auto;" id="preferences_checkboxes_div">
+                <div style="max-height: 514px; overflow: auto;" id="preferences_checkboxes_div">
                     {% for preference_name, details in preferences.items %}
                         {% if details.checked == 1 %}
                             <p style="font-size: 20px;"><input type="checkbox"  name="checks[]" value="{{ details.tagid }}" checked> {{ preference_name }}</p>

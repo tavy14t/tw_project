@@ -31,10 +31,10 @@
     <div id="content" class="col-md-12">
         <legend style="font-family: 'Lobster'; font-size:32px;">Tags</legend>
         <div class="col-md-12">
-            <form class="form-horizontal" id="tagsForm" method="POST" action="/filtered">
+            <form class="form-horizontal" id="preferencesForm" method="POST" action="/filtered">
                 {% csrf_token %}
                 <label for="listbox_tags">Check the tags you want to search by:</label>
-                <div style="max-height: 70vh; overflow: auto;" id="tags_checkboxes_div">
+                <div style="max-height: 70vh; overflow: auto;" id="preferences_checkboxes_div">
                     {% for preference_name, details in tags.items %}
                         {% if details.checked == 1 %}
                             <p style="font-size: 20px;"><input type="checkbox"  name="checks[]" value="{{ details.tagid }}" checked> {{ preference_name }}</p>

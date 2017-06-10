@@ -7,7 +7,8 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from login_decorator import login_required
 from controller import *
-from forms import CommentForm
+from forms import CommentForm, AvatarForm
+import os
 
 
 def login(request):
@@ -73,7 +74,9 @@ def about(request):
 @login_required
 def account_settings(request):
     preferences = get_preferences(request)
-    context = {'preferences': preferences}
+    avatar_form = AvatarForm()
+    context = {'preferences': preferences, 'avatar_form': avatar_form,
+               'userid': request.session['userid']}
     if request.method == 'GET':
         return render(request, 'account_settings.html', context=context)
     elif request.method == 'POST':
@@ -97,7 +100,21 @@ def account_settings(request):
         elif settings_result == AccountSettingsRC.EMAIL_TOO_LONG:
             messages.info(request, 'Email is too long!')
 
-        return render(request, 'account_settings.html')
+        return render(request, 'account_settings.html', context)
+
+
+@login_required
+def account_avatar(request):
+    if request.method == 'GET':
+        return HttpResponseRedirect('/home/account_settings')
+    elif request.method == 'POST':
+        form = AvatarForm(request.POST, request.FILES)
+        if form.is_valid():
+            avatar = Avatars(url=request.FILES['url'],
+                             user=Users.objects.filter(
+                userid=request.session['userid']).first())
+            avatar.save()
+            return HttpResponseRedirect('/home/account_settings')
 
 
 @login_required
@@ -125,7 +142,10 @@ def get_posts(request):
             messages.error(request, 'The comment can not be empty!')
 
     content = get_post_content(request.GET['postid'])
-    return render(request, 'post.html', content)
+    if content['text'].endswith("pdf"):
+        return render(request, 'post.html', content)
+    else:
+        return render(request, 'video_post.html', content)
 
 
 @login_required

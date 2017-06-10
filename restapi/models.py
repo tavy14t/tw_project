@@ -178,11 +178,6 @@ class Friends(models.Model):
     )
 
 
-class ImageUploadForm(forms.Form):
-    """Image upload form."""
-    image = forms.ImageField()
-
-
-class ExampleModel(models.Model):
-    model_pic = models.ImageField(
-        upload_to='avatars/', default='avatars/default-user.png')
+class Avatars(models.Model):
+    url = models.FileField(upload_to='avatars')
+    user = models.ForeignKey(Users)
