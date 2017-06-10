@@ -142,7 +142,11 @@ def get_posts(request):
             messages.error(request, 'The comment can not be empty!')
 
     content = get_post_content(request.GET['postid'])
-    return render(request, 'post.html', content)
+    if content['text'].endswith("pdf"):
+        return render(request, 'post.html', content)
+    else:
+        return render(request, 'video_post.html', content)
+
 
 
 @login_required

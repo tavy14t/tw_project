@@ -207,7 +207,7 @@ def save_account_settings(request):
         cursor.execute("update users set EMAIL = :email,"
                        "PASSWORDHASH = :md5pass,"
                        "ADDRESS = :address,"
-                       "PHONE = :phone "
+                       "PHONE = :phone"
                        "where userid = :userid",
                        {'email': email,
                         'md5pass': cur_password_hash,
@@ -217,8 +217,7 @@ def save_account_settings(request):
                         })
         cursor.close()
         return AccountSettingsRC.SUCCESS
-    except Exception as ex:
-        print 'Exception:', ex
+    except Exception:
         return AccountSettingsRC.INTERNAL_SERVER_ERROR
 
 
