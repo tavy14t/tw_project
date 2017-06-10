@@ -10,8 +10,9 @@ urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/home/about')),
     url(r'^admin/', admin.site.urls),
 
-    url(r'^restapi/posts/', restapi.views.PostList.as_view()),
-    url(r'^restapi/users/', restapi.views.UsersList.as_view()),
+    url(r'^restapi/posts/$', restapi.views.PostList.as_view()),
+    url(r'^restapi/users/$', restapi.views.UsersList.as_view()),
+    url(r'^restapi/posts/', restapi.views.get_post),
 
     url(r'^login$', views.login),
     url(r'^register$', views.register),
