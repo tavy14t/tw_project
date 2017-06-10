@@ -1,0 +1,24 @@
+.table_class{
+    margin-top: 20px;
+}
+.table_class tr th{
+    background-color: rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    font-size: 18px;
+}
+.table_td{
+    padding: 2px;
+}
+.table_td *{
+    font-size: 15px;
+    font-weight: bold;
+}
+.table>tbody>tr>th{
+    border-top: 1px solid black;
+}
+/*tr td a:nth-child(2n){
+    color: #52c984;
+}*/
+tr:nth-child(2n+1){
+    background-color: rgba(0, 0, 0, 0.05)
+}

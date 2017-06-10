@@ -18,14 +18,16 @@
             height: 50px;
         }
     </style>
-    <table>
+    <link rel="stylesheet" type="text/css" href="{% static "tables.css" %}">
+    <legend style="font-family: 'Lobster'; font-size:32px;">Tags</legend>
+    <table class="table_class">
         <tr>
             <th> Tag </th>
             <th> Posts </th>
         </tr>
         {% for tag in content %}
             <tr>
-                <td> <a href="/tags/?tagid={{ tag.tagid }}"> {{ tag.name }} </a> </td>
+                <td class="table_td"> <a href="/tags/?tagid={{ tag.tagid }}"> {{ tag.name }} </a> </td>
                 <td>
                 {% for post in tag.posts %}
                     {% if forloop.counter0|divisibleby:2 %}
