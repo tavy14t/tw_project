@@ -48,4 +48,3 @@ trex/wsgi.pyc
 .idea\inspectionProfiles\profiles_settings.xml
 *.pyc
 dump.rdb
-trex.db
