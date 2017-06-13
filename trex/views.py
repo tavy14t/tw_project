@@ -8,6 +8,8 @@ from django.contrib import messages
 from login_decorator import login_required
 from controller import *
 from forms import CommentForm, AvatarForm
+from pocket import Pocket
+from django.conf import settings
 import os
 
 
@@ -112,7 +114,7 @@ def account_avatar(request):
         if form.is_valid():
             avatar = Avatars(url=request.FILES['url'],
                              user=Users.objects.filter(
-                userid=request.session['userid']).first())
+                                 userid=request.session['userid']).first())
             avatar.save()
             return HttpResponseRedirect('/home/account_settings')
 
@@ -220,3 +222,23 @@ def chat_friends(request):
 
     context = get_chat_friends_context(userid)
     return render(request, 'chat.html', context)
+
+
+@login_required
+def pocket_login(request):
+    if 'pocket_access_token' not in request.session:
+        return HttpResponseRedirect(settings.POCKET_AUTH_URL)
+    else:
+        return render(request, 'about.html')
+
+
+@login_required
+def pocket_browse(request):
+    if request.method == 'GET':
+        try:
+            user_credentials = Pocket.get_credentials(consumer_key=settings.POCKET_CONSUMER_KEY,
+                                                      code=settings.POCKET_REQUEST_TOKEN)
+            request.session['pocket_access_token'] = user_credentials['access_token']
+        except:
+            return render(request, 'about.html')
+        return render(request, 'about.html')

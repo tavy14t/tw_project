@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 from django.conf import settings
+from pocket import Pocket
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,7 +27,6 @@ SECRET_KEY = 'nyv$!=g_6)ovivw8bxaxf@!wde9dh7ip%eymi8vkmhi7gjf3x('
 DEBUG = True
 
 ALLOWED_HOSTS = ["31.5.234.132", "localhost", "127.0.0.1"]
-
 
 # Application definition
 
@@ -91,7 +91,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'trex.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
@@ -109,7 +108,6 @@ DATABASES = {
         'NAME': 'trex.db'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -129,7 +127,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -142,7 +139,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
@@ -175,7 +171,7 @@ MESSAGE_TYPES_CHOICES = getattr(settings, 'MESSAGE_TYPES_CHOICES', (
     (MSG_TYPE_MUTED, 'MUTED'),
     (MSG_TYPE_ENTER, 'ENTER'),
     (MSG_TYPE_LEAVE, 'LEAVE'))
-)
+                                )
 
 MESSAGE_TYPES_LIST = getattr(settings, 'MESSAGE_TYPES_LIST',
                              [MSG_TYPE_MESSAGE,
@@ -185,3 +181,10 @@ MESSAGE_TYPES_LIST = getattr(settings, 'MESSAGE_TYPES_LIST',
                               MSG_TYPE_ENTER,
                               MSG_TYPE_LEAVE]
                              )
+
+# Pocket settings
+POCKET_CONSUMER_KEY = '67853-17e07228b29f7c44ef6d2784'
+POCKET_REDIRECT_URI = 'http://127.0.0.1:8000/pocket/browse'
+POCKET_REQUEST_TOKEN = Pocket.get_request_token(consumer_key=POCKET_CONSUMER_KEY, redirect_uri=POCKET_REDIRECT_URI)
+POCKET_AUTH_URL = Pocket.get_auth_url(code=POCKET_REQUEST_TOKEN, redirect_uri=POCKET_REDIRECT_URI)
+POCKET_INSTANCE = None

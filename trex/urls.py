@@ -2,6 +2,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.views.generic import RedirectView
 from rest_framework.urlpatterns import format_suffix_patterns
+from django.conf import settings
 import restapi.views
 import views
 
@@ -33,6 +34,9 @@ urlpatterns = [
 
     url(r'^chat/$', views.chat, name='chat'),
     url(r'^friends/$', views.chat_friends, name='chat'),
+
+    url(r'^pocket/login', views.pocket_login),
+    url(r'pocket/browse', views.pocket_browse),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
