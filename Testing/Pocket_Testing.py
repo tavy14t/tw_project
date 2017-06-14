@@ -86,13 +86,29 @@ for key in d:
 
 print '--------------------------------'
 '''
-access_token = 'd8830338-65cd-ef39-64db-ec5b99'
+#access_token = 'd8830338-65cd-ef39-64db-ec5b99'
 
-pocket_instance = Pocket(POCKET_CONSUMER_KEY, access_token)
+#pocket_instance = Pocket(POCKET_CONSUMER_KEY, access_token)
 
-print pocket_instance.get()[0]
+#sample = pocket_instance.get(detailType='complete')[0]
 
-print len(pocket_instance.get()[0]['list'])
+
+
+with open('result.json', 'r') as fp:
+    pocket_request = json.load(fp)
+
+pocket_posts = pocket_request['list']
+
+print pocket_posts
+
+tags = []
+
+for post in pocket_posts:
+    #print post
+    if 'tags' in pocket_posts[post]:
+        tags.append(pocket_posts[post]['tags'])
+
+print tags
 '''
 pocket_api = requests.post('https://getpocket.com/v3/get',
                            data={'consumer_key': POCKET_CONSUMER_KEY,

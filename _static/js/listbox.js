@@ -2,7 +2,7 @@
  * Created by iilie on 4/28/2017.
  */
 $(function () {
-    $('.list-group.checked-list-box .list-group-item').each(function () {
+    $('.lift-group.checked-list-box .list-group-item').each(function () {
 
         // Settings
         var $widget = $(this),

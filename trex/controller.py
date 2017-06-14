@@ -6,6 +6,10 @@ from enum import Enum
 from restapi.models import *
 from django.db.models import Q
 from utils import get_room_id_for_2_users
+from FeedlyClient import FeedlyClient
+from django.conf import settings
+from django.http import HttpResponse
+
 
 mail_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
 phone_regex = r"(\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})"  # noqa
@@ -84,6 +88,7 @@ def authenticate_user(request):
     for line in cursor:
         if line[4] == password_hash:
             request.session['userid'] = str(line[0])
+            cursor.close()
             return AuthRC.SUCCESS
     cursor.close()
 
@@ -501,3 +506,21 @@ def get_chat_rooms_context(userid):
     }
 
     return context
+
+
+def get_feedly_client(token=None):
+    if token:
+        return FeedlyClient(token=token, sandbox=True)
+    else:
+        return FeedlyClient(
+            client_id=settings.FEEDLY_CLIENT_ID,
+            client_secret=settings.FEEDLY_CLIENT_SECRET,
+            sandbox=True
+        )
+
+class HttpResponseTemporaryRedirect(HttpResponse):
+    status_code = 307
+
+    def __init__(self, redirect_to):
+        HttpResponse.__init__(self)
+        self['Location'] = redirect_to

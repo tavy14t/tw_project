@@ -115,12 +115,23 @@
                 <input type="submit" id="save_changes_btn" class="btn btn-def btn-block" value="Connect with Pocket"
                     name="Submit" id="frm1_submit" />
             </form>
+            <p style="font-size: 10px;"></p>
+            <form action="/feedly/login" method="get">
+                <input type="submit" id="save_changes_btn" class="btn btn-def btn-block" value="Connect with Feedly"
+                    name="Submit" id="frm1_submit" />
+            </form>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-10 style="max-height: 514px; overflow: auto;" id="preferences_checkboxes_div">
             {% if pocket == 1 %}
-                <p style="font-size: 20px;">You are connected with pocket</p>
+                <p style="font-size: 25px;">You are connected with Pocket</p>
             {% else %}
-                <p style="font-size: 20px;">You are not connected with pocket</p>
+                <p style="font-size: 25px;">You are not connected with Pocket</p>
+            {% endif %}
+            <p style="font-size: 10px;"></p>
+            {% if feedly == 1 %}
+                <p style="font-size: 25px;">You are connected with Feedly</p>
+            {% else %}
+                <p style="font-size: 25px;">You are not connected with Feedly</p>
             {% endif %}
         </div>
     </div>

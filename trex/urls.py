@@ -8,7 +8,7 @@ import views
 
 
 urlpatterns = [
-    url(r'^$', RedirectView.as_view(url='/home/about')),
+    url(r'^$', views.about),#RedirectView.as_view(url='/home/about')),
     url(r'^admin/', admin.site.urls),
 
     url(r'^restapi/posts/$', restapi.views.PostList.as_view()),
@@ -35,7 +35,8 @@ urlpatterns = [
     url(r'^chat/$', views.chat, name='chat'),
     url(r'^friends/$', views.chat_friends, name='chat'),
 
-    url(r'^pocket/login', views.pocket_login),
+    url(r'^pocket/login$', views.pocket_login),
+    url(r'^feedly/login$', views.feedly_login),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

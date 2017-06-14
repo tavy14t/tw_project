@@ -70,6 +70,12 @@ def logout(request):
 @login_required
 def about(request):
     if request.method == 'GET':
+        print request.session.keys()
+        #code = request.GET.get('code', '')
+        #request.session.pop('feedly_access_token')
+        #request.session.pop('pocket_access_token', None)
+        #request.session.pop('pocket_acces_token', None)
+        print request.session.keys()
         return render(request, 'about.html')
 
 
@@ -79,7 +85,8 @@ def account_settings(request):
     avatar_form = AvatarForm()
     context = {'preferences': preferences, 'avatar_form': avatar_form,
                'userid': request.session['userid'],
-               'pocket': 1 if 'pocket_access_token' in request.session else 0}
+               'pocket': 1 if 'pocket_access_token' in request.session else 0,
+               'feedly': 1 if 'feedly' in request.session else 0}
     if request.method == 'GET':
         return render(request, 'account_settings.html', context=context)
     elif request.method == 'POST':
@@ -234,6 +241,16 @@ def pocket_login(request):
             request.session['pocket_access_token'] = user_credentials['access_token']
         except:
             return HttpResponseRedirect(settings.POCKET_AUTH_URL)
-    else:
-        print request.session['pocket_access_token']
         return HttpResponseRedirect('/home/account_settings')
+    else:
+        return HttpResponseRedirect('/home/account_settings')
+
+@login_required
+def feedly_login(request):
+    if 'feedly' not in request.session:
+        feedly = get_feedly_client()
+        code_url = feedly.get_code_url(settings.FEEDLY_REDIRECT_URI)
+        return HttpResponseRedirect(code_url)
+    else:
+        return HttpResponseRedirect('/home/account_settings')
+
