@@ -108,5 +108,21 @@
             <hr>
         </div>
     </div>
+    <div id="content" class="col-md-12">
+        <legend style="font-family: 'Lobster'; font-size:32px;">Connect with other sites</legend>
+        <div class="col-md-2">
+            <form action="/pocket/login" method="get">
+                <input type="submit" id="save_changes_btn" class="btn btn-def btn-block" value="Connect with Pocket"
+                    name="Submit" id="frm1_submit" />
+            </form>
+        </div>
+        <div class="col-md-10">
+            {% if pocket == 1 %}
+                <p style="font-size: 20px;">You are connected with pocket</p>
+            {% else %}
+                <p style="font-size: 20px;">You are not connected with pocket</p>
+            {% endif %}
+        </div>
+    </div>
 
 {% endblock base_home_content %}

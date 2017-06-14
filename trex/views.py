@@ -78,7 +78,8 @@ def account_settings(request):
     preferences = get_preferences(request)
     avatar_form = AvatarForm()
     context = {'preferences': preferences, 'avatar_form': avatar_form,
-               'userid': request.session['userid']}
+               'userid': request.session['userid'],
+               'pocket': 1 if 'pocket_access_token' in request.session else 0}
     if request.method == 'GET':
         return render(request, 'account_settings.html', context=context)
     elif request.method == 'POST':
@@ -227,18 +228,12 @@ def chat_friends(request):
 @login_required
 def pocket_login(request):
     if 'pocket_access_token' not in request.session:
-        return HttpResponseRedirect(settings.POCKET_AUTH_URL)
-    else:
-        return render(request, 'about.html')
-
-
-@login_required
-def pocket_browse(request):
-    if request.method == 'GET':
         try:
             user_credentials = Pocket.get_credentials(consumer_key=settings.POCKET_CONSUMER_KEY,
                                                       code=settings.POCKET_REQUEST_TOKEN)
             request.session['pocket_access_token'] = user_credentials['access_token']
         except:
-            return render(request, 'about.html')
-        return render(request, 'about.html')
+            return HttpResponseRedirect(settings.POCKET_AUTH_URL)
+    else:
+        print request.session['pocket_access_token']
+        return HttpResponseRedirect('/home/account_settings')

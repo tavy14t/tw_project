@@ -253,6 +253,7 @@ def get_preferences(request):
 
 
 def save_preferences(request):
+    print request.POST
     tags = request.POST.getlist('checks[]')
 
     cursor = connection.cursor()

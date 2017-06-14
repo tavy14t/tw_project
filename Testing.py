@@ -88,10 +88,12 @@ print '--------------------------------'
 '''
 access_token = 'd8830338-65cd-ef39-64db-ec5b99'
 
-# pocket_instance = Pocket(POCKET_CONSUMER_KEY, access_token)
+pocket_instance = Pocket(POCKET_CONSUMER_KEY, access_token)
 
-# print pocket_instance.get()[0]
+print pocket_instance.get()[0]
 
+print len(pocket_instance.get()[0]['list'])
+'''
 pocket_api = requests.post('https://getpocket.com/v3/get',
                            data={'consumer_key': POCKET_CONSUMER_KEY,
                                  'access_token': access_token,
@@ -120,3 +122,4 @@ e = [key]
 # print d
 
 # recursive_keys(pocket_instance.get()[0])
+'''

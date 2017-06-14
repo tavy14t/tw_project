@@ -36,7 +36,6 @@ urlpatterns = [
     url(r'^friends/$', views.chat_friends, name='chat'),
 
     url(r'^pocket/login', views.pocket_login),
-    url(r'pocket/browse', views.pocket_browse),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
