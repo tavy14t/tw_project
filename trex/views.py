@@ -10,6 +10,7 @@ from controller import *
 from forms import CommentForm, AvatarForm
 from pocket import Pocket
 from django.conf import settings
+from django.contrib.sessions.backends.db import SessionStore
 import os
 
 
@@ -239,6 +240,8 @@ def pocket_login(request):
             user_credentials = Pocket.get_credentials(consumer_key=settings.POCKET_CONSUMER_KEY,
                                                       code=settings.POCKET_REQUEST_TOKEN)
             request.session['pocket_access_token'] = user_credentials['access_token']
+            response = HttpResponse('blah')
+            response.set_cookie('pocket', user_credentials['access_token'])
         except:
             return HttpResponseRedirect(settings.POCKET_AUTH_URL)
         return HttpResponseRedirect('/home/account_settings')
