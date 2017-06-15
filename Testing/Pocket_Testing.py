@@ -17,12 +17,12 @@ from random import randint
 
 # POCKET_CONSUMER_KEY = '67853-fa80baf944f56fd495dab319' #Desktop
 POCKET_CONSUMER_KEY = '67853-17e07228b29f7c44ef6d2784'  # Web
-REDIRECT_URI = 'http://127.0.0.1:8000/home/about'
+REDIRECT_URI = 'http://localhost:8000/home/about'
 '''
 # connecting to pocket API; pocket_api stores the http response
 pocket_api = requests.post('https://getpocket.com/v3/oauth/request',
                            data={'consumer_key': POCKET_CONSUMER_KEY,
-                                 'redirect_uri': 'http://127.0.0.1:8000/home/about'})
+                                 'redirect_uri': 'http://localhost:8000/home/about'})
 
 print pocket_api.status_code  # if 200, it means all ok.
 
@@ -34,7 +34,7 @@ code = pocket_api.text.split('=')[1]
 
 print code
 
-os.system('chrome "https://getpocket.com/auth/authorize?request_token={}&redirect_uri={}"'.format(code, 'http://127.0.0.1:8000/home/about'))
+os.system('chrome "https://getpocket.com/auth/authorize?request_token={}&redirect_uri={}"'.format(code, 'http://localhost:8000/home/about'))
 
 time.sleep(5)
 

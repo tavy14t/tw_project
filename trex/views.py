@@ -249,6 +249,7 @@ def pocket_login(request):
         try:
             user_credentials = Pocket.get_credentials(consumer_key=settings.POCKET_CONSUMER_KEY,
                                                       code=settings.POCKET_REQUEST_TOKEN)
+            print "added pocket token"
             request.session['pocket'] = user_credentials['access_token']
             request.session.modified = True
             return HttpResponseRedirect('/home/account_settings')

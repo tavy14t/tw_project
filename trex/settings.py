@@ -26,7 +26,7 @@ SECRET_KEY = 'nyv$!=g_6)ovivw8bxaxf@!wde9dh7ip%eymi8vkmhi7gjf3x('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["31.5.234.132", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["31.5.234.132", "localhost",]
 
 # Application definition
 
@@ -188,7 +188,7 @@ MESSAGE_TYPES_LIST = getattr(settings, 'MESSAGE_TYPES_LIST',
 
 # Pocket settings
 POCKET_CONSUMER_KEY = '67853-17e07228b29f7c44ef6d2784'
-POCKET_REDIRECT_URI = 'http://127.0.0.1:8000/pocket/login'
+POCKET_REDIRECT_URI = 'http://localhost:8000/pocket/login'
 POCKET_REQUEST_TOKEN = Pocket.get_request_token(consumer_key=POCKET_CONSUMER_KEY, redirect_uri=POCKET_REDIRECT_URI)
 POCKET_AUTH_URL = Pocket.get_auth_url(code=POCKET_REQUEST_TOKEN, redirect_uri=POCKET_REDIRECT_URI)
 
@@ -201,4 +201,4 @@ FEEDLY_CLIENT_SECRET = 'JGC5BYXNVW9NXAK48KH9'
 VIMEO_CLIENT_ID = 'd7b506963366fc024915e0a74b341361c08233bd'
 VIMEO_CLIENT_SECRET = 'u3xHs+ff/PhLvQB/SxG/bY02xYIXCS1zD3s+CTzRonk2Od77JsI2Zq2CP5X0F22uPG3N' \
                       '+mTFulsTAaQuSO36RvYOYCqFvwdSI2ZFfj6XlmZiVR977UDFJtoRgOqhoboh'
-VIMEO_REDIRECT_URL = 'http://127.0.0.1:8000/vimeo/login'
+VIMEO_REDIRECT_URL = 'http://localhost:8000/vimeo/login'
