@@ -91,6 +91,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'trex.wsgi.application'
 
+# Session settings
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+SESSION_SAVE_EVERY_REQUEST = True
+
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
@@ -189,6 +193,12 @@ POCKET_REQUEST_TOKEN = Pocket.get_request_token(consumer_key=POCKET_CONSUMER_KEY
 POCKET_AUTH_URL = Pocket.get_auth_url(code=POCKET_REQUEST_TOKEN, redirect_uri=POCKET_REDIRECT_URI)
 
 # Feedly settings
-FEEDLY_REDIRECT_URI = 'http://localhost:8000'
+FEEDLY_REDIRECT_URL = 'http://localhost:8000'
 FEEDLY_CLIENT_ID = 'sandbox'
 FEEDLY_CLIENT_SECRET = 'JGC5BYXNVW9NXAK48KH9'
+
+# Vimeo settings
+VIMEO_CLIENT_ID = 'd7b506963366fc024915e0a74b341361c08233bd'
+VIMEO_CLIENT_SECRET = 'u3xHs+ff/PhLvQB/SxG/bY02xYIXCS1zD3s+CTzRonk2Od77JsI2Zq2CP5X0F22uPG3N' \
+                      '+mTFulsTAaQuSO36RvYOYCqFvwdSI2ZFfj6XlmZiVR977UDFJtoRgOqhoboh'
+VIMEO_REDIRECT_URL = 'http://127.0.0.1:8000/vimeo/login'

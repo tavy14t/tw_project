@@ -37,6 +37,7 @@ urlpatterns = [
 
     url(r'^pocket/login$', views.pocket_login),
     url(r'^feedly/login$', views.feedly_login),
+    url(r'^vimeo/login$', views.vimeo_login),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

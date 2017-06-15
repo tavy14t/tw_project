@@ -11,6 +11,7 @@ from forms import CommentForm, AvatarForm
 from pocket import Pocket
 from django.conf import settings
 from django.contrib.sessions.backends.db import SessionStore
+import vimeo
 import os
 
 
@@ -72,10 +73,18 @@ def logout(request):
 def about(request):
     if request.method == 'GET':
         print request.session.keys()
-        #code = request.GET.get('code', '')
-        #request.session.pop('feedly_access_token')
-        #request.session.pop('pocket_access_token', None)
-        #request.session.pop('pocket_acces_token', None)
+        code = request.GET.get('code', '')
+        if len(code) != 0:
+            print 'Got in here'
+            request.session['feedly'] = code
+            request.session.modified = True
+            #request.COOKIES['feedly'] = code
+        # request.session.pop('feedly_access_token')
+        # request.session.pop('pocket_access_token', None)
+        # request.session.pop('pocket_acces_token', None)
+        # response = HttpResponse('io')
+        # response.set_cookie('feedly', request.session['feedly'])
+        #print request.session['feedly']
         print request.session.keys()
         return render(request, 'about.html')
 
@@ -86,8 +95,9 @@ def account_settings(request):
     avatar_form = AvatarForm()
     context = {'preferences': preferences, 'avatar_form': avatar_form,
                'userid': request.session['userid'],
-               'pocket': 1 if 'pocket_access_token' in request.session else 0,
-               'feedly': 1 if 'feedly' in request.session else 0}
+               'pocket': 1 if 'pocket' in request.session else 0,
+               'feedly': 1 if 'feedly' in request.session else 0,
+               'vimeo': 1 if 'vimeo' in request.session else 0}
     if request.method == 'GET':
         return render(request, 'account_settings.html', context=context)
     elif request.method == 'POST':
@@ -235,25 +245,46 @@ def chat_friends(request):
 
 @login_required
 def pocket_login(request):
-    if 'pocket_access_token' not in request.session:
+    if 'pocket' not in request.session:
         try:
             user_credentials = Pocket.get_credentials(consumer_key=settings.POCKET_CONSUMER_KEY,
                                                       code=settings.POCKET_REQUEST_TOKEN)
-            request.session['pocket_access_token'] = user_credentials['access_token']
-            response = HttpResponse('blah')
-            response.set_cookie('pocket', user_credentials['access_token'])
+            request.session['pocket'] = user_credentials['access_token']
+            request.session.modified = True
+            return HttpResponseRedirect('/home/account_settings')
         except:
             return HttpResponseRedirect(settings.POCKET_AUTH_URL)
-        return HttpResponseRedirect('/home/account_settings')
     else:
         return HttpResponseRedirect('/home/account_settings')
+
 
 @login_required
 def feedly_login(request):
     if 'feedly' not in request.session:
         feedly = get_feedly_client()
-        code_url = feedly.get_code_url(settings.FEEDLY_REDIRECT_URI)
+        code_url = feedly.get_code_url(settings.FEEDLY_REDIRECT_URL)
         return HttpResponseRedirect(code_url)
     else:
         return HttpResponseRedirect('/home/account_settings')
 
+
+@login_required
+def vimeo_login(request):
+    if 'vimeo' not in request.session:
+        vimeo_client = vimeo.VimeoClient(
+            key=settings.VIMEO_CLIENT_ID,
+            secret=settings.VIMEO_CLIENT_SECRET)
+
+        # You should retrieve the "code" from the URL string Vimeo redirected to. Here, that's named `CODE_FROM_URL`.
+        try:
+            code = request.GET.get('code', '')
+            print code
+            token, user, scope = vimeo_client.exchange_code(code, settings.VIMEO_REDIRECT_URL)
+            request.session['vimeo'] = token
+            request.session.modified = True
+            return HttpResponseRedirect('/home/account_settings')
+        except vimeo.auth.GrantFailed:
+            code_url = vimeo_client.auth_url(['public', 'private'], settings.VIMEO_REDIRECT_URL, None)
+            return HttpResponseRedirect(code_url)
+    else:
+        return HttpResponseRedirect('/home/account_settings')
