@@ -194,7 +194,8 @@ def get_prefered(request):
 
     if 'pocket' in request.session:
         pocket_instance = Pocket(settings.POCKET_CONSUMER_KEY, request.session['pocket'])
-        data_from_api['pocket'] = pocket_instance.get()[0]
+        # data_from_api['pocket'] = pocket_instance.get()[0]
+        get_pocket_data(pocket_instance)
 
     if 'vimeo' in request.session:
         vimeo_instance = vimeo.VimeoClient(

@@ -569,6 +569,18 @@ def get_vimeo_data(vimeo_instance):
     return data
 
 
+def get_pocket_data(pocket_instance):
+    pocket_posts = pocket_instance.get(detailType='complete')[0]
+    data = {'posts': {}}
+    for post in pocket_posts:
+        data['posts'][post] = {}
+        data['posts'][post]['name'] = pocket_posts[post]['given_title']
+        data['posts'][post]['embed_link'] = pocket_posts[post]['resolved_url']
+        if 'tags' in pocket_posts[post]:
+            data['posts'][post]['tags'] = [tag for tag in pocket_posts[post]['tags']]
+        else:
+            data['posts'][post]['tags'] = []
+    return data
 
 
 

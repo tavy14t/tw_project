@@ -47,7 +47,7 @@ print pocket_auth.status_code
 print pocket_auth.text
 pocket_access_token = pocket_auth.text.split('=')[1].split('&')[0]
 print '--------------------------------------------'
-'''
+
 request_token = Pocket.get_request_token(consumer_key=POCKET_CONSUMER_KEY, redirect_uri=REDIRECT_URI)
 print 1
 # URL to redirect user to, to authorize your app
@@ -65,7 +65,7 @@ pocket_instance = Pocket(POCKET_CONSUMER_KEY, access_token)
 
 
 
-'''
+
 pocket_get = open('pocket_get.txt', 'w')
 
 
@@ -92,16 +92,36 @@ print '--------------------------------'
 #pocket_instance = Pocket(POCKET_CONSUMER_KEY, access_token)
 
 #sample = pocket_instance.get(detailType='complete')[0]
+'''
 
-
-
-with open('result.json', 'r') as fp:
+with open('../result.json', 'r') as fp:
     pocket_request = json.load(fp)
 
 pocket_posts = pocket_request['list']
 
-print pocket_posts
 
+def pretty(d, indent=0):
+    for key, value in d.iteritems():
+        print '  ' * indent + unicode(key)
+        if isinstance(value, dict):
+            pretty(value, indent + 1)
+        else:
+            print '  ' * (indent + 1) + unicode(value)
+
+data = {'posts': {}}
+
+for post in pocket_posts:
+    data['posts'][post] = {}
+    data['posts'][post]['name'] = pocket_posts[post]['given_title']
+    data['posts'][post]['embed_link'] = pocket_posts[post]['resolved_url']
+    if 'tags' in pocket_posts[post]:
+        data['posts'][post]['tags'] = [tag for tag in pocket_posts[post]['tags']]
+    else:
+        data['posts'][post]['tags'] = []
+
+print data
+# print [tag for tag in pocket_posts[post]]
+'''
 tags = []
 
 for post in pocket_posts:
