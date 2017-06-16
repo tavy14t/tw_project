@@ -3,6 +3,7 @@ import os
 import hashlib
 from collections import Counter
 
+from datetime import date, datetime
 from django.db import connection
 from enum import Enum
 from restapi.models import *
@@ -570,7 +571,7 @@ def get_vimeo_data(vimeo_instance):
 
 
 def get_pocket_data(pocket_instance):
-    pocket_posts = pocket_instance.get(detailType='complete')[0]
+    pocket_posts = pocket_instance.get(detailType='complete')[0]['list']
     data = {'posts': {}}
     for post in pocket_posts:
         data['posts'][post] = {}
@@ -583,6 +584,32 @@ def get_pocket_data(pocket_instance):
     return data
 
 
+def get_feedly_data(feedly_instance, access_token):
+    feeds = []
+    data = {'recommended': {}}
+    feedly_subscriptions = feedly_instance.get_user_subscriptions(access_token)
+    for subscription in feedly_subscriptions:
+        if subscription['id'] in feeds:
+            continue
+        else:
+            feeds.append(subscription['id'])
+        posts = feedly_instance.get_feed_content(access_token, subscription['id'], False, 0)
+        # pretty(posts['items'][0])
+        # break
+        for post in posts['items'][:5]:
+            data['recommended'][post['id']] = {}
+            data['recommended'][post['id']]['name'] = post['title']
+            if 'author' in post:
+                data['recommended'][post['id']]['uploader'] = post['author']
+            else:
+                data['recommended'][post['id']]['uploader'] = 'Unknown'
+            data['recommended'][post['id']]['embed_link'] = post['alternate'][0]['href']
+            if 'keywords' in post:
+                data['recommended'][post['id']]['tags'] = [x.lower() for x in post['keywords']]
+            else:
+                data['recommended'][post['id']]['tags'] = []
+            data['recommended'][post['id']]['tags'] = list(set(data['recommended'][post['id']]['tags']))
+    return data
 
 
 

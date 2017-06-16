@@ -194,8 +194,7 @@ def get_prefered(request):
 
     if 'pocket' in request.session:
         pocket_instance = Pocket(settings.POCKET_CONSUMER_KEY, request.session['pocket'])
-        # data_from_api['pocket'] = pocket_instance.get()[0]
-        get_pocket_data(pocket_instance)
+        data_from_api['pocket'] = get_pocket_data(pocket_instance)
 
     if 'vimeo' in request.session:
         vimeo_instance = vimeo.VimeoClient(
@@ -206,27 +205,11 @@ def get_prefered(request):
         if vimeo_about_me.status_code != 200:
             print 'Vimeo not working'
         else:
-            get_vimeo_data(vimeo_instance)
-            data_from_api['vimeo'] = vimeo_about_me.json()
+            data_from_api['vimeo'] = get_vimeo_data(vimeo_instance)
 
     if 'feedly' in request.session:
         feedly_instance = get_feedly_client()
-        data_from_api['feedly'] = feedly_instance.get_user_subscriptions(request.session['feedly']['access_token'])
-
-    # for i in data_from_api['vimeo']['data']:
-    #     print i['name'], i['uri'].split('/')[-1]
-
-    # for api in data_from_api:
-    #     print api
-    #     for bapi in data_from_api[api]:
-    #         print bapi, ' ' * (max([len(x) for x in data_from_api[api]]) - len(bapi) + 4), data_from_api[api][bapi]
-    # print data_from_api
-    # data = data_from_api['vimeo']['data']
-    # for d in data:
-    #     for i in d:
-    #         print i, ' ' * (max([len(x) for x in d]) - len(i) + 4), d[i]
-    # with open(r"D:\Facultate\TW\tw_project-master\Testing\result_from_api.json", 'w') as fp:
-    #     json.dump(data_from_api, fp)
+        data_from_api['feedly'] = get_feedly_data(feedly_instance, request.session['feedly']['access_token'])
 
     return render(request, 'about.html')
 
