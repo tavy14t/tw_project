@@ -25,6 +25,7 @@ urlpatterns = [
 
     url(r'^filtered', views.get_filtered),
     url(r'^recommended', views.get_recommended),
+    url(r'^prefered', views.get_prefered),
 
     url(r'^home/$', RedirectView.as_view(url='/home/about')),
     url(r'^home/about$', views.about),

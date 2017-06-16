@@ -47,7 +47,7 @@ print pocket_auth.status_code
 print pocket_auth.text
 pocket_access_token = pocket_auth.text.split('=')[1].split('&')[0]
 print '--------------------------------------------'
-
+'''
 request_token = Pocket.get_request_token(consumer_key=POCKET_CONSUMER_KEY, redirect_uri=REDIRECT_URI)
 print 1
 # URL to redirect user to, to authorize your app
@@ -63,8 +63,9 @@ access_token = user_credentials['access_token']
 print 4
 pocket_instance = Pocket(POCKET_CONSUMER_KEY, access_token)
 
-new_instance = Pocket(POCKET_CONSUMER_KEY, access_token)
 
+
+'''
 pocket_get = open('pocket_get.txt', 'w')
 
 
@@ -85,7 +86,7 @@ for key in d:
 # open('test.txt', 'w').write(str(pocket_instance.get()))
 
 print '--------------------------------'
-'''
+
 #access_token = 'd8830338-65cd-ef39-64db-ec5b99'
 
 #pocket_instance = Pocket(POCKET_CONSUMER_KEY, access_token)
@@ -109,7 +110,7 @@ for post in pocket_posts:
         tags.append(pocket_posts[post]['tags'])
 
 print tags
-'''
+
 pocket_api = requests.post('https://getpocket.com/v3/get',
                            data={'consumer_key': POCKET_CONSUMER_KEY,
                                  'access_token': access_token,

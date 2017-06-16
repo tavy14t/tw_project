@@ -20,7 +20,7 @@ def auth(request=None):
     feedly = get_feedly_client()
     # Redirect the user to the feedly authorization URL to get user code
     code_url = feedly.get_code_url(FEEDLY_REDIRECT_URI)
-    #print code_url
+    # print code_url
     return redirect(code_url)
 
 
@@ -40,9 +40,11 @@ def callback(request):
     id = res_access_token['id']
     access_token = res_access_token['access_token']
 
+
 def feed(access_token):
-	'''get user's subscription'''
-	feedly = get_feedly_client()
-	user_subscriptions = feedly.get_user_subscriptions(access_token)
+    """get user's subscription"""
+    feedly = get_feedly_client()
+    user_subscriptions = feedly.get_user_subscriptions(access_token)
+
 
 auth()

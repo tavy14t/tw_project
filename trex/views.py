@@ -1,18 +1,12 @@
-import json
-
-from rest_framework.views import APIView
-from django.shortcuts import redirect
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.contrib import messages
-from login_decorator import login_required
-from controller import *
-from forms import CommentForm, AvatarForm
-from pocket import Pocket
-from django.conf import settings
-from django.contrib.sessions.backends.db import SessionStore
 import vimeo
-import os
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from pocket import Pocket
+
+from controller import *
+from forms import AvatarForm
+from login_decorator import login_required
 
 
 def login(request):
@@ -76,15 +70,18 @@ def about(request):
         code = request.GET.get('code', '')
         if len(code) != 0:
             print 'Got in here'
-            request.session['feedly'] = code
+            res_access_token = get_feedly_client().get_access_token(settings.FEEDLY_REDIRECT_URL, code)
+            request.session['feedly'] = {}
+            request.session['feedly']['access_token'] = res_access_token['access_token']
+            request.session['feedly']['id'] = res_access_token['id']
             request.session.modified = True
-            #request.COOKIES['feedly'] = code
+            # request.COOKIES['feedly'] = code
         # request.session.pop('feedly_access_token')
         # request.session.pop('pocket_access_token', None)
         # request.session.pop('pocket_acces_token', None)
         # response = HttpResponse('io')
         # response.set_cookie('feedly', request.session['feedly'])
-        #print request.session['feedly']
+        # print request.session['feedly']
         print request.session.keys()
         return render(request, 'about.html')
 
@@ -190,6 +187,49 @@ def get_recommended(request):
     return render(request, 'post.html', content)
 
 
+########################################################################################################################
+@login_required
+def get_prefered(request):
+    data_from_api = {}
+
+    if 'pocket' in request.session:
+        pocket_instance = Pocket(settings.POCKET_CONSUMER_KEY, request.session['pocket'])
+        data_from_api['pocket'] = pocket_instance.get()[0]
+
+    if 'vimeo' in request.session:
+        vimeo_instance = vimeo.VimeoClient(
+            token=request.session['vimeo'],
+            key=settings.VIMEO_CLIENT_ID,
+            secret=settings.VIMEO_CLIENT_SECRET)
+        vimeo_about_me = vimeo_instance.get('/me/albums')
+        if vimeo_about_me.status_code != 200:
+            print 'Vimeo not working'
+        else:
+            get_vimeo_data(vimeo_instance)
+            data_from_api['vimeo'] = vimeo_about_me.json()
+
+    if 'feedly' in request.session:
+        feedly_instance = get_feedly_client()
+        data_from_api['feedly'] = feedly_instance.get_user_subscriptions(request.session['feedly']['access_token'])
+
+    # for i in data_from_api['vimeo']['data']:
+    #     print i['name'], i['uri'].split('/')[-1]
+
+    # for api in data_from_api:
+    #     print api
+    #     for bapi in data_from_api[api]:
+    #         print bapi, ' ' * (max([len(x) for x in data_from_api[api]]) - len(bapi) + 4), data_from_api[api][bapi]
+    # print data_from_api
+    # data = data_from_api['vimeo']['data']
+    # for d in data:
+    #     for i in d:
+    #         print i, ' ' * (max([len(x) for x in d]) - len(i) + 4), d[i]
+    # with open(r"D:\Facultate\TW\tw_project-master\Testing\result_from_api.json", 'w') as fp:
+    #     json.dump(data_from_api, fp)
+
+    return render(request, 'about.html')
+
+
 @login_required
 def get_authors(request):
     if request.method == 'GET':
@@ -246,15 +286,22 @@ def chat_friends(request):
 @login_required
 def pocket_login(request):
     if 'pocket' not in request.session:
+        if 'pocket_request_token' not in request.session:
+            request.session['pocket_request_token'] = Pocket.get_request_token(consumer_key=settings.POCKET_CONSUMER_KEY,
+                                                                         redirect_uri=settings.POCKET_REDIRECT_URL)
+            pocket_auth_url = Pocket.get_auth_url(code=request.session['pocket_request_token'],
+                                                  redirect_uri=settings.POCKET_REDIRECT_URL)
+            return HttpResponseRedirect(pocket_auth_url)
         try:
+            print "trying to add pocket"
             user_credentials = Pocket.get_credentials(consumer_key=settings.POCKET_CONSUMER_KEY,
-                                                      code=settings.POCKET_REQUEST_TOKEN)
+                                                      code=request.session['pocket_request_token'])
             print "added pocket token"
             request.session['pocket'] = user_credentials['access_token']
             request.session.modified = True
             return HttpResponseRedirect('/home/account_settings')
         except:
-            return HttpResponseRedirect(settings.POCKET_AUTH_URL)
+            return HttpResponseRedirect('/home/account_settings')
     else:
         return HttpResponseRedirect('/home/account_settings')
 

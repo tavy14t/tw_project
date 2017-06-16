@@ -1,6 +1,8 @@
 import re
 import os
 import hashlib
+from collections import Counter
+
 from django.db import connection
 from enum import Enum
 from restapi.models import *
@@ -9,7 +11,6 @@ from utils import get_room_id_for_2_users
 from FeedlyClient import FeedlyClient
 from django.conf import settings
 from django.http import HttpResponse
-
 
 mail_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
 phone_regex = r"(\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})"  # noqa
@@ -96,10 +97,10 @@ def authenticate_user(request):
 
 
 def deauthenticate_user(request):
-    if 'userid' not in request.session. keys():
+    if 'userid' not in request.session.keys():
         return DeAuthRC.NOT_LOGGED_IN
     else:
-        request.session.pop('userid')
+        request.session.flush()
         return DeAuthRC.SUCCESS
 
 
@@ -134,7 +135,7 @@ def create_account(request):
                    "EMAIL, PASSWORDHASH, ISACTIVATED, ROLE) values"
                    "(:fname, :lname, :email, :md5pass, 0, 'user')",
                    {'fname': firstname, 'lname':
-                    lastname, 'email': email, 'md5pass': password_hash})
+                       lastname, 'email': email, 'md5pass': password_hash})
     cursor.close()
 
     cursor = connection.cursor()
@@ -151,7 +152,6 @@ def create_account(request):
 
 
 def save_account_settings(request):
-
     def is_valid_form(request):
         if 'cur_password' not in request.POST:
             return False
@@ -518,9 +518,109 @@ def get_feedly_client(token=None):
             sandbox=True
         )
 
+
 class HttpResponseTemporaryRedirect(HttpResponse):
     status_code = 307
 
     def __init__(self, redirect_to):
         HttpResponse.__init__(self)
         self['Location'] = redirect_to
+
+
+def get_vimeo_data(vimeo_instance):
+    data = {}
+    me_albums = vimeo_instance.get('/me/albums').json()
+    data['albums'] = {x['uri'].split('/')[-1]: x['name'] for x in me_albums['data']}
+
+    tags = []
+    data['posts'] = {}
+    for z in vimeo_instance.get('/me/likes?filter_embeddable=true').json()['data']:
+        uri = z['uri'].split('/')[-1]
+        data['posts'][uri] = {}
+        data['posts'][uri]['name'] = z['name']
+        data['posts'][uri]['uploader'] = z['user']['name']
+        data['posts'][uri]['tags'] = [tag['name'] for tag in z['tags']]
+        for x in [tag['name'] for tag in z['tags']]:
+            tags.append(x)
+        data['posts'][uri]['embed_link'] = z['embed']['html'].split('src=', 1)[1]
+
+    data['recommended'] = {}
+
+    tags = sorted(tags, key=Counter(tags).get, reverse=True)
+    nr_tags = 3
+    for tag in tags:
+        print tag
+        while tag in tags:
+            tags.remove(tag)
+        for z in vimeo_instance.get('/tags/{}/videos?per_page=5'.format(tag)).json()['data']:
+            uri = z['uri'].split('/')[-1]
+            data['recommended'][uri] = {}
+            data['recommended'][uri]['name'] = z['name']
+            data['recommended'][uri]['uploader'] = z['user']['name']
+            data['recommended'][uri]['tags'] = [tag['name'] for tag in z['tags']]
+            for x in [tag['name'] for tag in z['tags']]:
+                tags.append(x)
+            data['recommended'][uri]['embed_link'] = z['embed']['html'].split('src=', 1)[1]
+        nr_tags -= 1
+        if nr_tags == 0:
+            break
+
+    print data
+    return data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

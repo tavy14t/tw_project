@@ -188,9 +188,7 @@ MESSAGE_TYPES_LIST = getattr(settings, 'MESSAGE_TYPES_LIST',
 
 # Pocket settings
 POCKET_CONSUMER_KEY = '67853-17e07228b29f7c44ef6d2784'
-POCKET_REDIRECT_URI = 'http://localhost:8000/pocket/login'
-POCKET_REQUEST_TOKEN = Pocket.get_request_token(consumer_key=POCKET_CONSUMER_KEY, redirect_uri=POCKET_REDIRECT_URI)
-POCKET_AUTH_URL = Pocket.get_auth_url(code=POCKET_REQUEST_TOKEN, redirect_uri=POCKET_REDIRECT_URI)
+POCKET_REDIRECT_URL = 'http://localhost:8000/pocket/login'
 
 # Feedly settings
 FEEDLY_REDIRECT_URL = 'http://localhost:8000'
