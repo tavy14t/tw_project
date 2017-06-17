@@ -4,8 +4,12 @@ import hashlib
 from collections import Counter
 
 from datetime import date, datetime
+
+import vimeo
 from django.db import connection
 from enum import Enum
+from pocket import Pocket
+
 from restapi.models import *
 from django.db.models import Q
 from utils import get_room_id_for_2_users
@@ -550,7 +554,6 @@ def get_vimeo_data(vimeo_instance):
     tags = sorted(tags, key=Counter(tags).get, reverse=True)
     nr_tags = 3
     for tag in tags:
-        print tag
         while tag in tags:
             tags.remove(tag)
         for z in vimeo_instance.get('/tags/{}/videos?per_page=5'.format(tag)).json()['data']:
@@ -561,26 +564,26 @@ def get_vimeo_data(vimeo_instance):
             data['recommended'][uri]['tags'] = [tag['name'] for tag in z['tags']]
             for x in [tag['name'] for tag in z['tags']]:
                 tags.append(x)
-            data['recommended'][uri]['embed_link'] = z['embed']['html'].split('src=', 1)[1]
+            data['recommended'][uri]['embed_link'] = z['embed']['html'].split('src="', 1)[1].split('"')[0]
         nr_tags -= 1
         if nr_tags == 0:
             break
 
-    print data
     return data
 
 
 def get_pocket_data(pocket_instance):
     pocket_posts = pocket_instance.get(detailType='complete')[0]['list']
-    data = {'posts': {}}
+    data = {'recommended': {}}
     for post in pocket_posts:
-        data['posts'][post] = {}
-        data['posts'][post]['name'] = pocket_posts[post]['given_title']
-        data['posts'][post]['embed_link'] = pocket_posts[post]['resolved_url']
+        data['recommended'][post] = {}
+        data['recommended'][post]['name'] = pocket_posts[post]['resolved_title']
+        data['recommended'][post]['embed_link'] = pocket_posts[post]['resolved_url']
+        data['recommended'][post]['uploader'] = pocket_posts[post]['given_url'].split('/')[2]
         if 'tags' in pocket_posts[post]:
-            data['posts'][post]['tags'] = [tag for tag in pocket_posts[post]['tags']]
+            data['recommended'][post]['tags'] = [tag for tag in pocket_posts[post]['tags']]
         else:
-            data['posts'][post]['tags'] = []
+            data['recommended'][post]['tags'] = []
     return data
 
 
@@ -596,7 +599,7 @@ def get_feedly_data(feedly_instance, access_token):
         posts = feedly_instance.get_feed_content(access_token, subscription['id'], False, 0)
         # pretty(posts['items'][0])
         # break
-        for post in posts['items'][:5]:
+        for post in posts['items'][:3]:
             data['recommended'][post['id']] = {}
             data['recommended'][post['id']]['name'] = post['title']
             if 'author' in post:
@@ -612,7 +615,26 @@ def get_feedly_data(feedly_instance, access_token):
     return data
 
 
+def get_api_data(request):
+    data_from_api = {}
 
+    if 'pocket' in request.session:
+        pocket_instance = Pocket(settings.POCKET_CONSUMER_KEY,
+                                 request.session['pocket'])
+        data_from_api['pocket'] = get_pocket_data(pocket_instance)
+
+    if 'vimeo' in request.session:
+        vimeo_instance = vimeo.VimeoClient(
+            token=request.session['vimeo'],
+            key=settings.VIMEO_CLIENT_ID,
+            secret=settings.VIMEO_CLIENT_SECRET)
+        data_from_api['vimeo'] = get_vimeo_data(vimeo_instance)
+
+    if 'feedly' in request.session:
+        feedly_instance = get_feedly_client()
+        data_from_api['feedly'] = get_feedly_data(feedly_instance, request.session['feedly']['access_token'])
+
+    return data_from_api
 
 
 

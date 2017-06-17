@@ -119,7 +119,7 @@ for post in pocket_posts:
     else:
         data['posts'][post]['tags'] = []
 
-print data
+print pocket_posts[pocket_posts.keys()[0]]
 # print [tag for tag in pocket_posts[post]]
 '''
 tags = []

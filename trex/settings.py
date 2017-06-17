@@ -95,6 +95,14 @@ WSGI_APPLICATION = 'trex.wsgi.application'
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 SESSION_SAVE_EVERY_REQUEST = True
 
+# Cache settings
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/var/tmp/django_cache',
+    }
+}
+
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 

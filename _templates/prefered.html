@@ -1,0 +1,48 @@
+{% extends 'base_home.html' %}
+{% load static %}
+
+{% block bootstrap3_title %}
+    TReX Posts
+{% endblock %}
+
+{% block base_home_content %}
+    <style>
+        table, th, td {
+            text-align: center;
+            border: 1px solid black;
+        }
+        table {
+            width: 100%;
+        }
+        th {
+            height: 50px;
+        }
+        .table-hover>tbody>tr:hover{
+            background-color: #E0E0BF;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="{% static "tables.css" %}">
+    <legend style="font-family: 'Lobster'; font-size:32px;">Posts</legend>
+    <table class="table table-hover table-responsiveness table_class">
+        <tr>
+            <th> Title of publication </th>
+            <th> Author </th>
+            <th> Tags </th>
+        </tr>
+        {% for item in content %}
+            <tr>
+                <td class="table_td"> <a href="{{ item.ref }}"> {{ item.title }} </a> </td>
+                <td> <a href="{{ item.author_ref }}"> {{ item.author }} </a> </td>
+                <td>
+                {% for tag in item.tags %}
+                    {% if forloop.counter0|divisibleby:3 %}
+                        <p></p>
+                    {% endif %}
+                    <a href="/prefered/?tag={{ tag }}"> {{ tag }}</a>&nbsp;&nbsp;
+                {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

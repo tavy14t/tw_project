@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^posts', views.get_posts),
     url(r'^authors', views.get_authors),
     url(r'^tags', views.get_tags),
+    url(r'^search', views.search),
 
     url(r'^filtered', views.get_filtered),
     url(r'^recommended', views.get_recommended),
@@ -39,6 +40,8 @@ urlpatterns = [
     url(r'^pocket/login$', views.pocket_login),
     url(r'^feedly/login$', views.feedly_login),
     url(r'^vimeo/login$', views.vimeo_login),
+
+    url(r'^update', views.update),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -1,9 +1,9 @@
-import vimeo
+from random import shuffle
+
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from pocket import Pocket
-
+from django.core.cache import cache
 from controller import *
 from forms import AvatarForm
 from login_decorator import login_required
@@ -190,28 +190,39 @@ def get_recommended(request):
 ########################################################################################################################
 @login_required
 def get_prefered(request):
-    data_from_api = {}
+    api_data = cache.get('api_data')
+    if not api_data:
+        api_data = get_api_data(request)
+        cache.set('api_data', api_data)
+    content = []
+    for api in api_data:
+        for post in api_data[api]['recommended']:
+            try:
+                api_data[api]['recommended'][post]['tags'] = [str(x) for x in
+                                                              api_data[api]['recommended'][post]['tags']]
+            except:
+                continue
+            print api_data[api]['recommended'][post]['embed_link']
+            content.append({
+                'postid': post,
+                'api': api,
+                'title': api_data[api]['recommended'][post]['name'],
+                'author': api_data[api]['recommended'][post]['uploader'],
+                'author_ref': 'https://' + api_data[api]['recommended'][post]['uploader']
+                if (api_data[api]['recommended'][post]['uploader'].startswith("www")
+                    or api_data[api]['recommended'][post]['uploader'].endswith(".com"))
+                else '/prefered?author=' + api_data[api]['recommended'][post]['uploader'],
+                'tags': api_data[api]['recommended'][post]['tags'],
+                'ref': api_data[api]['recommended'][post]['embed_link']
+            })
+    shuffle(content)
+    content = {'content': content}
+    return render(request, 'prefered.html', content)
 
-    if 'pocket' in request.session:
-        pocket_instance = Pocket(settings.POCKET_CONSUMER_KEY, request.session['pocket'])
-        data_from_api['pocket'] = get_pocket_data(pocket_instance)
 
-    if 'vimeo' in request.session:
-        vimeo_instance = vimeo.VimeoClient(
-            token=request.session['vimeo'],
-            key=settings.VIMEO_CLIENT_ID,
-            secret=settings.VIMEO_CLIENT_SECRET)
-        vimeo_about_me = vimeo_instance.get('/me/albums')
-        if vimeo_about_me.status_code != 200:
-            print 'Vimeo not working'
-        else:
-            data_from_api['vimeo'] = get_vimeo_data(vimeo_instance)
-
-    if 'feedly' in request.session:
-        feedly_instance = get_feedly_client()
-        data_from_api['feedly'] = get_feedly_data(feedly_instance, request.session['feedly']['access_token'])
-
-    return render(request, 'about.html')
+@login_required
+def search(request):
+    return render(request, 'home.html')
 
 
 @login_required
@@ -271,8 +282,9 @@ def chat_friends(request):
 def pocket_login(request):
     if 'pocket' not in request.session:
         if 'pocket_request_token' not in request.session:
-            request.session['pocket_request_token'] = Pocket.get_request_token(consumer_key=settings.POCKET_CONSUMER_KEY,
-                                                                         redirect_uri=settings.POCKET_REDIRECT_URL)
+            request.session['pocket_request_token'] = Pocket.get_request_token(
+                consumer_key=settings.POCKET_CONSUMER_KEY,
+                redirect_uri=settings.POCKET_REDIRECT_URL)
             pocket_auth_url = Pocket.get_auth_url(code=request.session['pocket_request_token'],
                                                   redirect_uri=settings.POCKET_REDIRECT_URL)
             return HttpResponseRedirect(pocket_auth_url)
@@ -320,3 +332,10 @@ def vimeo_login(request):
             return HttpResponseRedirect(code_url)
     else:
         return HttpResponseRedirect('/home/account_settings')
+
+
+@login_required
+def update(request):
+    api_data = get_api_data(request)
+    cache.set('api_data', api_data)
+    return HttpResponseRedirect('/home/account_settings')
