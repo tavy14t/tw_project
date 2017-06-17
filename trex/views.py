@@ -75,13 +75,6 @@ def about(request):
             request.session['feedly']['access_token'] = res_access_token['access_token']
             request.session['feedly']['id'] = res_access_token['id']
             request.session.modified = True
-            # request.COOKIES['feedly'] = code
-        # request.session.pop('feedly_access_token')
-        # request.session.pop('pocket_access_token', None)
-        # request.session.pop('pocket_acces_token', None)
-        # response = HttpResponse('io')
-        # response.set_cookie('feedly', request.session['feedly'])
-        # print request.session['feedly']
         print request.session.keys()
         return render(request, 'about.html')
 
@@ -202,7 +195,6 @@ def get_prefered(request):
                                                               api_data[api]['recommended'][post]['tags']]
             except:
                 continue
-            print api_data[api]['recommended'][post]['embed_link']
             content.append({
                 'postid': post,
                 'api': api,
@@ -222,7 +214,55 @@ def get_prefered(request):
 
 @login_required
 def search(request):
-    return render(request, 'home.html')
+    if request.method == 'GET':
+        return render(request, 'search.html')
+    elif request.method == 'POST':
+        if 'author' in request.POST:
+            uploader_string = str(request.POST['author']).lower()
+        else:
+            uploader_string = ''
+        if 'title' in request.POST:
+            title_string = request.POST['title'].lower()
+        else:
+            title_string = ''
+        if 'tags' in request.POST:
+            tags_string = request.POST['tags']
+            tags_list = [''.join(str(x).split()).lower() for x in tags_string.strip().split(',')]
+        else:
+            tags_list = []
+        api_data = cache.get('api_data')
+        if not api_data:
+            api_data = get_api_data(request)
+            cache.set('api_data', api_data)
+        content = []
+        for api in api_data:
+            for post in api_data[api]['recommended']:
+                try:
+                    api_data[api]['recommended'][post]['tags'] = [str(x) for x in
+                                                                  api_data[api]['recommended'][post]['tags']]
+                except:
+                    continue
+                if title_string not in api_data[api]['recommended'][post]['name'].lower():
+                    continue
+                if uploader_string not in api_data[api]['recommended'][post]['uploader'].lower():
+                    continue
+                if not set(tags_list).issubset(set(api_data[api]['recommended'][post]['tags'])):
+                    continue
+                content.append({
+                    'postid': post,
+                    'api': api,
+                    'title': api_data[api]['recommended'][post]['name'],
+                    'author': api_data[api]['recommended'][post]['uploader'],
+                    'author_ref': 'https://' + api_data[api]['recommended'][post]['uploader']
+                    if (api_data[api]['recommended'][post]['uploader'].startswith("www")
+                        or api_data[api]['recommended'][post]['uploader'].endswith(".com"))
+                    else '/prefered?author=' + api_data[api]['recommended'][post]['uploader'],
+                    'tags': api_data[api]['recommended'][post]['tags'],
+                    'ref': api_data[api]['recommended'][post]['embed_link']
+                })
+        shuffle(content)
+        content = {'content': content}
+        return render(request, 'prefered.html', content)
 
 
 @login_required
@@ -322,7 +362,6 @@ def vimeo_login(request):
         # You should retrieve the "code" from the URL string Vimeo redirected to. Here, that's named `CODE_FROM_URL`.
         try:
             code = request.GET.get('code', '')
-            print code
             token, user, scope = vimeo_client.exchange_code(code, settings.VIMEO_REDIRECT_URL)
             request.session['vimeo'] = token
             request.session.modified = True
